@@ -1,5 +1,0 @@
-<material>
-	<technique name="CoreData/Techniques/DiffNormalAlpha.xml" quality="1" loddistance="0"/>
-	<texture name="Resources/Textures/UrhoDiffuse.png" unit="diffuse"/>
-	<texture name="Resources/Textures/UrhoNormals.png" unit="normal"/>
-</material>
