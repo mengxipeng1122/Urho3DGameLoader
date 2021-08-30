@@ -57,11 +57,14 @@ Sample::Sample(Context* context) :
 void Sample::Setup()
 {
     // Modify engine startup parameters
-    engineParameters_[EP_WINDOW_TITLE] = GetTypeName();
+    engineParameters_[EP_WINDOW_TITLE] = "GameBox";
     engineParameters_[EP_LOG_NAME]     = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
     engineParameters_[EP_FULL_SCREEN]  = false;
     engineParameters_[EP_HEADLESS]     = false;
     engineParameters_[EP_SOUND]        = false;
+
+    engineParameters_[EP_WINDOW_WIDTH] = 1280;
+    engineParameters_[EP_WINDOW_HEIGHT]=  720;
 
     // Construct a search path to find the resource prefix with two entries:
     // The first entry is an empty path which will be substituted with program/bin directory -- this entry is for binary when it is still in build tree
@@ -83,7 +86,7 @@ void Sample::Start()
     CreateLogo();
 
     // Set custom window Title & Icon
-    SetWindowTitleAndIcon();
+    // SetWindowTitleAndIcon();
 
     // Create console and debug HUD
     CreateConsoleAndDebugHud();
