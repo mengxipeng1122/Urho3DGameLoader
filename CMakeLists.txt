@@ -13,10 +13,14 @@ if (COMMAND cmake_policy)
     # Honor the visibility properties for SHARED target types only
     cmake_policy (SET CMP0063 OLD)
 endif ()
-# Set CMake modules search path
-set(URHO3D_BASE_INCLUDE_DIR ${URHO3D_HOME}/build.mac/include/Urho3D ) 
-set(URHO3D_LIBRARIES ${URHO3D_HOME}/../Urho3D/build.mac/lib/libUrho3D.a ) 
-set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake/Modules)
+message("CMAKE_SYSTEM_NAME ${CMAKE_SYSTEM_NAME} ${CMAKE_CURRENT_LIST_FILE} ${CMAKE_CURRENT_LIST_LINE}")
+if (CMAKE_SYSTEM_NAME STREQUAL Linux)
+else()
+    # Set CMake modules search path
+    set(URHO3D_BASE_INCLUDE_DIR ${URHO3D_HOME}/build.mac/include/Urho3D ) 
+    set(URHO3D_LIBRARIES ${URHO3D_HOME}/../Urho3D/build.mac/lib/libUrho3D.a ) 
+endif()
+set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules/)
 # Include Urho3D Cmake common module
 include (UrhoCommon)
 # Define source files
