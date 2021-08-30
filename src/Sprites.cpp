@@ -32,7 +32,7 @@
 #include <Urho3D/DebugNew.h>
 
 // Number of sprites to draw
-static const unsigned NUM_SPRITES = 100;
+static const unsigned NUM_SPRITES = 0;
 
 // Custom variable identifier for storing sprite velocity within the UI element
 static const StringHash VAR_VELOCITY("Velocity");
@@ -147,5 +147,5 @@ void Sprites::HandleUpdate(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move sprites, scale movement with time step
-    MoveSprites(timeStep);
+    // MoveSprites(timeStep);
 }
