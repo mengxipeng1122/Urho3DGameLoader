@@ -75,6 +75,9 @@ void Sample::Setup()
 
 void Sample::Start()
 {
+    // resource path 
+    auto* cache = GetSubsystem<ResourceCache>(); 
+    auto success = cache->AddResourceDir("../Resources");
     if (GetPlatform() == "Android" || GetPlatform() == "iOS")
         // On mobile platform, enable touch by adding a screen joystick
         InitTouchInput();
