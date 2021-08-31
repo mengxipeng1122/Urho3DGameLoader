@@ -42,7 +42,7 @@
 #include <Urho3D/Resource/XMLFile.h>
 #include <Urho3D/IO/Log.h>
 
-Sample::Sample(Context* context) :
+MainControl::MainControl(Context* context) :
     Application(context),
     yaw_(0.0f),
     pitch_(0.0f),
@@ -54,7 +54,7 @@ Sample::Sample(Context* context) :
 {
 }
 
-void Sample::Setup()
+void MainControl::Setup()
 {
     // Modify engine startup parameters
     engineParameters_[EP_WINDOW_TITLE] = "GameBox";
@@ -73,41 +73,32 @@ void Sample::Setup()
         engineParameters_[EP_RESOURCE_PREFIX_PATHS] = ";../share/Resources;../share/Urho3D/Resources";
 }
 
-void Sample::Start()
+void MainControl::Start()
 {
     // resource path 
     auto* cache = GetSubsystem<ResourceCache>(); 
     auto success = cache->AddResourceDir("../Resources");
-    if (GetPlatform() == "Android" || GetPlatform() == "iOS")
-        // On mobile platform, enable touch by adding a screen joystick
-        InitTouchInput();
-    else if (GetSubsystem<Input>()->GetNumJoysticks() == 0)
+    if (GetSubsystem<Input>()->GetNumJoysticks() == 0)
         // On desktop platform, do not detect touch when we already got a joystick
-        SubscribeToEvent(E_TOUCHBEGIN, URHO3D_HANDLER(Sample, HandleTouchBegin));
-
-    // Create logo
-    // CreateLogo();
-
-    // Set custom window Title & Icon
-    // SetWindowTitleAndIcon();
+        SubscribeToEvent(E_TOUCHBEGIN, URHO3D_HANDLER(MainControl, HandleTouchBegin));
 
     // Create console and debug HUD
-    CreateConsoleAndDebugHud();
+    //CreateConsoleAndDebugHud();
 
     // Subscribe key down event
-    SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(Sample, HandleKeyDown));
+    SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(MainControl, HandleKeyDown));
     // Subscribe key up event
-    SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(Sample, HandleKeyUp));
+    SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(MainControl, HandleKeyUp));
     // Subscribe scene update event
-    SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(Sample, HandleSceneUpdate));
+    SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(MainControl, HandleSceneUpdate));
 }
 
-void Sample::Stop()
+void MainControl::Stop()
 {
     engine_->DumpResources(true);
 }
 
-void Sample::InitTouchInput()
+void MainControl::InitTouchInput()
 {
     touchEnabled_ = true;
 
@@ -126,86 +117,7 @@ void Sample::InitTouchInput()
     input->SetScreenJoystickVisible(screenJoystickSettingsIndex_, true);
 }
 
-void Sample::InitMouseMode(MouseMode mode)
-{
-    useMouseMode_ = mode;
-
-    Input* input = GetSubsystem<Input>();
-
-    if (GetPlatform() != "Web")
-    {
-        if (useMouseMode_ == MM_FREE)
-            input->SetMouseVisible(true);
-
-        Console* console = GetSubsystem<Console>();
-        if (useMouseMode_ != MM_ABSOLUTE)
-        {
-            input->SetMouseMode(useMouseMode_);
-            if (console && console->IsVisible())
-                input->SetMouseMode(MM_ABSOLUTE, true);
-        }
-    }
-    else
-    {
-        input->SetMouseVisible(true);
-        SubscribeToEvent(E_MOUSEBUTTONDOWN, URHO3D_HANDLER(Sample, HandleMouseModeRequest));
-        SubscribeToEvent(E_MOUSEMODECHANGED, URHO3D_HANDLER(Sample, HandleMouseModeChange));
-    }
-}
-
-void Sample::SetLogoVisible(bool enable)
-{
-    if (logoSprite_)
-        logoSprite_->SetVisible(enable);
-}
-
-void Sample::CreateLogo()
-{
-    // Get logo texture
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-    Texture2D* logoTexture = cache->GetResource<Texture2D>("Textures/FishBoneLogo.png");
-    if (!logoTexture)
-        return;
-
-    // Create logo sprite and add to the UI layout
-    UI* ui = GetSubsystem<UI>();
-    logoSprite_ = ui->GetRoot()->CreateChild<Sprite>();
-
-    // Set logo sprite texture
-    logoSprite_->SetTexture(logoTexture);
-
-    int textureWidth = logoTexture->GetWidth();
-    int textureHeight = logoTexture->GetHeight();
-
-    // Set logo sprite scale
-    logoSprite_->SetScale(256.0f / textureWidth);
-
-    // Set logo sprite size
-    logoSprite_->SetSize(textureWidth, textureHeight);
-
-    // Set logo sprite hot spot
-    logoSprite_->SetHotSpot(textureWidth, textureHeight);
-
-    // Set logo sprite alignment
-    logoSprite_->SetAlignment(HA_RIGHT, VA_BOTTOM);
-
-    // Make logo not fully opaque to show the scene underneath
-    logoSprite_->SetOpacity(0.9f);
-
-    // Set a low priority for the logo so that other UI elements can be drawn on top
-    logoSprite_->SetPriority(-100);
-}
-
-void Sample::SetWindowTitleAndIcon()
-{
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-    Graphics* graphics = GetSubsystem<Graphics>();
-    Image* icon = cache->GetResource<Image>("Textures/UrhoIcon.png");
-    graphics->SetWindowIcon(icon);
-    graphics->SetWindowTitle("Urho3D Sample");
-}
-
-void Sample::CreateConsoleAndDebugHud()
+void MainControl::CreateConsoleAndDebugHud()
 {
     // Get default style
     ResourceCache* cache = GetSubsystem<ResourceCache>();
@@ -222,7 +134,7 @@ void Sample::CreateConsoleAndDebugHud()
 }
 
 
-void Sample::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
+void MainControl::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
 {
     using namespace KeyUp;
 
@@ -248,7 +160,7 @@ void Sample::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
     }
 }
 
-void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
+void MainControl::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
 {
     using namespace KeyDown;
 
@@ -354,68 +266,4 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
                 Time::GetTimeStamp().Replaced(':', '_').Replaced('.', '_').Replaced(' ', '_') + ".png");
         }
     }
-}
-
-void Sample::HandleSceneUpdate(StringHash /*eventType*/, VariantMap& eventData)
-{
-    // Move the camera by touch, if the camera node is initialized by descendant sample class
-    if (touchEnabled_ && cameraNode_)
-    {
-        Input* input = GetSubsystem<Input>();
-        for (unsigned i = 0; i < input->GetNumTouches(); ++i)
-        {
-            TouchState* state = input->GetTouch(i);
-            if (!state->touchedElement_)    // Touch on empty space
-            {
-                if (state->delta_.x_ ||state->delta_.y_)
-                {
-                    Camera* camera = cameraNode_->GetComponent<Camera>();
-                    if (!camera)
-                        return;
-
-                    Graphics* graphics = GetSubsystem<Graphics>();
-                    yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.x_;
-                    pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.y_;
-
-                    // Construct new orientation for the camera scene node from yaw and pitch; roll is fixed to zero
-                    cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
-                }
-                else
-                {
-                    // Move the cursor to the touch position
-                    Cursor* cursor = GetSubsystem<UI>()->GetCursor();
-                    if (cursor && cursor->IsVisible())
-                        cursor->SetPosition(state->position_);
-                }
-            }
-        }
-    }
-}
-
-void Sample::HandleTouchBegin(StringHash /*eventType*/, VariantMap& eventData)
-{
-    // On some platforms like Windows the presence of touch input can only be detected dynamically
-    InitTouchInput();
-    UnsubscribeFromEvent("TouchBegin");
-}
-
-// If the user clicks the canvas, attempt to switch to relative mouse mode on web platform
-void Sample::HandleMouseModeRequest(StringHash /*eventType*/, VariantMap& eventData)
-{
-    Console* console = GetSubsystem<Console>();
-    if (console && console->IsVisible())
-        return;
-    Input* input = GetSubsystem<Input>();
-    if (useMouseMode_ == MM_ABSOLUTE)
-        input->SetMouseVisible(false);
-    else if (useMouseMode_ == MM_FREE)
-        input->SetMouseVisible(true);
-    input->SetMouseMode(useMouseMode_);
-}
-
-void Sample::HandleMouseModeChange(StringHash /*eventType*/, VariantMap& eventData)
-{
-    Input* input = GetSubsystem<Input>();
-    bool mouseLocked = eventData[MouseModeChanged::P_MOUSELOCKED].GetBool();
-    input->SetMouseVisible(!mouseLocked);
 }

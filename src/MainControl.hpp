@@ -39,7 +39,7 @@ using namespace Urho3D;
 
 const float TOUCH_SENSITIVITY = 2.0f;
 
-/// Sample class, as framework for all samples.
+/// MainControl class, as framework for all samples.
 ///    - Initialization of the Urho3D engine (in Application class)
 ///    - Modify engine parameters for windowed mode and to show the class name as title
 ///    - Create Urho3D logo at screen
@@ -49,14 +49,14 @@ const float TOUCH_SENSITIVITY = 2.0f;
 ///    - Take screenshot with key 9
 ///    - Handle Esc key down to hide Console or exit application
 ///    - Init touch input on mobile platform using screen joysticks (patched for each individual sample)
-class Sample : public Application
+class MainControl : public Application
 {
     // Enable type information.
-    URHO3D_OBJECT(Sample, Application);
+    URHO3D_OBJECT(MainControl, Application);
 
 public:
     /// Construct.
-    explicit Sample(Context* context);
+    explicit MainControl(Context* context);
 
     /// Setup before engine initialization. Modifies the engine parameters.
     void Setup() override;
@@ -107,8 +107,6 @@ private:
     void HandleKeyUp(StringHash eventType, VariantMap& eventData);
     /// Handle scene update event to control camera's pitch and yaw for all samples.
     void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
-    /// Handle touch begin event to initialize touch input on desktop platform.
-    void HandleTouchBegin(StringHash eventType, VariantMap& eventData);
 
     /// Screen joystick index for navigational controls (mobile platforms only).
     unsigned screenJoystickIndex_;
@@ -118,4 +116,4 @@ private:
     bool paused_;
 };
 
-#include "Sample.inl"
+//#include "MainControl.inl"

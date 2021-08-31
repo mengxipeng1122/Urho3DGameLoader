@@ -25,8 +25,15 @@ set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules/)
 include (UrhoCommon)
 # Define source files
 
-file (GLOB SRC_CPP_FILES src/*.cpp)
-file (GLOB SRC_H_FILES src/*.h)
+file (GLOB SRC_CPP_FILES 
+    src/*.cpp
+    src/utils/*.cpp
+
+    )
+file (GLOB SRC_H_FILES 
+    src/*.hpp
+    src/utils/*.hpp
+    )
 define_source_files (GROUP EXTRA_CPP_FILES ${SRC_CPP_FILES} EXTRA_H_FILES ${SRC_H_FILES})
 #define_source_files ()
 # Setup target with resource copying
