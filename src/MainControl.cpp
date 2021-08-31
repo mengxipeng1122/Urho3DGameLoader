@@ -37,25 +37,43 @@
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Scene/SceneEvents.h>
 #include <Urho3D/UI/Sprite.h>
+#include <Urho3D/UI/BorderImage.h>
 #include <Urho3D/Graphics/Texture2D.h>
 #include <Urho3D/Core/Timer.h>
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Resource/XMLFile.h>
 #include <Urho3D/IO/Log.h>
 
+#include "utils/log.hpp"
+
 #include "MainControl.hpp"
 
 URHO3D_DEFINE_APPLICATION_MAIN(MainControl)
 
-MainControl::MainControl(Context* context) :
-    Application(context),
-    yaw_(0.0f),
-    pitch_(0.0f),
-    touchEnabled_(false),
-    useMouseMode_(MM_ABSOLUTE),
-    screenJoystickIndex_(M_MAX_UNSIGNED),
-    screenJoystickSettingsIndex_(M_MAX_UNSIGNED),
-    paused_(false)
+MainControl::MainControl(Context* context) 
+    : Application(context)
+    , yaw_(0.0f)
+    , pitch_(0.0f)
+    , touchEnabled_(false)
+    , useMouseMode_(MM_ABSOLUTE)
+    , screenJoystickIndex_(M_MAX_UNSIGNED)
+    , screenJoystickSettingsIndex_(M_MAX_UNSIGNED)
+    , paused_(false)
+    , uiRoot_(GetSubsystem<UI>()->GetRoot())
+    , wallpaperNames_{
+        "wallpaper/00.jpg",
+        "wallpaper/01.jpg",
+        "wallpaper/02.jpg",
+        "wallpaper/03.jpg",
+        "wallpaper/04.jpg",
+        "wallpaper/05.jpg",
+        "wallpaper/06.jpg",
+        "wallpaper/07.jpg",
+        "wallpaper/08.jpg",
+        "wallpaper/09.jpg",
+        }
+    , background_(nullptr)
+    , logo_(nullptr)
 {
 }
 
@@ -78,12 +96,66 @@ void MainControl::Setup()
         engineParameters_[EP_RESOURCE_PREFIX_PATHS] = ";../share/Resources;../share/Urho3D/Resources";
 }
 
+void MainControl::CreateUIControls()
+{
+    auto* cache = GetSubsystem<ResourceCache>(); 
+    // show Background
+    background_ = new Sprite(context_);
+    {
+        auto texture = cache->GetResource<Texture2D>(wallpaperNames_[wallpaperno_]);
+        background_->SetSize(texture->GetWidth(), texture->GetHeight());
+        background_->SetTexture(texture); // Set texture
+        background_->SetName(String("background"));
+    }
+    uiRoot_->AddChild(background_);
+
+    logo_ = new Sprite(context_);
+    {
+        auto texture = cache->GetResource<Texture2D>("res/logo.png");
+        logo_->SetSize(texture->GetWidth(), texture->GetHeight());
+        logo_->SetTexture(texture); // Set texture
+    }
+    uiRoot_->AddChild(logo_);
+
+}
+
 void MainControl::Start()
 {
     // resource path 
     auto* cache = GetSubsystem<ResourceCache>(); 
     auto success = cache->AddResourceDir("../Resources");
   //  if (GetSubsystem<Input>()->GetNumJoysticks() == 0) SubscribeToEvent(E_TOUCHBEGIN, URHO3D_HANDLER(MainControl, HandleTouchBegin));
+
+
+    // Load XML file containing default UI style sheet
+    auto* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+
+    // Set the loaded style as default style
+    uiRoot_->SetDefaultStyle(style);
+
+    if(1)
+    {
+        SharedPtr<File> file = cache->GetFile("screens/home.xml"); uiRoot_->LoadXML(*file);
+
+        if(0)
+        {
+            auto sprite = new Sprite(context_);
+            auto texture = cache->GetResource<Texture2D>("res/main_header_bg.png");
+            sprite->SetSize(texture->GetWidth(), texture->GetHeight());
+            sprite->SetBlendMode(BLEND_ALPHA);
+            sprite->SetTexture(texture); // Set texture
+            uiRoot_->AddChild(sprite);
+        }
+
+        File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); uiRoot_->SaveXML(saveFile);
+    }
+    else
+    {
+        CreateUIControls();
+       File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); uiRoot_->SaveXML(saveFile);
+    }
+
+
 
     // Create console and debug HUD
     //CreateConsoleAndDebugHud();
