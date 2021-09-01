@@ -10,14 +10,17 @@ using namespace Urho3D;
 
 void IOTestScreen::Enter(Context* context)
 {
-    auto* cache = context->GetSubsystem<ResourceCache>(); 
+    Screen::Enter(context);
     auto* uiRoot= context->GetSubsystem<UI>()->GetRoot();
-
+    auto* screen = uiRoot->CreateChild<UIElement>(GetName());
+    auto* cache = context->GetSubsystem<ResourceCache>(); 
     String fileName= ToString("screens/%s.xml", GetName());
+    SharedPtr<File> file = cache->GetFile(fileName); 
+    screen->LoadXML(*file);
 
-    SharedPtr<File> file = cache->GetFile(fileName); uiRoot->LoadXML(*file);
 }
 
 void IOTestScreen::Leave(Context* context)
 {
+    Screen::Leave(context);
 }

@@ -271,7 +271,7 @@ void MainControl::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
                 input->SetScreenJoystickVisible(screenJoystickSettingsIndex_, paused_);
         }
 
-        // Texture quality
+        // Switch Screen test
         else if (key == '1')
         {
             static bool homescreen = true;
@@ -286,6 +286,14 @@ void MainControl::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
                 homescreen = true;
             }
         }
+
+        // Save UI layout xml file 
+        else if (key == '2')
+        {
+            File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); uiRoot_->SaveXML(saveFile);
+            LOG_INFOS_CPP(" save to /tmp/tt.xml");
+        }
+
 
         // Take screenshot
         else if (key == '9')

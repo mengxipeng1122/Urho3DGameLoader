@@ -13,7 +13,7 @@ class Screen
     public:
         Screen()=default;
         virtual ~Screen()=default;
-        virtual void Enter( Context* context) = 0;
-        virtual void Leave( Context* context) = 0;
+        virtual void Enter( Context* context) ;
+        virtual void Leave( Context* context) ;
 };
 

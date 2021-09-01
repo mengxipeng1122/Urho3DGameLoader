@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<element>
+	<attribute name="Size" value="1280 720" />
+	<element type="Sprite">
+		<attribute name="Name" value="background" />
+		<attribute name="Size" value="1280 720" />
+		<attribute name="Texture" value="Texture2D;wallpaper/00.jpg" />
+		<attribute name="Image Rect" value="0 0 1280 720" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Size" value="1280 119" />
+		<attribute name="Texture" value="Texture2D;res/main_header_bg.png" />
+		<attribute name="Image Rect" value="0 0 1280 119" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="0 119" />
+		<attribute name="Size" value="1280 4" />
+		<attribute name="Texture" value="Texture2D;res/main_header_div.png" />
+		<attribute name="Image Rect" value="0 0 1280 4" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="0 108" />
+		<attribute name="Size" value="1280 72" />
+		<attribute name="Texture" value="Texture2D;res/main_tab_bg.png" />
+		<attribute name="Image Rect" value="0 0 1280 72" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="391 0" />
+		<attribute name="Size" value="497 114" />
+		<attribute name="Texture" value="Texture2D;res/logo.png" />
+		<attribute name="Image Rect" value="0 0 497 114" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="0 680 " />
+		<attribute name="Size" value="1280 4" />
+		<attribute name="Texture" value="Texture2D;res/main_footer_div.png" />
+		<attribute name="Image Rect" value="0 0 1280 4" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+</element>
