@@ -4,21 +4,22 @@
 
 DP::Factory<ScreenManager::ScreenTypes, ScreenBuilder, Screen> ScreenManager::s_screenFactory; 
 
+std::unique_ptr<Screen> ScreenManager::s_currentScreen{nullptr};
+
 ScreenManager::ScreenManager()
-    : currentScreen_()
 {
 }
 
-void ScreenManager::setCurrentScreen(ScreenTypes& name)
+void ScreenManager::setCurrentScreen(ScreenTypes name, Context* context)
 {
-    if(currentScreen_!=nullptr)
+    if(s_currentScreen!=nullptr)
     {
-        currentScreen_->Leave();
-        currentScreen_ = nullptr;
+        s_currentScreen->Leave(context);
+        s_currentScreen = nullptr;
     }
     {
-        currentScreen_ = std::unique_ptr<Screen>( s_screenFactory.Build(name));
-        currentScreen_->Enter();
+        s_currentScreen = std::unique_ptr<Screen>( s_screenFactory.Build(name));
+        s_currentScreen->Enter(context);
     }
     return ;
 }

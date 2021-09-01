@@ -26,7 +26,6 @@
 #include <Urho3D/Input/Input.h>
 
 #include "Settings.hpp"
-#include "screens/ScreenManager.hpp"
 
 namespace Urho3D
 {
@@ -125,8 +124,8 @@ private:
     // setttings
     Settings settings_;
     ////////////////////////////////////////////////////////////////////////////////
-    // ScreenManager
-    ScreenManager screenManager_;
+    // screens
+    void RegistScreens();
     
 
     // uiroot 

@@ -47,7 +47,9 @@
 #include "utils/log.hpp"
 
 #include "MainControl.hpp"
+#include "screens/ScreenManager.hpp"
 #include "screens/HomeScreen.hpp"
+#include "screens/IOTestScreen.hpp"
 
 URHO3D_DEFINE_APPLICATION_MAIN(MainControl)
 
@@ -77,9 +79,13 @@ MainControl::MainControl(Context* context)
     , background_(nullptr)
     , logo_(nullptr)
 {
-    std::string name("home");
-    ScreenManager::RegistScreen(name, new  ScreenTBuilder<HomeScreen>());
-    screenManager_.setCurrentScreen(name);
+    RegistScreens();
+}
+
+void MainControl::RegistScreens()
+{
+    { std::string name(HomeScreen  ::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<HomeScreen  >()); }
+    { std::string name(IOTestScreen::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<IOTestScreen>()); }
 }
 
 void MainControl::Setup()
@@ -138,7 +144,9 @@ void MainControl::Start()
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
 
-    if(1)
+    ScreenManager::setCurrentScreen(HomeScreen::GetName(), context_);
+
+    if(0)
     {
         SharedPtr<File> file = cache->GetFile("screens/home.xml"); uiRoot_->LoadXML(*file);
 
@@ -157,8 +165,8 @@ void MainControl::Start()
     }
     else
     {
-        CreateUIControls();
-       File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); uiRoot_->SaveXML(saveFile);
+       // CreateUIControls();
+       //File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); uiRoot_->SaveXML(saveFile);
     }
 
 
@@ -266,62 +274,18 @@ void MainControl::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
         // Texture quality
         else if (key == '1')
         {
-            auto quality = (unsigned)renderer->GetTextureQuality();
-            ++quality;
-            if (quality > QUALITY_HIGH)
-                quality = QUALITY_LOW;
-            renderer->SetTextureQuality((MaterialQuality)quality);
+            static bool homescreen = true;
+            if(homescreen)
+            {
+                ScreenManager::setCurrentScreen(IOTestScreen::GetName(), context_);
+                homescreen = false;
+            }
+            else
+            {
+                ScreenManager::setCurrentScreen(HomeScreen::GetName(), context_);
+                homescreen = true;
+            }
         }
-
-        // Material quality
-        else if (key == '2')
-        {
-            auto quality = (unsigned)renderer->GetMaterialQuality();
-            ++quality;
-            if (quality > QUALITY_HIGH)
-                quality = QUALITY_LOW;
-            renderer->SetMaterialQuality((MaterialQuality)quality);
-        }
-
-        // Specular lighting
-        else if (key == '3')
-            renderer->SetSpecularLighting(!renderer->GetSpecularLighting());
-
-        // Shadow rendering
-        else if (key == '4')
-            renderer->SetDrawShadows(!renderer->GetDrawShadows());
-
-        // Shadow map resolution
-        else if (key == '5')
-        {
-            int shadowMapSize = renderer->GetShadowMapSize();
-            shadowMapSize *= 2;
-            if (shadowMapSize > 2048)
-                shadowMapSize = 512;
-            renderer->SetShadowMapSize(shadowMapSize);
-        }
-
-        // Shadow depth and filtering quality
-        else if (key == '6')
-        {
-            ShadowQuality quality = renderer->GetShadowQuality();
-            quality = (ShadowQuality)(quality + 1);
-            if (quality > SHADOWQUALITY_BLUR_VSM)
-                quality = SHADOWQUALITY_SIMPLE_16BIT;
-            renderer->SetShadowQuality(quality);
-        }
-
-        // Occlusion culling
-        else if (key == '7')
-        {
-            bool occlusion = renderer->GetMaxOccluderTriangles() > 0;
-            occlusion = !occlusion;
-            renderer->SetMaxOccluderTriangles(occlusion ? 5000 : 0);
-        }
-
-        // Instancing
-        else if (key == '8')
-            renderer->SetDynamicInstancing(!renderer->GetDynamicInstancing());
 
         // Take screenshot
         else if (key == '9')

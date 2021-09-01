@@ -1,13 +1,14 @@
 
+
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Core/StringUtils.h>
 #include <Urho3D/Resource/ResourceCache.h>
 
-#include "HomeScreen.hpp"
+#include "IOTestScreen.hpp"
 
 using namespace Urho3D;
 
-void HomeScreen::Enter(Context* context)
+void IOTestScreen::Enter(Context* context)
 {
     auto* cache = context->GetSubsystem<ResourceCache>(); 
     auto* uiRoot= context->GetSubsystem<UI>()->GetRoot();
@@ -17,6 +18,6 @@ void HomeScreen::Enter(Context* context)
     SharedPtr<File> file = cache->GetFile(fileName); uiRoot->LoadXML(*file);
 }
 
-void HomeScreen::Leave(Context* context)
+void IOTestScreen::Leave(Context* context)
 {
 }
