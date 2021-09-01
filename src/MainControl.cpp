@@ -42,6 +42,7 @@
 #include <Urho3D/Core/Timer.h>
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Resource/XMLFile.h>
+#include <Urho3D/Resource/Localization.h>
 #include <Urho3D/IO/Log.h>
 
 #include "utils/log.hpp"
@@ -80,6 +81,7 @@ MainControl::MainControl(Context* context)
     , logo_(nullptr)
 {
     RegistScreens();
+
 }
 
 void MainControl::RegistScreens()
@@ -105,6 +107,7 @@ void MainControl::Setup()
     // The second and third entries are possible relative paths from the installed program/bin directory to the asset directory -- these entries are for binary when it is in the Urho3D SDK installation location
     if (!engineParameters_.Contains(EP_RESOURCE_PREFIX_PATHS))
         engineParameters_[EP_RESOURCE_PREFIX_PATHS] = ";../share/Resources;../share/Urho3D/Resources";
+
 }
 
 void MainControl::CreateUIControls()
@@ -135,7 +138,15 @@ void MainControl::Start()
     // resource path 
     auto* cache = GetSubsystem<ResourceCache>(); 
     auto success = cache->AddResourceDir("../Resources");
-  //  if (GetSubsystem<Input>()->GetNumJoysticks() == 0) SubscribeToEvent(E_TOUCHBEGIN, URHO3D_HANDLER(MainControl, HandleTouchBegin));
+
+    // initialize laguage 
+    {
+        Localization* l10n = GetSubsystem<Localization>();
+        l10n->LoadJSONFile("localization/StringsCnEn.json");
+        l10n->SetLanguage("En");
+        LOG_INFOS_CPP(" lang " , l10n->GetNumLanguages());
+    }
+
 
 
     // Load XML file containing default UI style sheet
@@ -143,6 +154,7 @@ void MainControl::Start()
 
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
+
 
     ScreenManager::setCurrentScreen(HomeScreen::GetName(), context_);
 

@@ -3,7 +3,10 @@
 #include <Urho3D/Core/StringUtils.h>
 #include <Urho3D/UI/Text.h>
 #include <Urho3D/UI/Font.h>
+#include <Urho3D/UI/Sprite.h>
+#include <Urho3D/Graphics/Texture2D.h>
 #include <Urho3D/Resource/ResourceCache.h>
+#include <Urho3D/Resource/Localization.h>
 
 #include "HomeScreen.hpp"
 
@@ -19,12 +22,10 @@ void HomeScreen::Enter(Context* context)
     SharedPtr<File> file = cache->GetFile(fileName); 
     screen->LoadXML(*file);
 
-    // add text
-//    auto* text = screen->CreateChild<Text>();
-//    text->SetText("HOME");
-//    text->SetFont(cache->GetResource<Font>("res/geometr415.ttf"), 35);
-//    //text->SetMinWidth(CeilToInt(text->GetRowWidth(0) + 10));
-//    text->SetPosition(15,15);
+    auto* tipHome = screen->GetChild(String("tipHome"));
+    ASSERT_CPP(tipHome!=nullptr, " can not found tipHome ");
+
+
 }
 
 void HomeScreen::Leave(Context* context)

@@ -1,0 +1,24 @@
+{
+    "RETURN_GAME_LIST":
+    {
+        "En": "return game list",
+        "Cn": "返回节目列表"
+    },
+    "SELECT":
+    {
+        "En": "select"
+    },
+    "DIFFICULT":
+    {
+        "En": "difficult"
+    },
+    "ADD/REMOVE FAV":
+    {
+        "En": "Add/remove fav"
+    },
+    "PAGE":
+    {
+        "En": "page",
+        "Cn": "樊野"
+    }
+}

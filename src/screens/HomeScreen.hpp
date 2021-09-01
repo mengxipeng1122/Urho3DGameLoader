@@ -6,6 +6,7 @@
 #include "ScreenManager.hpp"
 class HomeScreen : public Screen
 {
+    private:
     public:
         void Enter( Context* context) override;
         void Leave( Context* context) override;
