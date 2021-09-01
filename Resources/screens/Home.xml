@@ -128,5 +128,12 @@
 				<attribute name="Image Rect" value="0 0 34 34" />
 		        <attribute name="Blend Mode" value="alpha" />
 			</element>
+			<element type="Sprite">
+				<attribute name="Position" value=" 700 200" />
+				<attribute name="Size" value="555 450" />
+				<attribute name="Texture" value="Texture2D;res/key_bg.png" />
+				<attribute name="Image Rect" value="0 0 55 53" />
+		        <attribute name="Blend Mode" value="multiply" />
+			</element>
 		</element>
 </element>
