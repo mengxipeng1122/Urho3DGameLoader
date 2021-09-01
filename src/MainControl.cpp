@@ -140,8 +140,9 @@ void MainControl::Start()
         if(0)
         {
             auto sprite = new Sprite(context_);
-            auto texture = cache->GetResource<Texture2D>("res/main_header_bg.png");
+            auto texture = cache->GetResource<Texture2D>("res/logo.png");
             sprite->SetSize(texture->GetWidth(), texture->GetHeight());
+            sprite->SetPosition(391, 0);
             sprite->SetBlendMode(BLEND_ALPHA);
             sprite->SetTexture(texture); // Set texture
             uiRoot_->AddChild(sprite);
