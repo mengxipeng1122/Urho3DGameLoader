@@ -28,15 +28,15 @@ void HomeScreen::Enter(Context* context)
 
 //    auto* pageIndicator = screen->CreateChild<PageIndicator>("pageIndicator");
 
-    ////auto* pageIndicator = static_cast<PageIndicator*>(screen->GetChild(String("pageIndicator")));
+    auto* pageIndicator = static_cast<PageIndicator*>(screen->GetChild(String("pageIndicator")));
     for(auto& c : screen->GetChildren())
     {
         LOG_INFOS_CPP(" c ", c->GetName().CString());
     }
-  //  auto* pageIndicator = screen->GetChild(String("pageIndicator"));
-  //  ASSERT_CPP(pageIndicator!=nullptr, " can not found pageIndicator ");
+  //auto* pageIndicator = screen->GetChild(String("pageIndicator"));
+  ASSERT_CPP(pageIndicator!=nullptr, " can not found pageIndicator ");
 
-    //pageIndicator->Update();
+   pageIndicator->Update();
 
 
 

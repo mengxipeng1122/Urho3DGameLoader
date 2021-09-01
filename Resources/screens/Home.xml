@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <element>
     <attribute name="Size" value="1280 720" />
-        <element type="PageIndicator" >
-            <attribute name="Name" value="r ddd " />
-        </element>
         <element type="Text">
             <attribute name="Name" value="r  " />
             <attribute name="Position" value="185 65" />
@@ -19,6 +16,27 @@
             <attribute name="Texture" value="Texture2D;res/key_bg.png" />
             <attribute name="Image Rect" value="0 0 55 53" />
             <attribute name="Blend Mode" value="multiply" />
+        </element>
+        <element type="PageIndicator">
+            <attribute name="Position" value="169 600" />
+            <attribute name="Name" value="pageIndicator" />
+            <attribute name="Pivot" value="0 0" />
+            <element type="Sprite">
+                <attribute name="Position" value="10 0" />
+                <attribute name="Name" value="bg" />
+                <attribute name="Size" value="169 66" />
+                <attribute name="Texture" value="Texture2D;res/main_page_bg.png" />
+                <attribute name="Image Rect" value="0 0 169 66" />
+                <attribute name="Blend Mode" value="alpha" />
+            </element>
+            <element type="Text">
+                <attribute name="Position" value=" 0 0" />
+                <attribute name="Name" value="text" />
+                <attribute name="Pivot" value="0 0" />
+                <attribute name="Text" value="1/1"/>
+                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+                <attribute name="Font Size" value="12" />
+            </element>
         </element>
         <element>
             <attribute name="Name" value="tipHome" />

@@ -81,7 +81,7 @@ void PageIndicator::SetText()
 {
     ASSERT_CPP(text_!=nullptr, " can not get text");
     LOG_INFOS_CPP(" go here ");
-    text_->SetText(ToString("%03d/%04d", curPageNo_, totalPageNo_));
+    text_->SetText(ToString("%d/%d", curPageNo_, totalPageNo_));
 }
 
 
