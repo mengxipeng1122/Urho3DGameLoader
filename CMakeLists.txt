@@ -28,11 +28,13 @@ include (UrhoCommon)
 file (GLOB SRC_CPP_FILES 
     src/*.cpp
     src/utils/*.cpp
+    src/screens/*.cpp
 
     )
 file (GLOB SRC_H_FILES 
     src/*.hpp
     src/utils/*.hpp
+    src/screens/*.hpp
     )
 define_source_files (GROUP EXTRA_CPP_FILES ${SRC_CPP_FILES} EXTRA_H_FILES ${SRC_H_FILES})
 #define_source_files ()

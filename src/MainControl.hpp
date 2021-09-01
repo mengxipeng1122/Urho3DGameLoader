@@ -25,6 +25,9 @@
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Input/Input.h>
 
+#include "Settings.hpp"
+#include "screens/ScreenManager.hpp"
+
 namespace Urho3D
 {
 
@@ -116,6 +119,16 @@ private:
     bool paused_;
 
 
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // setttings
+    Settings settings_;
+    ////////////////////////////////////////////////////////////////////////////////
+    // ScreenManager
+    ScreenManager screenManager_;
+    
+
     // uiroot 
     SharedPtr<UIElement> uiRoot_;
     void CreateUIControls();
@@ -128,6 +141,7 @@ private:
 
     /// logo
     SharedPtr<Sprite> logo_;
+
 };
 
 //#include "MainControl.inl"

@@ -47,6 +47,7 @@
 #include "utils/log.hpp"
 
 #include "MainControl.hpp"
+#include "screens/HomeScreen.hpp"
 
 URHO3D_DEFINE_APPLICATION_MAIN(MainControl)
 
@@ -59,6 +60,7 @@ MainControl::MainControl(Context* context)
     , screenJoystickIndex_(M_MAX_UNSIGNED)
     , screenJoystickSettingsIndex_(M_MAX_UNSIGNED)
     , paused_(false)
+    , settings_(context, "Settings.xml")
     , uiRoot_(GetSubsystem<UI>()->GetRoot())
     , wallpaperNames_{
         "wallpaper/00.jpg",
@@ -75,6 +77,9 @@ MainControl::MainControl(Context* context)
     , background_(nullptr)
     , logo_(nullptr)
 {
+    std::string name("home");
+    ScreenManager::RegistScreen(name, new  ScreenTBuilder<HomeScreen>());
+    screenManager_.setCurrentScreen(name);
 }
 
 void MainControl::Setup()
