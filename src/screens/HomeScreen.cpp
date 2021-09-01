@@ -8,6 +8,7 @@
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Resource/Localization.h>
 
+#include "../widgets/PageIndicator.hpp"
 #include "HomeScreen.hpp"
 
 using namespace Urho3D;
@@ -24,6 +25,19 @@ void HomeScreen::Enter(Context* context)
 
     auto* tipHome = screen->GetChild(String("tipHome"));
     ASSERT_CPP(tipHome!=nullptr, " can not found tipHome ");
+
+//    auto* pageIndicator = screen->CreateChild<PageIndicator>("pageIndicator");
+
+    ////auto* pageIndicator = static_cast<PageIndicator*>(screen->GetChild(String("pageIndicator")));
+    for(auto& c : screen->GetChildren())
+    {
+        LOG_INFOS_CPP(" c ", c->GetName().CString());
+    }
+  //  auto* pageIndicator = screen->GetChild(String("pageIndicator"));
+  //  ASSERT_CPP(pageIndicator!=nullptr, " can not found pageIndicator ");
+
+    //pageIndicator->Update();
+
 
 
 }
