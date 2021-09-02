@@ -125,8 +125,8 @@ private:
     Settings settings_;
     ////////////////////////////////////////////////////////////////////////////////
     // screens
-    void RegistScreens();
-    void RegistWidgets();
+    void RegisterScreens();
+    void RegisterWidgets();
     
 
     // uiroot 

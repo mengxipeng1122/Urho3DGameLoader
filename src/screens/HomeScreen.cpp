@@ -10,6 +10,7 @@
 #include <Urho3D/Resource/Localization.h>
 
 #include "../widgets/PageIndicator.hpp"
+#include "../widgets/TabSelector.hpp"
 #include "HomeScreen.hpp"
 
 using namespace Urho3D;
@@ -30,6 +31,9 @@ void HomeScreen::Enter(Context* context)
     pageIndicator_ = static_cast<PageIndicator*>(screen->GetChild(String("pageIndicator")));
     ASSERT_CPP(pageIndicator_!=nullptr, " can not found pageIndicator ");
 
+    mainTab_ = static_cast<TabSelector*>(screen->GetChild(String("Main Tab")));
+    ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
+
 }
 
 void HomeScreen::Leave(Context* context)
@@ -40,6 +44,11 @@ void HomeScreen::Leave(Context* context)
 bool HomeScreen::HandleKeyDown(Context* context, StringHash eventType, VariantMap& eventData)
 {
     using namespace KeyDown;
+
+    ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
+    bool success = mainTab_->HandleKeyDown(context, eventType, eventData);
+    if(success) return true;
+
     int key = eventData[P_KEY].GetInt();
     if(key =='2')
     {

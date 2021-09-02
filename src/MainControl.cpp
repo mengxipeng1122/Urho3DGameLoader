@@ -48,7 +48,9 @@
 #include "utils/log.hpp"
 
 #include "MainControl.hpp"
+
 #include "widgets/PageIndicator.hpp"
+#include "widgets/TabSelector.hpp"
 #include "screens/ScreenManager.hpp"
 #include "screens/HomeScreen.hpp"
 #include "screens/IOTestScreen.hpp"
@@ -81,20 +83,21 @@ MainControl::MainControl(Context* context)
     , background_(nullptr)
     , logo_(nullptr)
 {
-    RegistWidgets();
-    RegistScreens();
+    RegisterWidgets();
+    RegisterScreens();
 
 }
 
-void MainControl::RegistScreens()
+void MainControl::RegisterScreens()
 {
     { std::string name(HomeScreen  ::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<HomeScreen  >()); }
     { std::string name(IOTestScreen::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<IOTestScreen>()); }
 }
 
-void MainControl::RegistWidgets()
+void MainControl::RegisterWidgets()
 {
     PageIndicator::RegisterObject(context_);
+    TabSelector  ::RegisterObject(context_);
 }
 
 

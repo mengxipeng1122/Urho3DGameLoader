@@ -55,7 +55,6 @@ void PageIndicator::RegisterObject(Context* context)
 PageIndicator::PageIndicator(Context *context)
     : UIElement(context)
 {
-    LOG_INFOS_CPP(" go here");
 }
 
 
