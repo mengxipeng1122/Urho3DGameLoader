@@ -63,11 +63,24 @@ public:
     bool HandleKeyDown(StringHash eventType, VariantMap& eventData);
 
 protected:
+    struct Item
+    {
+        String thumbPath_;
+        String name_;
+        bool   marked;
+    };
 
-    int             itemHight{40};
-    int             index_{0};
+    std::vector<std::unique_ptr<Item>>  games_;
 
-    Vector2         cursorBasePosition{0,0};
+    int                                 pageItems{10};
+    int                                 itemHight{40};
+    int                                 index_{0};
+
+    WeakPtr<Sprite>                     cursor0_{nullptr};
+    WeakPtr<Sprite>                     cursor1_{nullptr};
+
+    Vector2                             cursor0BasePosition{0,0};
+    Vector2                             cursor1BasePosition{0,0};
 
 
 private:

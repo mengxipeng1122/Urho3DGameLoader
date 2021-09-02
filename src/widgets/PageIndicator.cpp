@@ -68,8 +68,7 @@ bool PageIndicator::LoadXML(const XMLElement& source, XMLFile* styleFile)
     bool success = UIElement::LoadXML(source, styleFile);
     ASSERT_CPP(success, "load XML failed ");
     // get bg
-    LOG_INFOS_CPP(" go here ");
-    bg_ = static_cast<Sprite*>(GetChild(String("bg")));
+    bg_   = static_cast<Sprite*>(GetChild(String("bg")));
     ASSERT_CPP(bg_!=nullptr, " can not found bg ");
     text_ = static_cast<Text*>(GetChild(String("text")));
     ASSERT_CPP(text_!=nullptr, " can not found text ");

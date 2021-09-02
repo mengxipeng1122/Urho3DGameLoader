@@ -69,7 +69,6 @@ bool Gamelist::LoadXML(const XMLElement& source, XMLFile* styleFile)
     bool success = UIElement::LoadXML(source, styleFile);
     ASSERT_CPP(success, "load XML failed ");
 
-
     Update();
 
     return success;
