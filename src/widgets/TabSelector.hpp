@@ -69,7 +69,7 @@ protected:
     Vector2         cursorBasePosition{0,0};
     WeakPtr<Sprite> unselectCursor_;
     WeakPtr<Sprite> selectCursor_;
-    Vector<Text*>   tabs_;
+    Vector<WeakPtr<Text>>   tabs_;
 
 
 private:

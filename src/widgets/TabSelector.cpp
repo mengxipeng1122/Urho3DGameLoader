@@ -80,8 +80,8 @@ bool TabSelector::LoadXML(const XMLElement& source, XMLFile* styleFile)
     { 
         if(c->GetType() ==  Text::GetTypeStatic())
         {
-            auto* txt = static_cast<Text*>(c.Get());
-            
+            WeakPtr<Text>  txt { static_cast<Text*>(c.Get())};
+            ASSERT_CPP(txt!=nullptr, " txt is nullptr");
             tabs_.Push(txt);
         }
     }
