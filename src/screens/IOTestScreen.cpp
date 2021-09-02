@@ -8,24 +8,24 @@
 
 using namespace Urho3D;
 
-void IOTestScreen::Enter(Context* context)
+void IOTestScreen::Enter()
 {
-    Screen::Enter(context);
-    auto* uiRoot= context->GetSubsystem<UI>()->GetRoot();
+    Screen::Enter();
+    auto* uiRoot= context_->GetSubsystem<UI>()->GetRoot();
     auto* screen = uiRoot->CreateChild<UIElement>(GetName());
-    auto* cache = context->GetSubsystem<ResourceCache>(); 
+    auto* cache = context_->GetSubsystem<ResourceCache>(); 
     String fileName= ToString("screens/%s.xml", GetName());
     SharedPtr<File> file = cache->GetFile(fileName); 
     screen->LoadXML(*file);
 
 }
 
-void IOTestScreen::Leave(Context* context)
+void IOTestScreen::Leave()
 {
-    Screen::Leave(context);
+    Screen::Leave();
 }
 
-bool IOTestScreen::HandleKeyDown(Context* context, StringHash eventType, VariantMap& eventData)
+bool IOTestScreen::HandleKeyDown(StringHash eventType, VariantMap& eventData)
 {
     return false;
 }

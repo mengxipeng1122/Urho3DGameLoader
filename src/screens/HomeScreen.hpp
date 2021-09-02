@@ -11,10 +11,14 @@ class HomeScreen : public Screen
     private:
         WeakPtr<PageIndicator> pageIndicator_{nullptr};        
         WeakPtr<TabSelector>   mainTab_{nullptr};        
+        
+        void HandleTabChanged(StringHash eventType, VariantMap& eventData);
+
     public:
-        void Enter( Context* context) override;
-        void Leave( Context* context) override;
-        bool HandleKeyDown(Context* context, StringHash eventType, VariantMap& eventData) override;
+        HomeScreen(Context* context):Screen(context){}
+        void Enter() override;
+        void Leave() override;
+        bool HandleKeyDown(StringHash eventType, VariantMap& eventData) override;
         static const char* GetName() {return "Home";}
 };
 

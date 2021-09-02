@@ -5,16 +5,16 @@
 #include <Urho3D/Resource/ResourceCache.h>
 #include "Screen.hpp"
 
-void Screen::Enter( Context* context)
+void Screen::Enter()
 {
-    auto* cache = context->GetSubsystem<ResourceCache>(); 
-    auto* uiRoot= context->GetSubsystem<UI>()->GetRoot();
+    auto* cache = context_->GetSubsystem<ResourceCache>(); 
+    auto* uiRoot= context_->GetSubsystem<UI>()->GetRoot();
     String fileName= ToString("screens/%s.xml", "ScreenBase");
     SharedPtr<File> file = cache->GetFile(fileName); uiRoot->LoadXML(*file);
 }
 
-void Screen::Leave( Context* context) 
+void Screen::Leave()
 {
-    auto* uiRoot= context->GetSubsystem<UI>()->GetRoot();
+    auto* uiRoot= context_->GetSubsystem<UI>()->GetRoot();
     uiRoot->RemoveAllChildren();
 }

@@ -36,6 +36,16 @@ class CheckBox;
 using namespace Urho3D;
 namespace Urho3D
 {
+
+/// Text entry into a LineEdit. The text can be modified in the event data.
+URHO3D_EVENT(E_TABCHANGED, TabChanged)
+{
+    URHO3D_PARAM(P_ELEMENT, Element);              // UIElement pointer
+    URHO3D_PARAM(P_INDEX,   Index);                // String [in/out]
+}
+
+
+
 //=============================================================================
 //=============================================================================
 class TabSelector : public UIElement
@@ -52,7 +62,7 @@ public:
     void SetFocusing(bool b) { focusing_ = b; }
     bool IsFocusing() const { return focusing_; }
 
-    bool HandleKeyDown(Context* context, StringHash eventType, VariantMap& eventData);
+    bool HandleKeyDown(StringHash eventType, VariantMap& eventData);
 
 protected:
     void HandleUpdate(StringHash eventType, VariantMap& eventData);

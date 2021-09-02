@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <Urho3D/UI/UI.h>
+#include <Urho3D/Core/Context.h>
 
 #include "Screen.hpp"
 #include "ScreenBuilder.hpp"
@@ -16,7 +17,7 @@ class ScreenManager
     public:
         using ScreenTypes = std::string;
     protected:
-        static DP::Factory<ScreenTypes, ScreenBuilder, Screen> s_screenFactory; 
+        static DP::Factory<ScreenTypes, ScreenBuilder, Screen, Context*> s_screenFactory; 
         static std::unique_ptr<Screen> s_currentScreen;
     public:
         ScreenManager();
@@ -25,8 +26,9 @@ class ScreenManager
         static void RegistScreen(ScreenTypes& name, ScreenBuilder* builder) { s_screenFactory.AddBuilder(name, builder); }
 
         static void setCurrentScreen(ScreenTypes, Context* context);
+        static void setCurrentScreen(std::unique_ptr<Screen> ptr);
 
-        static bool HandleKeyDown(Context* context, StringHash eventType, VariantMap& eventData) {return s_currentScreen->HandleKeyDown(context, eventType, eventData);};
+        static bool HandleKeyDown(StringHash eventType, VariantMap& eventData) {return s_currentScreen->HandleKeyDown(eventType, eventData);};
 };
 
 

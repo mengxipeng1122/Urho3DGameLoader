@@ -203,6 +203,7 @@ void MainControl::Start()
     SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(MainControl, HandleKeyUp));
     // Subscribe scene update event
     SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(MainControl, HandleSceneUpdate));
+
 }
 
 void MainControl::Stop()
@@ -255,6 +256,7 @@ void MainControl::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
     // Close console (if open) or exit when ESC is pressed
     if (key == KEY_ESCAPE)
     {
+        ScreenManager::setCurrentScreen(nullptr);
         engine_->Exit();
     }
 }
@@ -263,7 +265,7 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
 {
     using namespace KeyDown;
 
-    ScreenManager::HandleKeyDown(context_, eventType, eventData);
+    ScreenManager::HandleKeyDown(eventType, eventData);
 
     int key = eventData[P_KEY].GetInt();
 
@@ -335,3 +337,4 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
 void MainControl::HandleSceneUpdate(StringHash /*eventType*/, VariantMap& eventData)
 {
 }
+

@@ -17,14 +17,14 @@ Templated class for creating  generic factory
 
 namespace DP
 {
-    template<typename EnumType, typename BuilderType, typename ReturnType>
+    template<typename EnumType, typename BuilderType, typename ReturnType, typename ArgType>
     class Factory
     {
     public:
     	~Factory(void);
     	bool AddBuilder(EnumType type, BuilderType* builder);
     	void RemoveBuilder(EnumType type);
-    	ReturnType* Build(EnumType type);
+    	ReturnType* Build(EnumType type, ArgType arg);
     	void ClearBuilders(void);
     private:
     	//! Typedef for my Hash Table of M5GameStages and M5StageBuilder's
@@ -40,8 +40,8 @@ namespace DP
     Destructor makes sure to delete all builders from the factory
     */
     /******************************************************************************/
-    template<typename EnumType, typename BuilderType, typename ReturnType>
-    Factory<EnumType, BuilderType, ReturnType>::~Factory(void)
+    template<typename EnumType, typename BuilderType, typename ReturnType, typename ArgType>
+    Factory<EnumType, BuilderType, ReturnType, ArgType>::~Factory(void)
     {
     	ClearBuilders();
     }
@@ -59,8 +59,8 @@ namespace DP
     true if the insertion was succesful, false otherwise.
     */
     /******************************************************************************/
-    template<typename EnumType, typename BuilderType, typename ReturnType>
-    bool Factory<EnumType, BuilderType, ReturnType>::AddBuilder(EnumType type, BuilderType* pBuilder)
+    template<typename EnumType, typename BuilderType, typename ReturnType, typename ArgType>
+    bool Factory<EnumType, BuilderType, ReturnType, ArgType>::AddBuilder(EnumType type, BuilderType* pBuilder)
     {
     	std::pair<ArcheTypeItor, bool> itor = m_builderMap.insert(std::make_pair(type, pBuilder));
     	return itor.second;
@@ -73,8 +73,8 @@ namespace DP
     The Type of the Enum/Builder to remove.
     */
     /******************************************************************************/
-    template<typename EnumType, typename BuilderType, typename ReturnType>
-    void Factory<EnumType, BuilderType, ReturnType>::RemoveBuilder(EnumType type)
+    template<typename EnumType, typename BuilderType, typename ReturnType, typename ArgType>
+    void Factory<EnumType, BuilderType, ReturnType, ArgType>::RemoveBuilder(EnumType type)
     {
     	typename BuilderMap::iterator itor = m_builderMap.find(type);
     	if (itor == m_builderMap.end())
@@ -98,20 +98,20 @@ namespace DP
     didn't exist.
     */
     /******************************************************************************/
-    template<typename EnumType, typename BuilderType, typename ReturnType>
-    ReturnType* Factory<EnumType, BuilderType, ReturnType>::Build(EnumType type)
+    template<typename EnumType, typename BuilderType, typename ReturnType, typename ArgType >
+    ReturnType* Factory<EnumType, BuilderType, ReturnType, ArgType>::Build(EnumType type, ArgType arg)
     {
     	ArcheTypeItor itor = m_builderMap.find(type);
         ASSERT_CPP(itor != m_builderMap.end()," build ", TypeName<ReturnType>::Get(), "with type", type , "failed ");
-    	return itor->second->Build();
+    	return itor->second->Build(arg);
     }
     /******************************************************************************/
     /*!
     Removes all elements from the factory and deletes the associated builders.
     */
     /******************************************************************************/
-    template<typename EnumType, typename BuilderType, typename ReturnType>
-    void Factory<EnumType, BuilderType, ReturnType>::ClearBuilders(void)
+    template<typename EnumType, typename BuilderType, typename ReturnType, typename ArgType>
+    void Factory<EnumType, BuilderType, ReturnType, ArgType>::ClearBuilders(void)
     {
     	ArcheTypeItor itor = m_builderMap.begin();
     	ArcheTypeItor end = m_builderMap.end();

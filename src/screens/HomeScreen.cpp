@@ -1,5 +1,7 @@
 
 #include <Urho3D/Core/Context.h>
+#include <Urho3D/Core/CoreEvents.h>
+#include <Urho3D/UI/UIEvents.h>
 #include <Urho3D/Core/StringUtils.h>
 #include <Urho3D/UI/Text.h>
 #include <Urho3D/Input/InputEvents.h>
@@ -15,12 +17,12 @@
 
 using namespace Urho3D;
 
-void HomeScreen::Enter(Context* context)
+void HomeScreen::Enter()
 {
-    Screen::Enter(context);
-    auto* uiRoot= context->GetSubsystem<UI>()->GetRoot();
+    Screen::Enter();
+    auto* uiRoot= context_->GetSubsystem<UI>()->GetRoot();
     auto* screen = uiRoot->CreateChild<UIElement>(GetName());
-    auto* cache = context->GetSubsystem<ResourceCache>(); 
+    auto* cache = context_->GetSubsystem<ResourceCache>(); 
     String fileName= ToString("screens/%s.xml", GetName());
     SharedPtr<File> file = cache->GetFile(fileName); 
     screen->LoadXML(*file);
@@ -34,19 +36,23 @@ void HomeScreen::Enter(Context* context)
     mainTab_ = static_cast<TabSelector*>(screen->GetChild(String("Main Tab")));
     ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
 
+    SubscribeToEvent(mainTab_, E_TABCHANGED, URHO3D_HANDLER(HomeScreen, HandleTabChanged));
+
 }
 
-void HomeScreen::Leave(Context* context)
+void HomeScreen::Leave()
 {
-    Screen::Leave(context);
+    LOG_INFOS_CPP(" go here ");
+    UnsubscribeFromEvent(mainTab_, E_TABCHANGED);
+    Screen::Leave();
 }
 
-bool HomeScreen::HandleKeyDown(Context* context, StringHash eventType, VariantMap& eventData)
+bool HomeScreen::HandleKeyDown( StringHash eventType, VariantMap& eventData)
 {
     using namespace KeyDown;
 
     ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
-    bool success = mainTab_->HandleKeyDown(context, eventType, eventData);
+    bool success = mainTab_->HandleKeyDown(eventType, eventData);
     if(success) return true;
 
     int key = eventData[P_KEY].GetInt();
@@ -61,4 +67,9 @@ bool HomeScreen::HandleKeyDown(Context* context, StringHash eventType, VariantMa
         return true;
     }
     return false;
+}
+
+void HomeScreen::HandleTabChanged(StringHash eventType, VariantMap& eventData)
+{
+    LOG_INFOS_CPP(" go here ");
 }

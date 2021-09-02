@@ -135,13 +135,21 @@ void TabSelector::Update()
 
 }
 
-bool TabSelector::HandleKeyDown(Context* context, StringHash eventType, VariantMap& eventData)
+bool TabSelector::HandleKeyDown( StringHash eventType, VariantMap& eventData)
 {
     using namespace KeyDown;
     int key = eventData[P_KEY].GetInt();
     if(key =='a') 
     {
-        if(index_>0) index_--; Update(); return true; 
+        if(index_>0) index_--; 
+
+
+        using namespace TabChanged;
+        VariantMap& eventData = GetEventDataMap();
+        eventData[P_ELEMENT] = this;
+        eventData[P_INDEX] = index_;
+        SendEvent(E_TABCHANGED, eventData);
+        Update(); return true; 
     }
     else if(key == 'd')
     {
