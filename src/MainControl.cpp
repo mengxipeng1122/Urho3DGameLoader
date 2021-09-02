@@ -50,6 +50,7 @@
 #include "MainControl.hpp"
 
 #include "widgets/PageIndicator.hpp"
+#include "widgets/Gamelist.hpp"
 #include "widgets/TabSelector.hpp"
 #include "screens/ScreenManager.hpp"
 #include "screens/HomeScreen.hpp"
@@ -96,6 +97,7 @@ void MainControl::RegisterScreens()
 
 void MainControl::RegisterWidgets()
 {
+    Gamelist     ::RegisterObject(context_);
     PageIndicator::RegisterObject(context_);
     TabSelector  ::RegisterObject(context_);
 }

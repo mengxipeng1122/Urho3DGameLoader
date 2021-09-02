@@ -12,6 +12,7 @@
 #include <Urho3D/Resource/Localization.h>
 
 #include "../widgets/PageIndicator.hpp"
+#include "../widgets/Gamelist.hpp"
 #include "../widgets/TabSelector.hpp"
 #include "HomeScreen.hpp"
 
@@ -37,6 +38,10 @@ void HomeScreen::Enter()
     ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
 
     SubscribeToEvent(mainTab_, E_TABCHANGED, URHO3D_HANDLER(HomeScreen, HandleTabChanged));
+
+    auto* gamelist_ = screen->GetChildStaticCast<Gamelist>(String("Gamelist"));
+    ASSERT_CPP(gamelist_!=nullptr, " can not found Gamelist");
+
 
 }
 
