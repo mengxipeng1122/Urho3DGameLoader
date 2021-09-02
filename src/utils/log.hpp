@@ -2,6 +2,7 @@
 #pragma once 
 
 #include <iostream>
+#include "date.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,14 +34,19 @@ void _log(T t, Args... args); // recursive variadic function
 
 #define LOG_INFOS_CPP(T,args...)                                                            \
 do{                                                                                         \
+    using namespace date;                                                                   \
     std::cout << "[" << std::string(__FILE__) << ":" << std::to_string(__LINE__);           \
-    std::cout << "@" << std::string(__FUNCTION__) << "]";                                   \
+    std::cout << "@" << std::string(__FUNCTION__) << "@";                                   \
+    std::cout << "@" << std::string(__FUNCTION__) << "@";                                   \
+    std::cout << std::chrono::system_clock::now() << "]";                                   \
     _log(T, ##args );                                                                       \
 }while(0)
 
 #define LOG_ERRS_CPP(T,args...)                                                             \
 do{                                                                                         \
+    using namespace date;                                                                   \
     std::cerr << "[" << std::string(__FILE__) << ":" << std::to_string(__LINE__);           \
+    std::cout << "@" << std::chrono::system_clock::now();                                   \
     std::cerr << "@" << std::string(__FUNCTION__);                                          \
     std::cerr << ":" << errno;                                                              \
     std::cerr << ":" << strerror(errno) << "]";                                             \
