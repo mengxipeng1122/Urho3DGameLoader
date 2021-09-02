@@ -93,7 +93,7 @@
 			<element type="Sprite" style="Sprite">
 				<attribute name="Position" value="4 0" />
 			    <attribute name="Name" value="thumb0" />
-				<attribute name="Size" value="80 50" />
+				<attribute name="Size" value="80 33" />
 				<attribute name="Texture" value="Texture2D;res/main_list_icon_default.png" />
 				<attribute name="Image Rect" value="0 0 80 50" />
 				<attribute name="Blend Mode" value="alpha" />
@@ -101,7 +101,7 @@
 			<element type="Sprite" style="Sprite">
 				<attribute name="Position" value="4 35" />
 			    <attribute name="Name" value="thumb1" />
-				<attribute name="Size" value="80 50" />
+				<attribute name="Size" value="80 33" />
 				<attribute name="Texture" value="Texture2D;res/main_list_icon_default.png" />
 				<attribute name="Image Rect" value="0 0 80 50" />
 				<attribute name="Blend Mode" value="alpha" />
@@ -109,7 +109,7 @@
 			<element type="Sprite" style="Sprite">
 				<attribute name="Position" value="4 70" />
 			    <attribute name="Name" value="thumb2" />
-				<attribute name="Size" value="80 50" />
+				<attribute name="Size" value="80 33" />
 				<attribute name="Texture" value="Texture2D;res/main_list_icon_default.png" />
 				<attribute name="Image Rect" value="0 0 80 50" />
 				<attribute name="Blend Mode" value="alpha" />
@@ -117,7 +117,7 @@
 			<element type="Sprite" style="Sprite">
 				<attribute name="Position" value="4 105" />
 			    <attribute name="Name" value="thumb3" />
-				<attribute name="Size" value="80 50" />
+				<attribute name="Size" value="80 33" />
 				<attribute name="Texture" value="Texture2D;res/main_list_icon_default.png" />
 				<attribute name="Image Rect" value="0 0 80 50" />
 				<attribute name="Blend Mode" value="alpha" />
@@ -125,7 +125,7 @@
 			<element type="Sprite" style="Sprite">
 				<attribute name="Position" value="4 140" />
 			    <attribute name="Name" value="thumb4" />
-				<attribute name="Size" value="80 50" />
+				<attribute name="Size" value="80 33" />
 				<attribute name="Texture" value="Texture2D;res/main_list_icon_default.png" />
 				<attribute name="Image Rect" value="0 0 80 50" />
 				<attribute name="Blend Mode" value="alpha" />
@@ -133,7 +133,7 @@
 			<element type="Sprite" style="Sprite">
 				<attribute name="Position" value="4 175" />
 			    <attribute name="Name" value="thumb5" />
-				<attribute name="Size" value="80 50" />
+				<attribute name="Size" value="80 33" />
 				<attribute name="Texture" value="Texture2D;res/main_list_icon_default.png" />
 				<attribute name="Image Rect" value="0 0 80 50" />
 				<attribute name="Blend Mode" value="alpha" />
@@ -141,7 +141,7 @@
 			<element type="Sprite" style="Sprite">
 				<attribute name="Position" value="4 210" />
 			    <attribute name="Name" value="thumb6" />
-				<attribute name="Size" value="80 50" />
+				<attribute name="Size" value="80 33" />
 				<attribute name="Texture" value="Texture2D;res/main_list_icon_default.png" />
 				<attribute name="Image Rect" value="0 0 80 50" />
 				<attribute name="Blend Mode" value="alpha" />
@@ -149,7 +149,7 @@
 			<element type="Sprite" style="Sprite">
 				<attribute name="Position" value="4 245" />
 			    <attribute name="Name" value="thumb7" />
-				<attribute name="Size" value="80 50" />
+				<attribute name="Size" value="80 33" />
 				<attribute name="Texture" value="Texture2D;res/main_list_icon_default.png" />
 				<attribute name="Image Rect" value="0 0 80 50" />
 				<attribute name="Blend Mode" value="alpha" />
@@ -157,7 +157,7 @@
 			<element type="Sprite" style="Sprite">
 				<attribute name="Position" value="4 280" />
 			    <attribute name="Name" value="thumb8" />
-				<attribute name="Size" value="80 50" />
+				<attribute name="Size" value="80 33" />
 				<attribute name="Texture" value="Texture2D;res/main_list_icon_default.png" />
 				<attribute name="Image Rect" value="0 0 80 50" />
 				<attribute name="Blend Mode" value="alpha" />
@@ -165,7 +165,7 @@
 			<element type="Sprite" style="Sprite">
 				<attribute name="Position" value="4 315" />
 			    <attribute name="Name" value="thumb9" />
-				<attribute name="Size" value="80 50" />
+				<attribute name="Size" value="80 33" />
 				<attribute name="Texture" value="Texture2D;res/main_list_icon_default.png" />
 				<attribute name="Image Rect" value="0 0 80 50" />
 				<attribute name="Blend Mode" value="alpha" />
@@ -240,6 +240,102 @@
 				<attribute name="Image Rect" value="0 0 467 33" />
 				<attribute name="Blend Mode" value="alpha" />
 			</element>
+			<element type="Sprite" style="Sprite">
+				<attribute name="Name" value="cursor0" />
+				<attribute name="Position" value="100 0" />
+				<attribute name="Size" value="467 33" />
+				<attribute name="Texture" value="Texture2D;res/list_item_bg_sel.png" />
+				<attribute name="Image Rect" value="0 0 467 33" />
+				<attribute name="Blend Mode" value="alpha" />
+			</element>
+			<element type="Sprite" style="Sprite">
+				<attribute name="Name" value="cursor1" />
+				<attribute name="Position" value="0 0" />
+				<attribute name="Size" value="4 33" />
+				<attribute name="Texture" value="Texture2D;res/main_list_mark_sel.png" />
+				<attribute name="Image Rect" value="0 0 4 33" />
+				<attribute name="Blend Mode" value="alpha" />
+			</element>
+            <element type="Text">
+                <attribute name="Position" value="120 0" />
+                <attribute name="Name" value="name0" />
+                <attribute name="Pivot" value="0 0" />
+                <attribute name="Text" value="game 0" />
+                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+                <attribute name="Font Size" value="12" />
+            </element>
+            <element type="Text">
+                <attribute name="Position" value="120 35" />
+                <attribute name="Name" value="name0" />
+                <attribute name="Pivot" value="0 0" />
+                <attribute name="Text" value="game 1" />
+                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+                <attribute name="Font Size" value="12" />
+            </element>
+            <element type="Text">
+                <attribute name="Position" value="120 70" />
+                <attribute name="Name" value="name0" />
+                <attribute name="Pivot" value="0 0" />
+                <attribute name="Text" value="game 2" />
+                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+                <attribute name="Font Size" value="12" />
+            </element>
+            <element type="Text">
+                <attribute name="Position" value="120 105" />
+                <attribute name="Name" value="name0" />
+                <attribute name="Pivot" value="0 0" />
+                <attribute name="Text" value="game 3" />
+                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+                <attribute name="Font Size" value="12" />
+            </element>
+            <element type="Text">
+                <attribute name="Position" value="120 140" />
+                <attribute name="Name" value="name0" />
+                <attribute name="Pivot" value="0 0" />
+                <attribute name="Text" value="game 4" />
+                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+                <attribute name="Font Size" value="12" />
+            </element>
+            <element type="Text">
+                <attribute name="Position" value="120 175" />
+                <attribute name="Name" value="name0" />
+                <attribute name="Pivot" value="0 0" />
+                <attribute name="Text" value="game 5" />
+                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+                <attribute name="Font Size" value="12" />
+            </element>
+            <element type="Text">
+                <attribute name="Position" value="120 210" />
+                <attribute name="Name" value="name0" />
+                <attribute name="Pivot" value="0 0" />
+                <attribute name="Text" value="game 6" />
+                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+                <attribute name="Font Size" value="12" />
+            </element>
+            <element type="Text">
+                <attribute name="Position" value="120 245" />
+                <attribute name="Name" value="name0" />
+                <attribute name="Pivot" value="0 0" />
+                <attribute name="Text" value="game 7" />
+                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+                <attribute name="Font Size" value="12" />
+            </element>
+            <element type="Text">
+                <attribute name="Position" value="120 280" />
+                <attribute name="Name" value="name0" />
+                <attribute name="Pivot" value="0 0" />
+                <attribute name="Text" value="game 8" />
+                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+                <attribute name="Font Size" value="12" />
+            </element>
+            <element type="Text">
+                <attribute name="Position" value="120 315" />
+                <attribute name="Name" value="name0" />
+                <attribute name="Pivot" value="0 0" />
+                <attribute name="Text" value="game 9" />
+                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+                <attribute name="Font Size" value="12" />
+            </element>
 		</element>
 		<element type="TabSelector">
             <attribute name="Position" value="0  120" />
