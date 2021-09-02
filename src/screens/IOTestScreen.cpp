@@ -24,3 +24,9 @@ void IOTestScreen::Leave(Context* context)
 {
     Screen::Leave(context);
 }
+
+bool IOTestScreen::HandleKeyDown(Context* context, StringHash eventType, VariantMap& eventData)
+{
+    return false;
+}
+

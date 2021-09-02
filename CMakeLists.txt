@@ -46,6 +46,7 @@ get_target_property(TARGET_INCLUDES ${TARGET_NAME} INCLUDE_DIRECTORIES)
 list(REMOVE_ITEM TARGET_INCLUDES "/usr/local/include")
 list(APPEND TARGET_INCLUDES "/usr/local/include" )
 set_target_properties(${TARGET_NAME}  PROPERTIES INCLUDE_DIRECTORIES "${TARGET_INCLUDES}")
+target_compile_features(${TARGET_NAME} PRIVATE cxx_std_17)
 
 
 add_subdirectory(Samples/61_UITest)

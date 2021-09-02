@@ -25,6 +25,8 @@ class ScreenManager
         static void RegistScreen(ScreenTypes& name, ScreenBuilder* builder) { s_screenFactory.AddBuilder(name, builder); }
 
         static void setCurrentScreen(ScreenTypes, Context* context);
+
+        static bool HandleKeyDown(Context* context, StringHash eventType, VariantMap& eventData) {return s_currentScreen->HandleKeyDown(context, eventType, eventData);};
 };
 
 

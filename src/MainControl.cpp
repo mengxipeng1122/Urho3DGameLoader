@@ -256,9 +256,11 @@ void MainControl::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
     }
 }
 
-void MainControl::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
+void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
 {
     using namespace KeyDown;
+
+    ScreenManager::HandleKeyDown(context_, eventType, eventData);
 
     int key = eventData[P_KEY].GetInt();
 
@@ -313,7 +315,6 @@ void MainControl::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
             File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); uiRoot_->SaveXML(saveFile);
             LOG_INFOS_CPP(" save to /tmp/tt.xml");
         }
-
 
         // Take screenshot
         else if (key == '9')

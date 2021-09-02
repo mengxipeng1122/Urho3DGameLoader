@@ -37,6 +37,7 @@
 
 #include "PageIndicator.hpp"
 #include "../utils/log.hpp"
+#include "../utils/string.hpp"
 
 namespace Urho3D
 {
@@ -63,11 +64,18 @@ void PageIndicator::Quit()
     UnsubscribeFromEvent(E_UPDATE);
 }
 
-bool PageIndicator::LoadXML(Deserializer& source)
+bool PageIndicator::LoadXML(const XMLElement& source, XMLFile* styleFile)
 {
-    bool success = UIElement::LoadXML(source);
+    bool success = UIElement::LoadXML(source, styleFile);
     ASSERT_CPP(success, "load XML failed ");
     // get bg
+    LOG_INFOS_CPP(" go here ");
+    bg_ = static_cast<Sprite*>(GetChild(String("bg")));
+    ASSERT_CPP(bg_!=nullptr, " can not found bg ");
+    text_ = static_cast<Text*>(GetChild(String("text")));
+    ASSERT_CPP(text_!=nullptr, " can not found text ");
+    SetText();
+
     return success;
 }
 
@@ -81,7 +89,8 @@ void PageIndicator::SetText()
 {
     ASSERT_CPP(text_!=nullptr, " can not get text");
     LOG_INFOS_CPP(" go here ");
-    text_->SetText(ToString("%d/%d", curPageNo_, totalPageNo_));
+    std::string s = string_format("%03d/%04d",curPageNo_, totalPageNo_);
+    text_->SetText(ToString(s.c_str()));
 }
 
 

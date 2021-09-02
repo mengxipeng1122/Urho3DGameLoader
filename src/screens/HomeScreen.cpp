@@ -2,6 +2,7 @@
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Core/StringUtils.h>
 #include <Urho3D/UI/Text.h>
+#include <Urho3D/Input/InputEvents.h>
 #include <Urho3D/UI/Font.h>
 #include <Urho3D/UI/Sprite.h>
 #include <Urho3D/Graphics/Texture2D.h>
@@ -26,23 +27,29 @@ void HomeScreen::Enter(Context* context)
     auto* tipHome = screen->GetChild(String("tipHome"));
     ASSERT_CPP(tipHome!=nullptr, " can not found tipHome ");
 
-//    auto* pageIndicator = screen->CreateChild<PageIndicator>("pageIndicator");
-
-    auto* pageIndicator = static_cast<PageIndicator*>(screen->GetChild(String("pageIndicator")));
-    for(auto& c : screen->GetChildren())
-    {
-        LOG_INFOS_CPP(" c ", c->GetName().CString());
-    }
-  //auto* pageIndicator = screen->GetChild(String("pageIndicator"));
-  ASSERT_CPP(pageIndicator!=nullptr, " can not found pageIndicator ");
-
-   pageIndicator->Update();
-
-
+    pageIndicator_ = static_cast<PageIndicator*>(screen->GetChild(String("pageIndicator")));
+    ASSERT_CPP(pageIndicator_!=nullptr, " can not found pageIndicator ");
 
 }
 
 void HomeScreen::Leave(Context* context)
 {
     Screen::Leave(context);
+}
+
+bool HomeScreen::HandleKeyDown(Context* context, StringHash eventType, VariantMap& eventData)
+{
+    using namespace KeyDown;
+    int key = eventData[P_KEY].GetInt();
+    if(key =='2')
+    {
+        static auto page = 100;
+        static auto tpage = 100;
+        ASSERT_CPP(pageIndicator_!=nullptr, " can not found pageIndicator ");
+        pageIndicator_->SetPage(page, tpage);
+        page+=1;
+        tpage+=100;
+        return true;
+    }
+    return false;
 }

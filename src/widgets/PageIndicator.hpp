@@ -44,8 +44,7 @@ public:
     explicit PageIndicator(Context *context);
     virtual ~PageIndicator()override=default;
 
-    void SetCurPageNo  (int n) noexcept { curPageNo_ = n ; }
-    void SetTotalPageNo(int n) noexcept { totalPageNo_ = n ; }
+    void SetPage(int c, int t ) noexcept { curPageNo_ = c ; totalPageNo_ = t; SetText();  }
 
     void Update();
 
@@ -59,7 +58,7 @@ protected:
     void SetText();
 
 private:
-    bool LoadXML(Deserializer& source);
+    bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
 
 protected:
     WeakPtr<Sprite>      bg_{nullptr};

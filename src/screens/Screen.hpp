@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 #include <Urho3D/Core/Context.h>
-#include "ScreenManager.hpp"
 
 using namespace Urho3D;
 
@@ -15,5 +14,6 @@ class Screen
         virtual ~Screen()=default;
         virtual void Enter( Context* context) ;
         virtual void Leave( Context* context) ;
+        virtual bool HandleKeyDown(Context* context, StringHash eventType, VariantMap& eventData)=0;
 };
 
