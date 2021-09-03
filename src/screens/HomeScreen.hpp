@@ -16,6 +16,8 @@ class HomeScreen : public Screen
         
         void HandleTabChanged(StringHash eventType, VariantMap& eventData);
 
+        void SetGamelist();
+
     public:
         HomeScreen(Context* context):Screen(context){}
         void Enter() override;

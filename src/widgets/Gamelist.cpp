@@ -33,6 +33,7 @@
 #include <Urho3D/UI/Button.h>
 #include <Urho3D/UI/Font.h>
 #include <Urho3D/UI/Text.h>
+#include <Urho3D/IO/FileSystem.h>
 #include <Urho3D/Core/StringUtils.h>
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Resource/XMLElement.h>
@@ -69,6 +70,16 @@ bool Gamelist::LoadXML(const XMLElement& source, XMLFile* styleFile)
     bool success = UIElement::LoadXML(source, styleFile);
     ASSERT_CPP(success, "load XML failed ");
 
+    // 
+    UIItems_.Clear();
+    for(auto&& c : GetChildren())
+    {
+        WeakPtr<UIElement>  item { static_cast<UIElement*>(c.Get())};
+        ASSERT_CPP(item!=nullptr, " element is nullptr");
+        UIItems_.Push(item);
+    }
+    ASSERT_CPP(UIItems_.Size()==pageItems_, "page Items ", UIItems_.Size(), "/", pageItems_);
+
     Update();
 
     return success;
@@ -76,6 +87,45 @@ bool Gamelist::LoadXML(const XMLElement& source, XMLFile* styleFile)
 
 void Gamelist::Update()
 {
+    // set all UIItems_;
+    for(auto& item : UIItems_) {item->SetVisible(false);}
+    auto totalGames = games_.size();
+    LOG_INFOS_CPP(" t ", index_, totalGames, pageItems_ );
+    for(auto t=index_; t<totalGames && t<index_+pageItems_ ; t++)
+    {
+        LOG_INFOS_CPP(" t ", t );
+        auto itemIndex = t-index_; 
+        ASSERT_CPP(itemIndex < UIItems_.Size(), "itemIndex is not correct", itemIndex, UIItems_.Size());
+        UIItems_[itemIndex]->SetVisible(true);
+        auto thumbnailPath = games_[t]->thumbnailPath_;
+        auto name          = games_[t]->name_;
+        {
+            auto sprite  = UIItems_[itemIndex]->GetChildStaticCast<Sprite>(String("Thumbnail"));
+            ASSERT_CPP(sprite!=nullptr, "can not find Thumbnail ");
+            if(context_->GetSubsystem<FileSystem>()->FileExists(thumbnailPath))
+            {
+                // load texture and set  
+                File file(context_, thumbnailPath);
+                auto texture = new Texture2D(context_);
+                auto success = texture->Load(file);
+                ASSERT_CPP(success, " load texture2D failed ", thumbnailPath.CString());
+                sprite->SetTexture(texture);
+                auto width = texture->GetWidth();
+                auto height= texture->GetHeight();
+                LOG_INFOS_CPP(width, height);
+
+
+                IntRect imageRect(0, 0, width, height);
+                sprite->SetImageRect(imageRect);
+                //sprite->SetSize(width, height);
+                
+            }
+        }
+        {
+            auto s = string_format("%04d %s", t+1, name.CString());
+            UIItems_[itemIndex]->GetChildStaticCast<Text>(String("name"))->SetText(ToString(s.c_str()));
+        }
+    }
 
 }
 
@@ -84,5 +134,12 @@ bool Gamelist::HandleKeyDown( StringHash eventType, VariantMap& eventData)
     using namespace KeyDown;
     return false;
 }
+
+void Gamelist::addItem(const Item& item)
+{
+    auto newItem = std::make_unique<Item>(item);
+    games_.push_back(std::move(newItem));
+}
+
 
 }

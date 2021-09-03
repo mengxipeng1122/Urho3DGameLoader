@@ -10,6 +10,7 @@
 #include <Urho3D/Graphics/Texture2D.h>
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Resource/Localization.h>
+#include <Urho3D/Resource/JSONFile.h>
 
 #include "../widgets/PageIndicator.hpp"
 #include "../widgets/Gamelist.hpp"
@@ -40,6 +41,8 @@ void HomeScreen::Enter()
 
     gamelist_ = screen->GetChildStaticCast<Gamelist>(String("Gamelist"));
     ASSERT_CPP(gamelist_!=nullptr, " can not found Gamelist");
+
+    SetGamelist();
 
 
 }
@@ -77,3 +80,22 @@ void HomeScreen::HandleTabChanged(StringHash eventType, VariantMap& eventData)
 {
     LOG_INFOS_CPP(" go here ");
 }
+
+void HomeScreen::SetGamelist()
+{
+
+    auto* cache = context_->GetSubsystem<ResourceCache>(); 
+    auto* jgamelist = cache->GetResource<JSONFile>("gamelist1.json");
+    auto  gamelist = jgamelist->GetRoot().GetArray();
+    Gamelist::Item item;
+    for(auto& game : gamelist)
+    {
+        auto thumbnailPath = game.Get("thumbnailPath").GetString();
+        auto name = game.Get("name").GetString();
+        item.thumbnailPath_ = thumbnailPath;
+        item.name_ = name;
+        gamelist_->addItem(item);
+    }
+    gamelist_->Update();
+}
+

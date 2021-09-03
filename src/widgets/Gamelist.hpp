@@ -58,23 +58,29 @@ public:
     explicit Gamelist(Context *context);
     virtual ~Gamelist()override=default;
 
-    void Update();
 
     bool HandleKeyDown(StringHash eventType, VariantMap& eventData);
 
-protected:
+public:
     struct Item
     {
-        String thumbPath_;
+        String thumbnailPath_;
         String name_;
         bool   marked;
     };
+    void addItem(const Item& item);
+    void Update();
 
+
+protected:
     std::vector<std::unique_ptr<Item>>  games_;
 
-    int                                 pageItems{10};
-    int                                 itemHight{40};
+    int                                 pageItems_{10};
+    int                                 itemHight_{40};
     int                                 index_{0};
+
+    Vector<WeakPtr<UIElement>>          UIItems_; // this vector store all UI items for display one game 
+
 
     WeakPtr<Sprite>                     cursor0_{nullptr};
     WeakPtr<Sprite>                     cursor1_{nullptr};
