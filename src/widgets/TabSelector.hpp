@@ -25,6 +25,7 @@
 #include <Urho3D/UI/Window.h>
 
 #include "../utils/log.hpp"
+#include "../InputSystem.hpp"
 
 namespace Urho3D
 {
@@ -62,7 +63,7 @@ public:
     void SetFocusing(bool b) { focusing_ = b; }
     bool IsFocusing() const { return focusing_; }
 
-    bool HandleKeyDown(StringHash eventType, VariantMap& eventData);
+    bool HandleKeyDown(InputKey key);
 
 protected:
     void HandleUpdate(StringHash eventType, VariantMap& eventData);

@@ -25,7 +25,7 @@ void IOTestScreen::Leave()
     Screen::Leave();
 }
 
-bool IOTestScreen::HandleKeyDown(StringHash eventType, VariantMap& eventData)
+bool IOTestScreen::HandleKeyDown(InputKey)
 {
     return false;
 }

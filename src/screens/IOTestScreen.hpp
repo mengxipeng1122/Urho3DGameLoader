@@ -12,7 +12,7 @@ class IOTestScreen : public Screen
         IOTestScreen(Context* context):Screen(context){}
         void Enter() override;
         void Leave() override;
-        bool HandleKeyDown(StringHash eventType, VariantMap& eventData) override;
+        bool HandleKeyDown(InputKey key) override;
         static const char* GetName() {return "IOTest";}
 };
 

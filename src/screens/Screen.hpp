@@ -6,6 +6,7 @@
 #include <Urho3D/Core/Object.h>
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/UI/UIElement.h>
+#include "../InputSystem.hpp"
 
 using namespace Urho3D;
 
@@ -17,6 +18,6 @@ class Screen : public UIElement
         virtual ~Screen()=default;
         virtual void Enter() ;
         virtual void Leave() ;
-        virtual bool HandleKeyDown(StringHash eventType, VariantMap& eventData)=0;
+        virtual bool HandleKeyDown(InputKey key)=0;
 };
 

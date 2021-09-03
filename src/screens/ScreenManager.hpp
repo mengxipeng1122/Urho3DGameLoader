@@ -9,6 +9,7 @@
 #include "Screen.hpp"
 #include "ScreenBuilder.hpp"
 #include "../DP/Factory.hpp"
+#include "../InputSystem.hpp"
 
 using namespace Urho3D;
 
@@ -28,7 +29,7 @@ class ScreenManager
         static void setCurrentScreen(ScreenTypes, Context* context);
         static void setCurrentScreen(std::unique_ptr<Screen> ptr);
 
-        static bool HandleKeyDown(StringHash eventType, VariantMap& eventData) {return s_currentScreen->HandleKeyDown(eventType, eventData);};
+        static bool HandleKeyDown(InputKey key) {return s_currentScreen->HandleKeyDown(key);};
 };
 
 

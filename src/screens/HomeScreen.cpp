@@ -54,25 +54,14 @@ void HomeScreen::Leave()
     Screen::Leave();
 }
 
-bool HomeScreen::HandleKeyDown( StringHash eventType, VariantMap& eventData)
+bool HomeScreen::HandleKeyDown( InputKey key)
 {
     using namespace KeyDown;
 
     ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
-    bool success = mainTab_->HandleKeyDown(eventType, eventData);
+    bool success = mainTab_->HandleKeyDown(key);
     if(success) return true;
 
-    int key = eventData[P_KEY].GetInt();
-    if(key =='2')
-    {
-        static auto page = 100;
-        static auto tpage = 100;
-        ASSERT_CPP(pageIndicator_!=nullptr, " can not found pageIndicator ");
-        pageIndicator_->SetPage(page, tpage);
-        page+=1;
-        tpage+=100;
-        return true;
-    }
     return false;
 }
 

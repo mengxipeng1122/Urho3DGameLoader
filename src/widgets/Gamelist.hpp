@@ -26,6 +26,7 @@
 #include <Urho3D/UI/Window.h>
 
 #include "../utils/log.hpp"
+#include "../InputSystem.hpp"
 
 namespace Urho3D
 {
@@ -59,7 +60,7 @@ public:
     virtual ~Gamelist()override=default;
 
 
-    bool HandleKeyDown(StringHash eventType, VariantMap& eventData);
+    bool HandleKeyDown(InputKey key);
 
 public:
     struct Item

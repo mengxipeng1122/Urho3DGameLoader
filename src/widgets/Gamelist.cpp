@@ -42,6 +42,7 @@
 #include "Gamelist.hpp"
 #include "../utils/log.hpp"
 #include "../utils/string.hpp"
+#include "../InputSystem.hpp"
 
 namespace Urho3D
 {
@@ -129,9 +130,8 @@ void Gamelist::Update()
 
 }
 
-bool Gamelist::HandleKeyDown( StringHash eventType, VariantMap& eventData)
+bool Gamelist::HandleKeyDown(InputKey key)
 {
-    using namespace KeyDown;
     return false;
 }
 

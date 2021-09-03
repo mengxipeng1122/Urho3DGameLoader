@@ -55,6 +55,7 @@
 #include "screens/ScreenManager.hpp"
 #include "screens/HomeScreen.hpp"
 #include "screens/IOTestScreen.hpp"
+#include "InputSystem.hpp"
 
 URHO3D_DEFINE_APPLICATION_MAIN(MainControl)
 
@@ -161,40 +162,13 @@ void MainControl::Start()
     }
 
 
-
     // Load XML file containing default UI style sheet
     auto* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
 
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
 
-
     ScreenManager::setCurrentScreen(HomeScreen::GetName(), context_);
-
-    if(0)
-    {
-        SharedPtr<File> file = cache->GetFile("screens/home.xml"); uiRoot_->LoadXML(*file);
-
-        if(0)
-        {
-            auto sprite = new Sprite(context_);
-            auto texture = cache->GetResource<Texture2D>("res/logo.png");
-            sprite->SetSize(texture->GetWidth(), texture->GetHeight());
-            sprite->SetPosition(391, 0);
-            sprite->SetBlendMode(BLEND_ALPHA);
-            sprite->SetTexture(texture); // Set texture
-            uiRoot_->AddChild(sprite);
-        }
-
-        File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); uiRoot_->SaveXML(saveFile);
-    }
-    else
-    {
-       // CreateUIControls();
-       //File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); uiRoot_->SaveXML(saveFile);
-    }
-
-
 
     // Create console and debug HUD
     //CreateConsoleAndDebugHud();
@@ -267,7 +241,13 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
 {
     using namespace KeyDown;
 
-    ScreenManager::HandleKeyDown(eventType, eventData);
+    InputKey inputKey;
+        LOG_INFOS_CPP(" inputKey ", (int)inputKey);
+    if(HasInputKey(eventData, inputKey))
+    {
+        LOG_INFOS_CPP(" inputKey ", (int)inputKey);
+        ScreenManager::HandleKeyDown(inputKey);
+    }
 
     int key = eventData[P_KEY].GetInt();
 
