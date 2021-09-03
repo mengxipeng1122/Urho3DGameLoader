@@ -382,71 +382,23 @@
 			</element>
 		</element>
 		<element type="TabSelector">
-            <attribute name="Position" value="0  120" />
+            <attribute name="Position" value="0  105" />
 			<attribute name="Name" value="Main Tab" />
 			<attribute name="Pivot" value="0 0" />
-            <attribute name="Tab Gap" value="100" />
-            <attribute name="Select Color" value="1 0 0 1" />
-            <attribute name="UnSelect Color" value="0 0 1 1" />
-	        <element type="Sprite">
-	        	<attribute name="Position" value="0 0" />
-	        	<attribute name="Size" value="1280 72" />
-	        	<attribute name="Texture" value="Texture2D;res/main_tab_bg.png" />
-	        	<attribute name="Image Rect" value="0 0 1280 72" />
-	        	<attribute name="Blend Mode" value="alpha" />
-	        </element>
-            <element type="Sprite">
-                <attribute name="Name" value="unselect_cursor" />
-                <attribute name="Position" value=" 0 20" />
-                <attribute name="Size" value="180 41" />
-                <attribute name="Texture" value="Texture2D;res/main_tab.png" />
-                <attribute name="Image Rect" value="0 0 180 41" />
-                <attribute name="Blend Mode" value="alpha" />
-            </element>
-            <element type="Sprite">
-                <attribute name="Name" value="select_cursor" />
-                <attribute name="Position" value=" 0 20" />
-                <attribute name="Size" value="180 41" />
-                <attribute name="Texture" value="Texture2D;res/main_tab_sel.png" />
-                <attribute name="Image Rect" value="0 0 180 41" />
-                <attribute name="Blend Mode" value="alpha" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value=" 30 25" />
-                <attribute name="Name" value="tab0" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Text" value="GAME" />
-                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-                <attribute name="Font Size" value="12" />
-                <attribute name="Auto Localizable" value="true" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value=" 230 25" />
-                <attribute name="Name" value="tab1" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Text" value="RECENT" />
-                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-                <attribute name="Font Size" value="12" />
-                <attribute name="Auto Localizable" value="true" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value=" 430 25" />
-                <attribute name="Name" value="tab2" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Text" value="FAVORATE" />
-                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-                <attribute name="Font Size" value="12" />
-                <attribute name="Auto Localizable" value="true" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value=" 630 25" />
-                <attribute name="Name" value="tab3" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Text" value="SEARCH" />
-                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-                <attribute name="Font Size" value="12" />
-                <attribute name="Auto Localizable" value="true" />
-            </element>
+            <attribute name="Text Auto Localization" value="true" />
+            <attribute name="Background Texture" value="Texture2D;res/main_tab_bg.png" />
+            <attribute name="Unselect Cursor Texture" value="Texture2D;res/main_tab.png" />
+            <attribute name="Select Cursor Texture" value="Texture2D;res/main_tab_sel.png" />
+            <attribute name="Cursor Base Position" value=" 70 15" />
+			<attribute name="Texts">
+				<variant type="String" value="GAME" />
+				<variant type="String" value="RECENT" />
+				<variant type="String" value="FAVORITE" />
+				<variant type="String" value="SEARCH" />
+			</attribute>
+			<attribute name="Select Color" value="0 0 0 1" />
+			<attribute name="UnSelect Color" value="1 1 1 1" />
+			<attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
 		</element>
         <element type="PageIndicator">
             <attribute name="Position" value="169 600" />

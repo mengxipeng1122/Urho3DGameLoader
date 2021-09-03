@@ -23,6 +23,8 @@
 //
 #pragma once
 #include <Urho3D/UI/Window.h>
+#include <Urho3D/UI/Font.h>
+#include <Urho3D/UI/Text.h>
 
 #include "../utils/log.hpp"
 #include "../InputSystem.hpp"
@@ -60,26 +62,52 @@ public:
 
     void Update();
 
-    void SetFocusing(bool b) { focusing_ = b; }
-    bool IsFocusing() const { return focusing_; }
-
     bool HandleKeyDown(InputKey key);
 
 protected:
     void HandleUpdate(StringHash eventType, VariantMap& eventData);
-    void Create(Context* context);
+    void CreateChildren();
     void Quit();
 
 
-    int             tabGap_{40};
-    Color           selectColor_{0,0,0,1};
-    Color           unselectColor_{1,1,1,1};
+public:
+    void SetBackgroundTextureAttr(const ResourceRef& value) { backgroundTexture_ = value.name_ ; }
+    ResourceRef GetBackgroundTextureAttr() const { return ResourceRef(Texture2D::GetTypeStatic(), backgroundTexture_ ); }
 
-    int             index_{0};
-    bool            focusing_{false}; 
-    Vector2         cursorBasePosition{0,0};
-    WeakPtr<Sprite> unselectCursor_;
-    WeakPtr<Sprite> selectCursor_;
+    void SetTextsAttr(const VariantVector& value) {
+        texts_.Clear();
+        if (!value.Size()) return ;
+         for (VariantVector::ConstIterator i = value.Begin(); i != value.End(); ++i)
+         {
+             auto text = i->GetString();
+             texts_.Push(text);
+         }
+        }
+    VariantVector GetTextsAttr() const { VariantVector value; for (auto& text : texts_) { value.Push(text); } return value;  }
+
+    void SetSelectCursorTextureAttr(const ResourceRef& value) { selectCursorTexture_ = value.name_ ; }
+    ResourceRef GetSelectCursorTextureAttr() const { return ResourceRef(Texture2D::GetTypeStatic(), selectCursorTexture_ ); }
+
+    void SetUnselectCursorTextureAttr(const ResourceRef& value) { unselectCursorTexture_ = value.name_ ; }
+    ResourceRef GetUnselectCursorTextureAttr() const { return ResourceRef(Texture2D::GetTypeStatic(), unselectCursorTexture_ ); }
+
+    void SetTextFontAttr(const ResourceRef& value) { textFont_ = value.name_ ; }
+    ResourceRef GetTextFontAttr() const { return ResourceRef(Font::GetTypeStatic(), textFont_ ); }
+
+protected:
+    Color                   selectColor_{0,0,0,1};
+    Color                   unselectColor_{1,1,1,1};
+    String                  backgroundTexture_;
+    Vector<String>          texts_;
+    String                  selectCursorTexture_;
+    String                  unselectCursorTexture_;
+    String                  textFont_;
+    float                   textFontSize_{DEFAULT_FONT_SIZE};
+    bool                    textAutoLocalization_{false};
+    Vector2                 cursorBasePosition_{0,0};
+
+    int                     index_{0};
+    WeakPtr<Sprite>         cursor_;
     Vector<WeakPtr<Text>>   tabs_;
 
 
