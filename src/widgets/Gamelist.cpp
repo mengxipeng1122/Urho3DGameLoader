@@ -66,18 +66,16 @@ void Gamelist::Update()
     // set all UIItems_;
     for(auto& item : UIItems_) {item->SetVisible(false);}
     auto totalGames = games_.size();
-    LOG_INFOS_CPP(" t ", index_, totalGames, pageItems_ );
     for(auto t=index_; t<totalGames && t<index_+pageItems_ ; t++)
     {
-        LOG_INFOS_CPP(" t ", t );
         auto itemIndex = t-index_; 
         ASSERT_CPP(itemIndex < UIItems_.Size(), "itemIndex is not correct", itemIndex, UIItems_.Size());
         UIItems_[itemIndex]->SetVisible(true);
         auto thumbnailPath = games_[t]->thumbnailPath_;
         auto name          = games_[t]->name_;
         {
-            auto sprite  = UIItems_[itemIndex]->GetChildStaticCast<Sprite>(String("Thumbnail"));
-            ASSERT_CPP(sprite!=nullptr, "can not find Thumbnail ");
+            auto sprite  = UIItems_[itemIndex]->GetChildStaticCast<Sprite>(String("listIcon"));
+            ASSERT_CPP(sprite!=nullptr, "can not find list Icon");
             if(context_->GetSubsystem<FileSystem>()->FileExists(thumbnailPath))
             {
                 // load texture and set  
@@ -93,15 +91,24 @@ void Gamelist::Update()
 
                 IntRect imageRect(0, 0, width, height);
                 sprite->SetImageRect(imageRect);
-                //sprite->SetSize(width, height);
-                
             }
         }
         {
             auto s = string_format("%04d %s", t+1, name.CString());
             UIItems_[itemIndex]->GetChildStaticCast<Text>(String("name"))->SetText(ToString(s.c_str()));
         }
+        {
+            auto* cursor =  UIItems_[itemIndex]->GetChildStaticCast<Sprite>(String("cursor"));
+            auto* txt    =  UIItems_[itemIndex]->GetChildStaticCast<Text>  (String("name"));
+            auto x = (cursor->GetWidth() -txt->GetWidth())/2;
+            auto y = (cursor->GetHeight()-txt->GetHeight())/2;
+            auto cursorPosition = cursor->GetPosition();
+            txt->SetPosition(cursorPosition.x_+3
+                        ,cursorPosition.y_+y);
+        }
+
     }
+
 
 }
 
@@ -119,24 +126,24 @@ void Gamelist::addItem(const Item& item)
 void Gamelist::CreateChildren()
 {
     RemoveAllChildren();
-    auto* cache = GetSubsystem<ResourceCache>(); 
     UIItems_.Clear();
-    auto listMaskTexture = cache->GetResource<Texture2D>(listMaskTexture_);
+    auto listMaskTexture = CACHE->GetResource<Texture2D>(listMaskTexture_);
+    ASSERT_CPP(listMaskTexture != nullptr, " load Texture2D of ", listMaskTexture_.CString(), "failed");
     for(auto i = 0;i<pageItems_ ;i++)
     {
         auto* item = CreateChild<UIElement>();
         item->SetPosition(0, (listMaskTexture->GetHeight()+itemGap_)*i);
         auto listMark = item->CreateChild<Sprite>(String("listMark"));
         {
-            auto texture = cache->GetResource<Texture2D>(listMaskTexture_);
-            LOG_INFOS_CPP(texture!=nullptr, " can not open texture2d with name ", listMaskTexture_.CString());
+            auto texture = CACHE->GetResource<Texture2D>(listMaskTexture_);
+            ASSERT_CPP(texture!=nullptr, " can not open texture2d with name ", listMaskTexture_.CString());
             listMark ->SetSize(texture->GetWidth(), texture->GetHeight());
             listMark ->SetTexture(texture);
             listMark ->SetBlendMode(BLEND_ALPHA);
         }
         {
-            auto texture = cache->GetResource<Texture2D>(listIconDefaultTexture_);
-            LOG_INFOS_CPP(texture!=nullptr, " can not open texture2d with name ", listIconDefaultTexture_.CString());
+            auto texture = CACHE->GetResource<Texture2D>(listIconDefaultTexture_);
+            ASSERT_CPP(texture!=nullptr, " can not open texture2d with name ", listIconDefaultTexture_.CString());
             auto listIcon = item->CreateChild<Sprite>(String("listIcon"));
             listIcon ->SetTexture(texture);
             listIcon ->SetSize(listIconSize_);
@@ -144,8 +151,8 @@ void Gamelist::CreateChildren()
             listIcon ->SetPosition(listMark->GetWidth(), 0);
         }
         {
-            auto texture = cache->GetResource<Texture2D>(itemBackgroundTexture_);
-            LOG_INFOS_CPP(texture!=nullptr, " can not open texture2d with name ", itemBackgroundTexture_.CString());
+            auto texture = CACHE->GetResource<Texture2D>(itemBackgroundTexture_);
+            ASSERT_CPP(texture!=nullptr, " can not open texture2d with name ", itemBackgroundTexture_.CString());
             auto cursor = item->CreateChild<Sprite>(String("cursor"));
             cursor ->SetSize(texture->GetWidth(), texture->GetHeight());
             cursor ->SetTexture(texture);
@@ -154,7 +161,7 @@ void Gamelist::CreateChildren()
         }
         {
             auto name = item->CreateChild<Text>(String("name"));
-            auto font = cache->GetResource<Font>(textFont_);
+            auto font = CACHE->GetResource<Font>(textFont_);
             name->SetTextAlignment(HA_CENTER);
             name->SetFont(font, textFontSize_);
             name->SetColor(unselectColor_);

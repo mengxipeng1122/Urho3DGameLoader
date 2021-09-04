@@ -225,10 +225,8 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
     using namespace KeyDown;
 
     InputKey inputKey;
-        LOG_INFOS_CPP(" inputKey ", (int)inputKey);
     if(HasInputKey(eventData, inputKey))
     {
-        LOG_INFOS_CPP(" inputKey ", (int)inputKey);
         ScreenManager::HandleKeyDown(inputKey);
     }
 

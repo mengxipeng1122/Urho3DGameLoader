@@ -29,8 +29,8 @@ void TabSelector::RegisterObject(Context* context)
 TabSelector::TabSelector(Context *context)
     : UIElement(context)
 {
-    CreateChildren();
-    Update();
+    //CreateChildren();
+    //Update();
 }
 
 
@@ -142,11 +142,8 @@ void TabSelector::CreateChildren()
 
     RemoveAllChildren();
 
-    auto* cache = GetSubsystem<ResourceCache>(); 
-
-
     {
-        auto texture = cache->GetResource<Texture2D>(backgroundTexture_);
+        auto texture = CACHE->GetResource<Texture2D>(backgroundTexture_);
         ASSERT_CPP(texture!=nullptr, " can not load texture  for background with name ", backgroundTexture_.CString());
         auto* bg = this->CreateChild<Sprite>(String("background"));
         bg->SetSize(texture->GetWidth(), texture->GetHeight());
@@ -155,7 +152,7 @@ void TabSelector::CreateChildren()
     }
 
     {
-        auto texture = cache->GetResource<Texture2D>(unselectCursorTexture_);
+        auto texture = CACHE->GetResource<Texture2D>(unselectCursorTexture_);
         ASSERT_CPP(texture!=nullptr, " can not load texture  for unselect cursor with name ", unselectCursorTexture_.CString());
         cursor_ = this->CreateChild<Sprite>(String("cursor"));
         cursor_->SetSize(texture->GetWidth(), texture->GetHeight());
@@ -168,7 +165,7 @@ void TabSelector::CreateChildren()
         auto totalTabs = texts_.Size();
         auto tabWidth = cursor_->GetWidth();
         auto tabHeight= cursor_->GetHeight();
-        auto font = cache->GetResource<Font>(textFont_);
+        auto font = CACHE->GetResource<Font>(textFont_);
         tabs_.Clear();
         for(auto i = 0;i<totalTabs ; i++)
         {
