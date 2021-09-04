@@ -66,19 +66,20 @@ void Gamelist::Update()
     // set all UIItems_;
     for(auto& item : UIItems_) {item->SetVisible(false);}
     auto totalGames = games_.size();
+
+    LOG_INFOS_CPP(" firstIndex_ ", firstIndex_ , " index_", index_);
     
     for(auto t=0; t<pageItems_ ; t++)
-    for(auto t=index_; t<totalGames && t<index_+pageItems_ ; t++)
     {
-        auto itemIndex = firstIndex_+t;
-        if(itemIndex>=totalGames) {
+        auto gameIndex = firstIndex_+t;
+        if(gameIndex>=totalGames) {
             UIItems_[t]->SetVisible(false);
             continue;
         }
-        ASSERT_CPP(itemIndex>=0 && itemIndex < UIItems_.Size(), "itemIndex is not correct", itemIndex, UIItems_.Size());
+        ASSERT_CPP(gameIndex>=0 && gameIndex < games_.size(), "gameIndex is not correct", gameIndex, UIItems_.Size());
         UIItems_[t]->SetVisible(true);
-        auto thumbnailPath = games_[t]->thumbnailPath_;
-        auto name          = games_[t]->name_;
+        auto thumbnailPath = games_[gameIndex]->thumbnailPath_;
+        auto name          = games_[gameIndex]->name_;
         {
             auto texture = CACHE->GetResource<Texture2D>(listMaskTexture_);
             UIItems_[t]->GetChildStaticCast<Sprite>(String("listMark"))->SetTexture(texture);
@@ -101,16 +102,16 @@ void Gamelist::Update()
             }
         }
         {
-            auto s = string_format("%04d %s", t+1, name.CString());
-            UIItems_[itemIndex]->GetChildStaticCast<Text>(String("name"))->SetText(ToString(s.c_str()));
+            auto s = string_format("%04d %s", gameIndex+1, name.CString());
+            UIItems_[t]->GetChildStaticCast<Text>(String("name"))->SetText(ToString(s.c_str()));
         }
         {
             auto texture = CACHE->GetResource<Texture2D>(itemBackgroundTexture_);
             UIItems_[t]->GetChildStaticCast<Sprite>(String("cursor"))->SetTexture(texture);
         }
         {
-            auto* cursor =  UIItems_[itemIndex]->GetChildStaticCast<Sprite>(String("cursor"));
-            auto* txt    =  UIItems_[itemIndex]->GetChildStaticCast<Text>  (String("name"));
+            auto* cursor =  UIItems_[t]->GetChildStaticCast<Sprite>(String("cursor"));
+            auto* txt    =  UIItems_[t]->GetChildStaticCast<Text>  (String("name"));
             auto x = (cursor->GetWidth() -txt->GetWidth())/2;
             auto y = (cursor->GetHeight()-txt->GetHeight())/2;
             auto cursorPosition = cursor->GetPosition();
@@ -129,7 +130,7 @@ void Gamelist::Update()
                 UIItems_[t]->GetChildStaticCast<Sprite>(String("cursor"))->SetTexture(texture);
             }
             {
-                auto* txt    =  UIItems_[itemIndex]->GetChildStaticCast<Text>  (String("name"));
+                auto* txt    =  UIItems_[t]->GetChildStaticCast<Text>  (String("name"));
                 txt->SetColor(selectColor_);
             }
         }
@@ -141,7 +142,49 @@ void Gamelist::Update()
 
 bool Gamelist::HandleKeyDown(InputKey key)
 {
-    return false;
+    if(!IsSelected()) return false;
+
+    bool indexChanged = false;
+    bool handledKey = false;
+    auto totalGames = games_.size();
+    if(key == InputKey::LEFT_1P) 
+    {
+        LOG_INFOS_CPP(" LEFT");
+        goPreviousPage();
+        indexChanged = true;
+        handledKey = true;
+    }
+    else if(key == InputKey::RIGHT_1P)
+    {
+        LOG_INFOS_CPP(" RIGHT");
+        goNextPage();
+        indexChanged = true;
+        handledKey = true;
+    }
+    else if(key == InputKey::UP_1P)
+    {
+        goPreviousItem();
+        indexChanged = true;
+        handledKey = true;
+    }
+    else if(key == InputKey::DOWN_1P)
+    {
+        goNextItem();
+        indexChanged = true;
+        handledKey = true;
+    }
+
+    if(indexChanged)
+    {
+        Update();
+        using namespace ItemChanged;
+        VariantMap& eventData = GetEventDataMap();
+        eventData[P_ELEMENT] = this;
+        eventData[P_INDEX] = firstIndex_+index_;
+        SendEvent(E_ITEMCHANGED, eventData);
+    }
+    
+    return handledKey;
 }
 
 void Gamelist::addItem(const Item& item)
@@ -198,5 +241,59 @@ void Gamelist::CreateChildren()
     }
 
 }
+
+
+int Gamelist::goPreviousItem()
+{
+    index_--;
+    if(index_<0) {
+        index_ = pageItems_-1;
+        firstIndex_-=pageItems_;
+        if(firstIndex_<0) {
+            firstIndex_ = ((games_.size()-1)/pageItems_)*pageItems_;
+            if(firstIndex_+index_>=(int)games_.size()) { index_ = games_.size()-1-firstIndex_; }
+        }
+    }
+    return 0;
+}
+
+int Gamelist::goNextItem()
+{
+    if(firstIndex_+index_+1>=(int)games_.size())
+    {
+        firstIndex_ = 0;
+        index_ = 0;
+        return -1;
+
+    }
+
+    index_++;
+    if(index_>=pageItems_) { 
+        index_=0; 
+        firstIndex_+=pageItems_;
+        if(firstIndex_>=(int)games_.size()) { firstIndex_=0; }
+        if(firstIndex_+index_>=(int)games_.size()) { index_ = games_.size()-1-firstIndex_; }
+    }
+    return 0;
+}
+
+int Gamelist::goPreviousPage() 
+{
+    firstIndex_-=pageItems_;
+    if(firstIndex_<0) {
+        firstIndex_ = ((games_.size()-1)/pageItems_)*pageItems_;
+        if(firstIndex_+index_>=(int)games_.size()) { index_ = games_.size()-1-firstIndex_; }
+    }
+    return 0;
+}
+
+int Gamelist::goNextPage()     
+{
+    firstIndex_+=pageItems_;
+    if(firstIndex_>=(int)games_.size()) { firstIndex_=0; }
+    if(firstIndex_+index_>=(int)games_.size()) { index_ = games_.size()-1-firstIndex_; }
+    return 0;
+}
+
 
 }

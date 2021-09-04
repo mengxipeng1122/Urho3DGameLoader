@@ -8,12 +8,12 @@
 namespace Urho3D
 {
 
-// /// Text entry into a LineEdit. The text can be modified in the event data.
-// URHO3D_EVENT(E_TABCHANGED, TabChanged)
-// {
-//     URHO3D_PARAM(P_ELEMENT, Element);              // UIElement pointer
-//     URHO3D_PARAM(P_INDEX,   Index);                // String [in/out]
-// }
+URHO3D_EVENT(E_ITEMCHANGED, ItemChanged)
+{
+    URHO3D_PARAM(P_ELEMENT, Element);              // UIElement pointer
+    URHO3D_PARAM(P_INDEX,   Index);                // String [in/out]
+}
+
 
 
 
@@ -80,6 +80,11 @@ protected:
 
 private:
     bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
+
+    int goNextPage();
+    int goPreviousPage();
+    int goNextItem();
+    int goPreviousItem();
 
 };
 

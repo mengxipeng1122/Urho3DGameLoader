@@ -52,11 +52,13 @@ bool HomeScreen::HandleKeyDown( InputKey key)
         {
             mainTab_->SetSelected(false); mainTab_->Update();
             gamelist_->SetSelected(true); gamelist_->Update();
+            return true;
         }
         else if(gamelist_->IsSelected() && key == InputKey::START_1P)
         {
             mainTab_->SetSelected(true); mainTab_->Update();
             gamelist_->SetSelected(false); gamelist_->Update();
+            return true;
         }
     }
 
