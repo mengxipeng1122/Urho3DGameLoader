@@ -24,6 +24,8 @@
 //
 #pragma once
 #include <Urho3D/UI/Window.h>
+#include <Urho3D/UI/Text.h>
+#include <Urho3D/UI/Font.h>
 
 #include "../utils/log.hpp"
 #include "../InputSystem.hpp"
@@ -72,22 +74,40 @@ public:
     void addItem(const Item& item);
     void Update();
 
+#define DEF_TEXTURE_ATTR_SETTER_GETTER( n0, n1 ) \
+    void Set ## n0 ## TextureAttr(const ResourceRef& value) { n1 ## Texture_ = value.name_ ; }  \
+    ResourceRef Get ## n0 ## TextureAttr() const { return ResourceRef(Texture2D::GetTypeStatic(), n1 ## Texture_ ); } \
+
+    DEF_TEXTURE_ATTR_SETTER_GETTER( ListMask, listMask)
+    DEF_TEXTURE_ATTR_SETTER_GETTER( ListMaskSelect,  listMaskSelect)
+    DEF_TEXTURE_ATTR_SETTER_GETTER( ListIconDefault, listIconDefault)
+    DEF_TEXTURE_ATTR_SETTER_GETTER( ItemBackground,  itemBackground)
+    DEF_TEXTURE_ATTR_SETTER_GETTER( ItemBackgroundSelect,  itemBackgroundSelect)
+
+    void SetTextFontAttr(const ResourceRef& value) { textFont_ = value.name_ ; }
+    ResourceRef GetTextFontAttr() const { return ResourceRef(Font::GetTypeStatic(), textFont_ ); }
 
 protected:
-    std::vector<std::unique_ptr<Item>>  games_;
 
     int                                 pageItems_{10};
-    int                                 itemHight_{40};
-    int                                 index_{0};
+    int                                 itemGap_{3};
+    String                              listMaskTexture_;
+    String                              listMaskSelectTexture_;
+    String                              listIconDefaultTexture_;
+    String                              itemBackgroundTexture_;
+    String                              itemBackgroundSelectTexture_;
+    Vector2                             itemBasePosition_{13,0};
+    IntVector2                          listIconSize_{0,0};
+    Color                               selectColor_{0,0,0,1};
+    Color                               unselectColor_{1,1,1,1};
+    String                              textFont_;
+    float                               textFontSize_{DEFAULT_FONT_SIZE};
 
+    std::vector<std::unique_ptr<Item>>  games_;
+    int                                 index_{0};
     Vector<WeakPtr<UIElement>>          UIItems_; // this vector store all UI items for display one game 
 
-
-    WeakPtr<Sprite>                     cursor0_{nullptr};
-    WeakPtr<Sprite>                     cursor1_{nullptr};
-
-    Vector2                             cursor0BasePosition{0,0};
-    Vector2                             cursor1BasePosition{0,0};
+    void CreateChildren();
 
 
 private:

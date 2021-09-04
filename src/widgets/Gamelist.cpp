@@ -56,9 +56,22 @@ void Gamelist::RegisterObject(Context* context)
     context->RegisterFactory<Gamelist>(UI_CATEGORY);
     URHO3D_COPY_BASE_ATTRIBUTES(UIElement);
 
-//    URHO3D_ATTRIBUTE("Tab Gap", int , tabGap_, 40, AM_FILE);
-//    URHO3D_ATTRIBUTE("Select Color", Color, selectColor_, Color::TRANSPARENT_BLACK, AM_FILE);
-//    URHO3D_ATTRIBUTE("UnSelect Color", Color, unselectColor_, Color::TRANSPARENT_BLACK, AM_FILE);
+    URHO3D_ATTRIBUTE("Page Items", int, pageItems_, 10, AM_FILE);
+    URHO3D_ATTRIBUTE("Item Gap",   int, pageItems_,  3, AM_FILE);
+
+    URHO3D_MIXED_ACCESSOR_ATTRIBUTE("List Mask Texture", GetListMaskTextureAttr, SetListMaskTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
+    URHO3D_MIXED_ACCESSOR_ATTRIBUTE("List Mask Select Texture", GetListMaskSelectTextureAttr, SetListMaskSelectTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
+    URHO3D_MIXED_ACCESSOR_ATTRIBUTE("List Icon Default Texture", GetListIconDefaultTextureAttr, SetListIconDefaultTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
+    URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Item Background Texture", GetItemBackgroundTextureAttr, SetItemBackgroundTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
+    URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Item Background Select Texture", GetItemBackgroundSelectTextureAttr, SetItemBackgroundSelectTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
+    URHO3D_ATTRIBUTE("Select Color", Color, selectColor_, Color::TRANSPARENT_BLACK, AM_FILE);
+    URHO3D_ATTRIBUTE("UnSelect Color", Color, unselectColor_, Color::TRANSPARENT_BLACK, AM_FILE);
+    URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Text Font", GetTextFontAttr, SetTextFontAttr, ResourceRef, ResourceRef(Font::GetTypeStatic()), AM_FILE);
+    URHO3D_ATTRIBUTE("Text Font Size", float, textFontSize_, DEFAULT_FONT_SIZE, AM_FILE);
+
+    URHO3D_ATTRIBUTE("Item Base Position", Vector2, itemBasePosition_, Vector2::ZERO, AM_FILE);
+    URHO3D_ATTRIBUTE("List Icon Size", IntVector2, listIconSize_, IntVector2::ZERO, AM_FILE);
+
 }
 
 Gamelist::Gamelist(Context *context)
@@ -72,15 +85,16 @@ bool Gamelist::LoadXML(const XMLElement& source, XMLFile* styleFile)
     ASSERT_CPP(success, "load XML failed ");
 
     // 
-    UIItems_.Clear();
-    for(auto&& c : GetChildren())
-    {
-        WeakPtr<UIElement>  item { static_cast<UIElement*>(c.Get())};
-        ASSERT_CPP(item!=nullptr, " element is nullptr");
-        UIItems_.Push(item);
-    }
-    ASSERT_CPP(UIItems_.Size()==pageItems_, "page Items ", UIItems_.Size(), "/", pageItems_);
-
+//    UIItems_.Clear();
+//    for(auto&& c : GetChildren())
+//    {
+//        WeakPtr<UIElement>  item { static_cast<UIElement*>(c.Get())};
+//        ASSERT_CPP(item!=nullptr, " element is nullptr");
+//        UIItems_.Push(item);
+//    }
+//    ASSERT_CPP(UIItems_.Size()==pageItems_, "page Items ", UIItems_.Size(), "/", pageItems_);
+//
+    CreateChildren();
     Update();
 
     return success;
@@ -141,5 +155,53 @@ void Gamelist::addItem(const Item& item)
     games_.push_back(std::move(newItem));
 }
 
+void Gamelist::CreateChildren()
+{
+    RemoveAllChildren();
+    auto* cache = GetSubsystem<ResourceCache>(); 
+    UIItems_.Clear();
+    auto listMaskTexture = cache->GetResource<Texture2D>(listMaskTexture_);
+    for(auto i = 0;i<pageItems_ ;i++)
+    {
+        auto* item = CreateChild<UIElement>();
+        item->SetPosition(0, (listMaskTexture->GetHeight()+itemGap_)*i);
+        auto listMark = item->CreateChild<Sprite>(String("listMark"));
+        {
+            auto texture = cache->GetResource<Texture2D>(listMaskTexture_);
+            LOG_INFOS_CPP(texture!=nullptr, " can not open texture2d with name ", listMaskTexture_.CString());
+            listMark ->SetSize(texture->GetWidth(), texture->GetHeight());
+            listMark ->SetTexture(texture);
+            listMark ->SetBlendMode(BLEND_ALPHA);
+        }
+        {
+            auto texture = cache->GetResource<Texture2D>(listIconDefaultTexture_);
+            LOG_INFOS_CPP(texture!=nullptr, " can not open texture2d with name ", listIconDefaultTexture_.CString());
+            auto listIcon = item->CreateChild<Sprite>(String("listIcon"));
+            listIcon ->SetTexture(texture);
+            listIcon ->SetSize(listIconSize_);
+            listIcon ->SetBlendMode(BLEND_ALPHA);
+            listIcon ->SetPosition(listMark->GetWidth(), 0);
+        }
+        {
+            auto texture = cache->GetResource<Texture2D>(itemBackgroundTexture_);
+            LOG_INFOS_CPP(texture!=nullptr, " can not open texture2d with name ", itemBackgroundTexture_.CString());
+            auto cursor = item->CreateChild<Sprite>(String("cursor"));
+            cursor ->SetSize(texture->GetWidth(), texture->GetHeight());
+            cursor ->SetTexture(texture);
+            cursor ->SetBlendMode(BLEND_ALPHA);
+            cursor ->SetPosition(itemBasePosition_);
+        }
+        {
+            auto name = item->CreateChild<Text>(String("name"));
+            auto font = cache->GetResource<Font>(textFont_);
+            name->SetTextAlignment(HA_CENTER);
+            name->SetFont(font, textFontSize_);
+            name->SetColor(unselectColor_);
+        }
+        WeakPtr<UIElement>  pitem { item};
+        UIItems_.Push(pitem);
+    }
+
+}
 
 }
