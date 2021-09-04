@@ -88,6 +88,7 @@ private:
     Settings settings_;
     ////////////////////////////////////////////////////////////////////////////////
     // screens
+    void RegisterSubsystems();
     void RegisterScreens();
     void RegisterWidgets();
     

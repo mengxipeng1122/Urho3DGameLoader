@@ -54,6 +54,7 @@
 #include <Urho3D/Engine/Console.h>
 #include <Urho3D/Engine/DebugHud.h>
 #include <Urho3D/Engine/Engine.h>
+#include <Urho3D/Engine/EngineDefs.h>
 #include <Urho3D/Engine/EngineEvents.h>
 #include <Urho3D/Graphics/AnimatedModel.h>
 #include <Urho3D/Graphics/Animation.h>
