@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "../Global.h"
+
 #include "ScreenBuilder.hpp"
 #include "Screen.hpp"
 #include "ScreenManager.hpp"

@@ -3,8 +3,7 @@
 
 class Screen;
 
-#include <Urho3D/Core/Context.h>
-using namespace Urho3D;
+#include "../Global.h"
 
 //! Base Builder class to create Game Stages via a ScreenFactory
 class ScreenBuilder

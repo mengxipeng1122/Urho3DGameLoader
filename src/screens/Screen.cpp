@@ -1,8 +1,4 @@
 
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/UI/UI.h>
-#include <Urho3D/Core/StringUtils.h>
-#include <Urho3D/Resource/ResourceCache.h>
 #include "Screen.hpp"
 
 void Screen::Enter()

@@ -3,8 +3,8 @@
 
 #include <string>
 #include <memory>
-#include <Urho3D/UI/UI.h>
-#include <Urho3D/Core/Context.h>
+
+#include "../Global.h"
 
 #include "Screen.hpp"
 #include "ScreenBuilder.hpp"

@@ -1,8 +1,5 @@
 
 
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/Core/StringUtils.h>
-#include <Urho3D/Resource/ResourceCache.h>
 
 #include "IOTestScreen.hpp"
 

@@ -3,12 +3,9 @@
 
 #include <vector>
 #include <string>
-#include <Urho3D/Core/Object.h>
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/UI/UIElement.h>
+#include "../Global.h"
 #include "../InputSystem.hpp"
 
-using namespace Urho3D;
 
 class Screen : public UIElement
 {

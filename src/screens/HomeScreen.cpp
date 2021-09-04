@@ -1,23 +1,8 @@
 
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/UI/UIEvents.h>
-#include <Urho3D/Core/StringUtils.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/Input/InputEvents.h>
-#include <Urho3D/UI/Font.h>
-#include <Urho3D/UI/Sprite.h>
-#include <Urho3D/Graphics/Texture2D.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Resource/Localization.h>
-#include <Urho3D/Resource/JSONFile.h>
 
-#include "../widgets/PageIndicator.hpp"
-#include "../widgets/Gamelist.hpp"
-#include "../widgets/TabSelector.hpp"
+
 #include "HomeScreen.hpp"
 
-using namespace Urho3D;
 
 void HomeScreen::Enter()
 {
