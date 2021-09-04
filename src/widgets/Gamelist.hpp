@@ -71,6 +71,7 @@ protected:
     float                               textFontSize_{DEFAULT_FONT_SIZE};
 
     std::vector<std::unique_ptr<Item>>  games_;
+    int                                 firstIndex_{0};
     int                                 index_{0};
     Vector<WeakPtr<UIElement>>          UIItems_; // this vector store all UI items for display one game 
 

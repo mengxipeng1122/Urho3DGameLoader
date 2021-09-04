@@ -44,10 +44,32 @@ void HomeScreen::Leave()
 bool HomeScreen::HandleKeyDown( InputKey key)
 {
     using namespace KeyDown;
-
     ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
-    bool success = mainTab_->HandleKeyDown(key);
-    if(success) return true;
+    ASSERT_CPP(gamelist_!=nullptr, " can not found Main Tab");
+
+    {
+        if (mainTab_->IsSelected() && key == InputKey::DOWN_1P)
+        {
+            mainTab_->SetSelected(false); mainTab_->Update();
+            gamelist_->SetSelected(true); gamelist_->Update();
+        }
+        else if(gamelist_->IsSelected() && key == InputKey::START_1P)
+        {
+            mainTab_->SetSelected(true); mainTab_->Update();
+            gamelist_->SetSelected(false); gamelist_->Update();
+        }
+    }
+
+    if(mainTab_->IsSelected())
+    {
+        bool success = mainTab_->HandleKeyDown(key);
+        if(success) return true;
+    }
+    else if(gamelist_->IsSelected())
+    {
+        bool success = gamelist_->HandleKeyDown(key);
+        if(success) return true;
+    }
 
     return false;
 }

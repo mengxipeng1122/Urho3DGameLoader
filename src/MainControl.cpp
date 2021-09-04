@@ -262,7 +262,7 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
         }
 
         // Switch Screen test
-        else if (key == '1')
+        else if (key == '8')
         {
             static bool homescreen = true;
             if(homescreen)

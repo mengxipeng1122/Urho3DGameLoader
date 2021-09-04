@@ -66,15 +66,25 @@ void Gamelist::Update()
     // set all UIItems_;
     for(auto& item : UIItems_) {item->SetVisible(false);}
     auto totalGames = games_.size();
+    
+    for(auto t=0; t<pageItems_ ; t++)
     for(auto t=index_; t<totalGames && t<index_+pageItems_ ; t++)
     {
-        auto itemIndex = t-index_; 
-        ASSERT_CPP(itemIndex < UIItems_.Size(), "itemIndex is not correct", itemIndex, UIItems_.Size());
-        UIItems_[itemIndex]->SetVisible(true);
+        auto itemIndex = firstIndex_+t;
+        if(itemIndex>=totalGames) {
+            UIItems_[t]->SetVisible(false);
+            continue;
+        }
+        ASSERT_CPP(itemIndex>=0 && itemIndex < UIItems_.Size(), "itemIndex is not correct", itemIndex, UIItems_.Size());
+        UIItems_[t]->SetVisible(true);
         auto thumbnailPath = games_[t]->thumbnailPath_;
         auto name          = games_[t]->name_;
         {
-            auto sprite  = UIItems_[itemIndex]->GetChildStaticCast<Sprite>(String("listIcon"));
+            auto texture = CACHE->GetResource<Texture2D>(listMaskTexture_);
+            UIItems_[t]->GetChildStaticCast<Sprite>(String("listMark"))->SetTexture(texture);
+        }
+        {
+            auto sprite  = UIItems_[t]->GetChildStaticCast<Sprite>(String("listIcon"));
             ASSERT_CPP(sprite!=nullptr, "can not find list Icon");
             if(context_->GetSubsystem<FileSystem>()->FileExists(thumbnailPath))
             {
@@ -86,9 +96,6 @@ void Gamelist::Update()
                 sprite->SetTexture(texture);
                 auto width = texture->GetWidth();
                 auto height= texture->GetHeight();
-                LOG_INFOS_CPP(width, height);
-
-
                 IntRect imageRect(0, 0, width, height);
                 sprite->SetImageRect(imageRect);
             }
@@ -98,13 +105,33 @@ void Gamelist::Update()
             UIItems_[itemIndex]->GetChildStaticCast<Text>(String("name"))->SetText(ToString(s.c_str()));
         }
         {
+            auto texture = CACHE->GetResource<Texture2D>(itemBackgroundTexture_);
+            UIItems_[t]->GetChildStaticCast<Sprite>(String("cursor"))->SetTexture(texture);
+        }
+        {
             auto* cursor =  UIItems_[itemIndex]->GetChildStaticCast<Sprite>(String("cursor"));
             auto* txt    =  UIItems_[itemIndex]->GetChildStaticCast<Text>  (String("name"));
             auto x = (cursor->GetWidth() -txt->GetWidth())/2;
             auto y = (cursor->GetHeight()-txt->GetHeight())/2;
             auto cursorPosition = cursor->GetPosition();
-            txt->SetPosition(cursorPosition.x_+3
-                        ,cursorPosition.y_+y);
+            txt->SetPosition(cursorPosition.x_+3 ,cursorPosition.y_+y);
+            txt->SetColor(unselectColor_);
+        }
+
+        if(t == index_ && IsSelected())
+        {
+            {
+                auto texture = CACHE->GetResource<Texture2D>(listMaskSelectTexture_);
+                UIItems_[t]->GetChildStaticCast<Sprite>(String("listMark"))->SetTexture(texture);
+            }
+            {
+                auto texture = CACHE->GetResource<Texture2D>(itemBackgroundSelectTexture_);
+                UIItems_[t]->GetChildStaticCast<Sprite>(String("cursor"))->SetTexture(texture);
+            }
+            {
+                auto* txt    =  UIItems_[itemIndex]->GetChildStaticCast<Text>  (String("name"));
+                txt->SetColor(selectColor_);
+            }
         }
 
     }
