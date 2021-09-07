@@ -2,10 +2,41 @@
 
 
 #include "HomeScreen.hpp"
+#include "../widgets/VideoPlayer.hpp"
+#include "../components/VideoPlayerComponent.hpp"
 
 
+VideoPlayerComponent* tvc{nullptr};
 void HomeScreen::Enter()
 {
+
+	SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(HomeScreen, HandleUpdate));
+
+#if 0
+    auto* c = new VideoPlayer(context_);
+    //c ->SetTexture(CACHE->GetResource<Texture2D>("Textures/Ramp.png"));
+    c ->SetTexture(CACHE->GetResource<Texture2D>("res/VideoPlayerBackground.png"));
+    c ->SetPosition(0,0);
+    c ->SetSize(80,60);
+    UI_ROOT->AddChild(c);
+
+//    tvc = new VideoPlayerComponent(context_);
+//    //tvc->OpenFileName("bbb_theora_486kbit.ogv");
+//    tvc->OpenFileName("dinopb.avi");
+    {
+//        auto* m0 = c->GetMaterial();
+//         File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); m0->Save(saveFile);
+    }
+
+//    {
+//        auto *m = CACHE->GetResource<Material>("Materials/TVmaterialGPUYUV.1.xml");
+//        printf(" m %p \n", m);
+//        c->SetMaterial(m);
+//	    tvc->SetOutputMaterial(m);
+//    }
+
+    return ;
+#endif
     Screen::Enter();
     auto* uiRoot= context_->GetSubsystem<UI>()->GetRoot();
     auto* screen = uiRoot->CreateChild<UIElement>(GetName());
@@ -32,12 +63,26 @@ void HomeScreen::Enter()
 
     SetGamelist();
 
+    videoPlayer_ = screen->GetChildStaticCast<VideoPlayer>(String("VideoPlayer"));
+
+    tvc = new VideoPlayerComponent(context_);
+    //tvc->OpenFileName("bbb_theora_486kbit.ogv");
+    tvc->OpenFileName("dinopb.avi");
+    {
+        auto *m = CACHE->GetResource<Material>("Materials/TVmaterialGPUYUV.1.xml");
+        printf(" m %p \n", m);
+        videoPlayer_->SetMaterial(m);
+	   // tvc->SetOutputMaterial(m);
+    }
+
+
 }
 
 void HomeScreen::Leave()
 {
     LOG_INFOS_CPP(" go here ");
     UnsubscribeFromEvent(mainTab_, E_TABCHANGED);
+    UnsubscribeFromEvent(this, E_UPDATE);
     Screen::Leave();
 }
 
@@ -80,6 +125,13 @@ void HomeScreen::HandleTabChanged(StringHash eventType, VariantMap& eventData)
 {
     LOG_INFOS_CPP(" go here ");
 }
+
+void HomeScreen::HandleUpdate(StringHash eventType, VariantMap& eventData)
+{
+//    if(tvc) tvc->HandleUpdate( eventType,  eventData);
+
+}
+
 
 void HomeScreen::SetGamelist()
 {

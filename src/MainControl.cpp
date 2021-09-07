@@ -26,9 +26,11 @@
 
 #include "MainControl.hpp"
 
+#include "components/VideoPlayerComponent.hpp"
 #include "widgets/PageIndicator.hpp"
 #include "widgets/Gamelist.hpp"
 #include "widgets/TabSelector.hpp"
+#include "widgets/VideoPlayer.hpp"
 #include "screens/ScreenManager.hpp"
 #include "screens/HomeScreen.hpp"
 #include "screens/IOTestScreen.hpp"
@@ -63,6 +65,7 @@ MainControl::MainControl(Context* context)
     , logo_(nullptr)
 {
     RegisterSubsystems();
+    RegisterComponents();
     RegisterWidgets();
     RegisterScreens();
 
@@ -77,6 +80,7 @@ void MainControl::RegisterScreens()
 void MainControl::RegisterWidgets()
 {
     Gamelist     ::RegisterObject(context_);
+    VideoPlayer  ::RegisterObject(context_);
     PageIndicator::RegisterObject(context_);
     TabSelector  ::RegisterObject(context_);
 }
@@ -85,6 +89,13 @@ void MainControl::RegisterSubsystems()
 {
     context_->RegisterSubsystem(new Global(context_));
 }
+
+void MainControl::RegisterComponents()
+{
+    
+	VideoPlayerComponent::RegisterObject(context_);
+}
+
 
 
 void MainControl::Setup()

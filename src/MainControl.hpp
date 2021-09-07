@@ -91,6 +91,7 @@ private:
     void RegisterSubsystems();
     void RegisterScreens();
     void RegisterWidgets();
+    void RegisterComponents();
     
 
     // uiroot 

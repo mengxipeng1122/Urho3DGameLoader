@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<material>
+	<technique name="Techniques/DiffUnlitTheoraVideoYUV444.1.xml" quality="1" loddistance="0" />
+</material>

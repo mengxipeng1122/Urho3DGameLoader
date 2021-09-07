@@ -30,12 +30,14 @@ file (GLOB SRC_CPP_FILES
     src/utils/*.cpp
     src/screens/*.cpp
     src/widgets/*.cpp
+    src/components/*.cpp
     )
 file (GLOB SRC_H_FILES 
     src/*.hpp
     src/utils/*.hpp
     src/screens/*.hpp
     src/widgets/*.hpp
+    src/components/*.hpp
     )
 define_source_files (GROUP EXTRA_CPP_FILES ${SRC_CPP_FILES} EXTRA_H_FILES ${SRC_H_FILES})
 #define_source_files ()
@@ -47,6 +49,8 @@ list(REMOVE_ITEM TARGET_INCLUDES "/usr/local/include")
 list(APPEND TARGET_INCLUDES "/usr/local/include" )
 set_target_properties(${TARGET_NAME}  PROPERTIES INCLUDE_DIRECTORIES "${TARGET_INCLUDES}")
 target_compile_features(${TARGET_NAME} PRIVATE cxx_std_17)
+
+target_link_libraries(${TARGET_NAME}   -lavformat -lavcodec -lavutil)
 
 
 add_subdirectory(Samples/61_UITest)
