@@ -37,14 +37,11 @@ bool VideoPlayer::LoadXML(const XMLElement& source, XMLFile* styleFile)
 
     LOG_INFOS_CPP(" go here");
 
-    //SetTexture(CACHE->GetResource<Texture2D>("res/VideoPlayerBackground.png"));
-    //SetPosition(0,0);
-    //SetSize(80,60);
-
     vp = new VideoPlayerComponent(context_);
     vp->OpenFileName("dinopb.avi");
     auto *m = CACHE->GetResource<Material>("Materials/TVmaterialGPUYUV.1.xml");
 	vp->SetOutputMaterial(m);
+    SetMaterial(m);
 
 
     return success;
