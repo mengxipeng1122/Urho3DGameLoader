@@ -86,11 +86,13 @@ bool HomeScreen::HandleKeyDown( InputKey key)
 void HomeScreen::HandleTabChanged(StringHash eventType, VariantMap& eventData)
 {
     LOG_INFOS_CPP(" go here ");
+    if( mainTab_->GetIndex() == 1) videoPlayer_->OpenFileName("dinopb.avi");
+    else if( mainTab_->GetIndex() == 2) videoPlayer_->Close();
+
 }
 
 void HomeScreen::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
-//    if(tvc) tvc->HandleUpdate( eventType,  eventData);
 
 }
 

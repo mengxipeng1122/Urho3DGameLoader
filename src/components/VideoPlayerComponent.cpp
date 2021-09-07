@@ -5,7 +5,7 @@
 VideoPlayerComponent::VideoPlayerComponent(Context* context) :
 	Component(context),
 	isFileOpened_(false),
-	isStopped_(false),
+	isInitilizedTextures_(false),
 	frameWidth_(0),
 	frameHeight_(0),
 	file_(0),
@@ -54,6 +54,8 @@ bool VideoPlayerComponent::OpenFileName(String name)
 
     isFileOpened_ = OpenFile(name);
 
+    InitTexture();
+
     frameWidth_ = videoInfo_.GetFrameWidth();    
     frameHeight_= videoInfo_.GetFrameHeight();   
 
@@ -61,23 +63,6 @@ bool VideoPlayerComponent::OpenFileName(String name)
 	return ret;
 }
 
-bool VideoPlayerComponent::SetOutputModel(StaticModel* sm)
-{
-	bool ret = false;
-	if (sm)
-	{
-		// Set model surface
-		outputModel = sm;
-		outputMaterial = sm->GetMaterial(0);
-
-		// Create textures & images
-		InitTexture();
-		//InitCopyBuffer();
-		ScaleModelAccordingVideoRatio();
-	}
-
-	return ret;
-}
 
 bool VideoPlayerComponent::SetOutputMaterial(Material* m)
 {
@@ -90,34 +75,9 @@ bool VideoPlayerComponent::SetOutputMaterial(Material* m)
 		// Create textures & images
 		InitTexture();
 		//InitCopyBuffer();
-		//ScaleModelAccordingVideoRatio();
 	}
 
 	return ret;
-}
-
-
-void VideoPlayerComponent::Play()
-{
-	isStopped_ = false;
-}
-
-void VideoPlayerComponent::Pause() 
-{
-	isStopped_ = true;
-}
-
-void VideoPlayerComponent::Loop(bool isLoop)
-{
-
-}
-
-void VideoPlayerComponent::Stop()
-{
-	isStopped_ = true;
-	videoTimer_ = 0;
-	prevFrame_ = 0;
-	file_->Seek(0);
 }
 
 void VideoPlayerComponent::HandleUpdate(StringHash eventType, VariantMap& eventData)
@@ -125,6 +85,13 @@ void VideoPlayerComponent::HandleUpdate(StringHash eventType, VariantMap& eventD
 	using namespace Update;
 	float timeStep = eventData[P_TIMESTEP].GetFloat();
 	//Time* time = GetSubsystem<Time>();
+
+    if(!isFileOpened_) return;
+    if(!isInitilizedTextures_)
+    {
+        InitTexture();
+        return;
+    }
 
 	unsigned frame = Advance(timeStep);
 	if (prevFrame_ != frame)
@@ -137,7 +104,18 @@ void VideoPlayerComponent::HandleUpdate(StringHash eventType, VariantMap& eventD
 
 bool VideoPlayerComponent::OpenFile(String fileName)
 {
+
+    Close();
     return videoInfo_.OpenVideo(fileName);
+}
+
+void VideoPlayerComponent::Close()
+{
+    isInitilizedTextures_ = false; 
+    isFileOpened_ = false;
+    videoTimer_= 0.f;
+    ClearTexture();
+    videoInfo_.CloseVideo();
 }
 
 
@@ -152,10 +130,8 @@ unsigned VideoPlayerComponent::Advance(float timeStep)
 	const unsigned curFrame = static_cast<unsigned>(floor(videoTimer_ * framesPerSecond_));
 
 
-        LOG_INFOS_CPP(" go here ", lastVideoFrame_, curFrame, timeStep, videoTimer_);
 	if (lastVideoFrame_ != curFrame)
 	{
-        LOG_INFOS_CPP(" go here ");
         videoInfo_.ReadFrame();
 		lastVideoFrame_ = curFrame;
 		UpdatePlaneTextures();		
@@ -165,68 +141,92 @@ unsigned VideoPlayerComponent::Advance(float timeStep)
 }
 
 
-bool VideoPlayerComponent::InitTexture()
+void VideoPlayerComponent::ClearTexture()
 {
-	bool ret = false;
-
 	// Try clear if using case of reassingn the movie file
 	for (int i = 0; i < YUV_PLANE_MAX_SIZE; ++i)
 	{
 		if (outputTexture[i])
 		{
-			outputTexture[i]->ReleaseRef();
+	//		outputTexture[i]->ReleaseRef();
 			outputTexture[i] = 0;
 		}
 	}
-
-	// do this for fill m_YUVFrame with properly info about frame
-	Advance(0);
-
-
-	// Planes textures create
-	for (int i = 0; i < YUV_PLANE_MAX_SIZE; ++i)
-	{
-		int texWidth = 0;
-		int texHeight = 0;
-
-		switch (i)
-		{
-		case YUV_PLANE_Y:
-			texWidth  = videoInfo_.pFrameYUV_->width;
-			texHeight = videoInfo_.pFrameYUV_->height;
-            LOG_INFOS_CPP(texWidth, texHeight);
-			framePlanarDataY_ = new unsigned char[texWidth * texHeight];
-			break;
-		
-		case YUV_PLANE_U:
-			texWidth  = videoInfo_.pFrameYUV_->width/2;
-			texHeight = videoInfo_.pFrameYUV_->height/2;
-			framePlanarDataU_ = new unsigned char[texWidth * texHeight];
-			break;
-
-		case YUV_PLANE_V:
-			texWidth  = videoInfo_.pFrameYUV_->width/2;
-			texHeight = videoInfo_.pFrameYUV_->height/2;
-			framePlanarDataV_ = new unsigned char[texWidth * texHeight];
-			break;
-		}
-
-		outputTexture[i] = SharedPtr<Texture2D>(new Texture2D(context_));
-		outputTexture[i]->SetSize(texWidth, texHeight, Graphics::GetLuminanceFormat(), TEXTURE_DYNAMIC);
-		outputTexture[i]->SetFilterMode(FILTER_BILINEAR);
-		outputTexture[i]->SetNumLevels(1);
-		outputTexture[i]->SetAddressMode(TextureCoordinate::COORD_U, TextureAddressMode::ADDRESS_MIRROR);
-		outputTexture[i]->SetAddressMode(TextureCoordinate::COORD_V, TextureAddressMode::ADDRESS_MIRROR);
-
+    if(outputMaterial!=nullptr)
+    {
+	    outputMaterial->SetTexture(TextureUnit::TU_DIFFUSE, nullptr);
+	    outputMaterial->SetTexture(TextureUnit::TU_SPECULAR,nullptr);
+	    outputMaterial->SetTexture(TextureUnit::TU_NORMAL,  nullptr);
     }
 
 
-	// assign planes textures into sepparated samplers for shader
-	outputMaterial->SetTexture(TextureUnit::TU_DIFFUSE, outputTexture[YUV_PLANE_Y]);
-	outputMaterial->SetTexture(TextureUnit::TU_SPECULAR, outputTexture[YUV_PLANE_U]);
-	outputMaterial->SetTexture(TextureUnit::TU_NORMAL, outputTexture[YUV_PLANE_V]);
+    isInitilizedTextures_ = false;
+
+}
+
+bool VideoPlayerComponent::InitTexture()
+{
+	bool ret = false;
+
+    ClearTexture();
+
+	// do this for fill m_YUVFrame with properly info about frame
+	Advance(1.f/framesPerSecond_);
+
+
+    if (videoInfo_.pFrameYUV_!=nullptr && outputMaterial !=nullptr)
+    {
+
+	    // Planes textures create
+	    for (int i = 0; i < YUV_PLANE_MAX_SIZE; ++i)
+	    {
+	    	int texWidth = 0;
+	    	int texHeight = 0;
+
+	    	switch (i)
+	    	{
+	    	case YUV_PLANE_Y:
+	    		texWidth  = videoInfo_.pFrameYUV_->width;
+	    		texHeight = videoInfo_.pFrameYUV_->height;
+                LOG_INFOS_CPP(texWidth, texHeight);
+                if(texWidth ==0 || texHeight==0) continue;
+	    		framePlanarDataY_ = new unsigned char[texWidth * texHeight];
+	    		break;
+	    	
+	    	case YUV_PLANE_U:
+	    		texWidth  = videoInfo_.pFrameYUV_->width/2;
+	    		texHeight = videoInfo_.pFrameYUV_->height/2;
+                if(texWidth ==0 || texHeight==0) continue;
+	    		framePlanarDataU_ = new unsigned char[texWidth * texHeight];
+	    		break;
+
+	    	case YUV_PLANE_V:
+	    		texWidth  = videoInfo_.pFrameYUV_->width/2;
+	    		texHeight = videoInfo_.pFrameYUV_->height/2;
+                if(texWidth ==0 || texHeight==0) continue;
+	    		framePlanarDataV_ = new unsigned char[texWidth * texHeight];
+	    		break;
+	    	}
+
+            if(texWidth ==0 || texHeight==0) continue;
+	    	outputTexture[i] = WeakPtr<Texture2D>(new Texture2D(context_));
+	    	outputTexture[i]->SetSize(texWidth, texHeight, Graphics::GetLuminanceFormat(), TEXTURE_DYNAMIC);
+	    	outputTexture[i]->SetFilterMode(FILTER_BILINEAR);
+	    	outputTexture[i]->SetNumLevels(1);
+	    	outputTexture[i]->SetAddressMode(TextureCoordinate::COORD_U, TextureAddressMode::ADDRESS_MIRROR);
+	    	outputTexture[i]->SetAddressMode(TextureCoordinate::COORD_V, TextureAddressMode::ADDRESS_MIRROR);
+
+        }
+
+
+	    // assign planes textures into sepparated samplers for shader
+	    outputMaterial->SetTexture(TextureUnit::TU_DIFFUSE, outputTexture[YUV_PLANE_Y]);
+	    outputMaterial->SetTexture(TextureUnit::TU_SPECULAR, outputTexture[YUV_PLANE_U]);
+	    outputMaterial->SetTexture(TextureUnit::TU_NORMAL, outputTexture[YUV_PLANE_V]);
+
+        isInitilizedTextures_ = true;
+    }
 	
-	//outputModel->SetMaterial(0, outputMaterial);
 
 	return ret;
 	
@@ -238,6 +238,15 @@ void VideoPlayerComponent::UpdatePlaneTextures()
     if(framePlanarDataU_==nullptr) return;
     if(framePlanarDataY_==nullptr) return;
     if(framePlanarDataV_==nullptr) return;
+    if(videoInfo_.pFrameYUV_==nullptr) return;
+
+    if(videoInfo_.pFrameYUV_!=nullptr)
+    {
+    LOG_INFOS_CPP(" videoInfo_.pFrameYUV_ ", videoInfo_.pFrameYUV_, videoInfo_.pFrameYUV_->width, videoInfo_.pFrameYUV_->height);
+        //exit(-9);
+    }
+
+    LOG_INFOS_CPP(" videoInfo_.pFrameYUV_ ", videoInfo_.pFrameYUV_);
 
 	auto texWidth  = videoInfo_.pFrameYUV_->width;
 	auto texHeight = videoInfo_.pFrameYUV_->height;
@@ -248,7 +257,8 @@ void VideoPlayerComponent::UpdatePlaneTextures()
 	{
         {
             unsigned char* sd = videoInfo_.pFrameYUV_->data[0];
-            //LOG_INFOS_CPP("y", y, texWidth, texHeight, (int)videoInfo_.pFrameYUV_->linesize[0], (void*)framePlanarDataY_);
+            LOG_INFOS_CPP(" videoInfo_.pFrameYUV_->data[0] ",(void*)videoInfo_.pFrameYUV_->data[0], (void*)sd);
+            LOG_INFOS_CPP(texWidth, texHeight);
 		    memcpy(&framePlanarDataY_[y*texWidth], &sd[y*videoInfo_.pFrameYUV_->linesize[0]], texWidth);
         }
     }
@@ -269,36 +279,12 @@ void VideoPlayerComponent::UpdatePlaneTextures()
         }
     }
 
-
-    {
-		for (int x = 0; x < texWidth; ++x)
-		{
-
-//			const int offsetUV = x + y * m_YUVFrame.uv_width;
-
-//			framePlanarDataU_[offsetUV] = m_YUVFrame.u[x + y * m_YUVFrame.uv_stride];
-//			framePlanarDataV_[offsetUV] = m_YUVFrame.v[x + y * m_YUVFrame.uv_stride];
-
-			// 2x2 more work for Y
-
-//			const int offsetLUTile = x + y * m_YUVFrame.y_width;
-//			framePlanarDataY_[offsetLUTile] = m_YUVFrame.y[x + y * m_YUVFrame.y_stride];
-
-//			const int offsetRUTile = m_YUVFrame.uv_width + x + y * m_YUVFrame.y_width;
-//			framePlanarDataY_[offsetRUTile] = m_YUVFrame.y[m_YUVFrame.uv_width + x + y * m_YUVFrame.y_stride];
-//
-//			const int offsetLBTile = x + (y + m_YUVFrame.uv_height) * m_YUVFrame.y_width;
-//			framePlanarDataY_[offsetLBTile] = m_YUVFrame.y[x + ((y + m_YUVFrame.uv_height) * m_YUVFrame.y_stride)];
-//
-//			const int offsetRBTile = (m_YUVFrame.uv_width + x) + (y + m_YUVFrame.uv_height) * m_YUVFrame.y_width;
-//			framePlanarDataY_[offsetRBTile] = m_YUVFrame.y[(m_YUVFrame.uv_width + x) + ((y + m_YUVFrame.uv_height) * m_YUVFrame.y_stride)];
-
-		}
-	}
+    
 
 	// Fill textures with new data
 	for (int i = 0; i < YUV_PLANE_MAX_SIZE; ++i)
 	{
+        if(outputTexture[i] == nullptr) continue;
 		switch (i)
 		{
 		case YUVP420PlaneType::YUV_PLANE_Y:
@@ -320,18 +306,6 @@ void VideoPlayerComponent::UpdatePlaneTextures()
 }
 
 
-void VideoPlayerComponent::ScaleModelAccordingVideoRatio()
-{
-	if (outputModel)
-	{
-		Node* node = outputModel->GetNode();
-		float ratioW = (float)frameWidth_ / (float)frameHeight_;
-		float ratioH = (float)frameHeight_ / (float)frameWidth_;
-
-		Vector3 originalScale = node->GetScale();
-		node->SetScale(Vector3(originalScale.x_, originalScale.x_ * ratioH, originalScale.z_ * ratioH));
-	}
-}
 
 bool VideoPlayerComponent::VideoInfo::OpenVideo(const String& fn)
 {

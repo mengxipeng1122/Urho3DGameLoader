@@ -62,6 +62,8 @@ public:
     void SetTextFontAttr(const ResourceRef& value) { textFont_ = value.name_ ; }
     ResourceRef GetTextFontAttr() const { return ResourceRef(Font::GetTypeStatic(), textFont_ ); }
 
+    int GetIndex() const noexcept { return index_; }
+
 protected:
     Color                   selectColor_{0,0,0,1};
     Color                   unselectColor_{1,1,1,1};

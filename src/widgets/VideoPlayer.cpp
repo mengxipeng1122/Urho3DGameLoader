@@ -38,7 +38,7 @@ bool VideoPlayer::LoadXML(const XMLElement& source, XMLFile* styleFile)
     LOG_INFOS_CPP(" go here");
 
     vp = new VideoPlayerComponent(context_);
-    vp->OpenFileName("dinopb.avi");
+//    vp->OpenFileName("dinopb.avi");
     auto *m = CACHE->GetResource<Material>("Materials/TVmaterialGPUYUV.1.xml");
 	vp->SetOutputMaterial(m);
     SetMaterial(m);
@@ -54,6 +54,17 @@ void VideoPlayer::HandleUpdate(StringHash eventType, VariantMap& eventData)
     if(vp!=nullptr) vp->HandleUpdate(eventType, eventData);
 
 }
+
+void VideoPlayer::OpenFileName(const char* fn)
+{
+    if(vp!=nullptr) vp->OpenFileName(fn);
+}
+
+void VideoPlayer::Close()
+{
+    if(vp!=nullptr) vp->Close();
+}
+
 
 
 }

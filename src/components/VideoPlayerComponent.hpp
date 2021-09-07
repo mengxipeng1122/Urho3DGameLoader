@@ -25,9 +25,8 @@ class URHO3D_API VideoPlayerComponent : public Component
 	URHO3D_OBJECT(VideoPlayerComponent, Component);
 
 public:
-	SharedPtr<StaticModel> outputModel;
-	SharedPtr<Material> outputMaterial;
-	SharedPtr<Texture2D> outputTexture[YUV_PLANE_MAX_SIZE];
+	WeakPtr<Material> outputMaterial;
+	WeakPtr<Texture2D> outputTexture[YUV_PLANE_MAX_SIZE];
 
 	unsigned prevTime_, prevFrame_;
 	unsigned char* framePlanarDataY_;
@@ -39,15 +38,9 @@ public:
 	static void RegisterObject(Context* context);
 
 	bool OpenFileName(String name);
-	bool SetOutputModel(StaticModel* sm);
+    void Close();
     bool SetOutputMaterial(Material* m);
-	void Play();
-	void Pause();
-	void Loop(bool isLoop = true);
-	void Stop();
 	unsigned Advance(float timeStep);
-
-	void ScaleModelAccordingVideoRatio();
 
 	int GetFrameWidth(void) const { return frameWidth_; };
 	int GetFrameHeight(void) const { return frameHeight_; };
@@ -62,11 +55,11 @@ private:
         {
             public:
                 bool opened_;
-                AVFormatContext *pFormatCtx_;
-                int              videoStream_;
-                AVCodecContext  *pCodecCtx_;
-                AVFrame         *pFrameYUV_;
-                uint8_t         *buffer_;
+                AVFormatContext *pFormatCtx_{nullptr};
+                int              videoStream_{-1};
+                AVCodecContext  *pCodecCtx_{nullptr};
+                AVFrame         *pFrameYUV_{nullptr};
+                uint8_t         *buffer_{nullptr};
                 int              frameWidth_{0};
                 int              frameHeight_{0};
             public:
@@ -85,15 +78,16 @@ private:
 	int BufferData(void);
 	void DecodeVideoFrame(void);
 	bool InitTexture();
+    void ClearTexture();
 
 	File* file_;
 	float framesPerSecond_{60.f};
-	bool isFileOpened_;
-	bool isStopped_;
-	unsigned frameWidth_;
-	unsigned frameHeight_;
+	bool isFileOpened_{false};
+	bool isInitilizedTextures_{false};
+	unsigned frameWidth_{0};
+	unsigned frameHeight_{0};
 	float videoTimer_{0.f};
-	unsigned lastVideoFrame_{0xffffff};
+	unsigned lastVideoFrame_{0u};
 
 	
 };
