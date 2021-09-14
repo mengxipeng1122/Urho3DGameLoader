@@ -19,6 +19,7 @@ class HomeScreen : public Screen
         WeakPtr<VideoPlayer>   videoPlayer_{nullptr};        
         
         void HandleTabChanged(StringHash eventType, VariantMap& eventData);
+        void HandleGamelistChanged(StringHash eventType, VariantMap& eventData);
         void HandleUpdate(StringHash eventType, VariantMap& eventData);
 
         void SetGamelist();

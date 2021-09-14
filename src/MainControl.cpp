@@ -145,7 +145,7 @@ void MainControl::Start()
 {
     // resource path 
     auto* cache = GetSubsystem<ResourceCache>(); 
-    auto success = cache->AddResourceDir("../Resources");
+    auto success = cache->AddResourceDir("Resources");
 
     // initialize laguage 
     {

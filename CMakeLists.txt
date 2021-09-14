@@ -44,10 +44,10 @@ define_source_files (GROUP EXTRA_CPP_FILES ${SRC_CPP_FILES} EXTRA_H_FILES ${SRC_
 # Setup target with resource copying
 setup_main_executable ()
 
-get_target_property(TARGET_INCLUDES ${TARGET_NAME} INCLUDE_DIRECTORIES)
-list(REMOVE_ITEM TARGET_INCLUDES "/usr/local/include")
-list(APPEND TARGET_INCLUDES "/usr/local/include" )
-set_target_properties(${TARGET_NAME}  PROPERTIES INCLUDE_DIRECTORIES "${TARGET_INCLUDES}")
+# get_target_property(TARGET_INCLUDES ${TARGET_NAME} INCLUDE_DIRECTORIES)
+# list(REMOVE_ITEM TARGET_INCLUDES "/usr/local/include")
+# list(APPEND TARGET_INCLUDES "/usr/local/include" )
+# set_target_properties(${TARGET_NAME}  PROPERTIES INCLUDE_DIRECTORIES "${TARGET_INCLUDES}")
 target_compile_features(${TARGET_NAME} PRIVATE cxx_std_17)
 
 target_link_libraries(${TARGET_NAME}   -lavformat -lavcodec -lavutil)

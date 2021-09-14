@@ -54,6 +54,8 @@ public:
     void SetTextFontAttr(const ResourceRef& value) { textFont_ = value.name_ ; }
     ResourceRef GetTextFontAttr() const { return ResourceRef(Font::GetTypeStatic(), textFont_ ); }
 
+    int GetIndex() const noexcept { return firstIndex_+index_; }
+
 protected:
 
     int                                 pageItems_{10};

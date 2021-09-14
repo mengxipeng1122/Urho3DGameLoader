@@ -22,25 +22,8 @@ VideoPlayerComponent::VideoPlayerComponent(Context* context) :
 
 VideoPlayerComponent::~VideoPlayerComponent()
 {
-
-	if (framePlanarDataY_)
-	{
-		delete[] framePlanarDataY_;
-		framePlanarDataY_ = 0;
-	}
-
-	if (framePlanarDataU_)
-	{
-		delete[] framePlanarDataU_;
-		framePlanarDataU_ = 0;
-	}
-
-	if (framePlanarDataV_)
-	{
-		delete[] framePlanarDataV_;
-		framePlanarDataV_ = 0;
-	}
-
+    Close();
+    ClearTexture();
 }
 
 void VideoPlayerComponent::RegisterObject(Context* context)
@@ -53,8 +36,7 @@ bool VideoPlayerComponent::OpenFileName(String name)
 	bool ret = false;
 
     isFileOpened_ = OpenFile(name);
-
-    InitTexture();
+    if( isFileOpened_) { InitTexture(); }
 
     frameWidth_ = videoInfo_.GetFrameWidth();    
     frameHeight_= videoInfo_.GetFrameHeight();   
@@ -143,12 +125,31 @@ unsigned VideoPlayerComponent::Advance(float timeStep)
 
 void VideoPlayerComponent::ClearTexture()
 {
+
+	if (framePlanarDataY_)
+	{
+		delete[] framePlanarDataY_;
+		framePlanarDataY_ = 0;
+	}
+
+	if (framePlanarDataU_)
+	{
+		delete[] framePlanarDataU_;
+		framePlanarDataU_ = 0;
+	}
+
+	if (framePlanarDataV_)
+	{
+		delete[] framePlanarDataV_;
+		framePlanarDataV_ = 0;
+	}
+
 	// Try clear if using case of reassingn the movie file
 	for (int i = 0; i < YUV_PLANE_MAX_SIZE; ++i)
 	{
 		if (outputTexture[i])
 		{
-	//		outputTexture[i]->ReleaseRef();
+//		outputTexture[i]->ReleaseRef();
 			outputTexture[i] = 0;
 		}
 	}
@@ -242,11 +243,11 @@ void VideoPlayerComponent::UpdatePlaneTextures()
 
     if(videoInfo_.pFrameYUV_!=nullptr)
     {
-    LOG_INFOS_CPP(" videoInfo_.pFrameYUV_ ", videoInfo_.pFrameYUV_, videoInfo_.pFrameYUV_->width, videoInfo_.pFrameYUV_->height);
+    //LOG_INFOS_CPP(" videoInfo_.pFrameYUV_ ", videoInfo_.pFrameYUV_, videoInfo_.pFrameYUV_->width, videoInfo_.pFrameYUV_->height);
         //exit(-9);
     }
 
-    LOG_INFOS_CPP(" videoInfo_.pFrameYUV_ ", videoInfo_.pFrameYUV_);
+    //LOG_INFOS_CPP(" videoInfo_.pFrameYUV_ ", videoInfo_.pFrameYUV_);
 
 	auto texWidth  = videoInfo_.pFrameYUV_->width;
 	auto texHeight = videoInfo_.pFrameYUV_->height;
@@ -257,8 +258,8 @@ void VideoPlayerComponent::UpdatePlaneTextures()
 	{
         {
             unsigned char* sd = videoInfo_.pFrameYUV_->data[0];
-            LOG_INFOS_CPP(" videoInfo_.pFrameYUV_->data[0] ",(void*)videoInfo_.pFrameYUV_->data[0], (void*)sd);
-            LOG_INFOS_CPP(texWidth, texHeight);
+            //LOG_INFOS_CPP(" videoInfo_.pFrameYUV_->data[0] ",(void*)videoInfo_.pFrameYUV_->data[0], (void*)sd);
+            //LOG_INFOS_CPP(texWidth, texHeight);
 		    memcpy(&framePlanarDataY_[y*texWidth], &sd[y*videoInfo_.pFrameYUV_->linesize[0]], texWidth);
         }
     }
