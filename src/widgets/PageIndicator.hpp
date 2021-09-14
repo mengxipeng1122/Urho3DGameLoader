@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Widget.hpp"
 #include "../Global.h"
 
 namespace Urho3D

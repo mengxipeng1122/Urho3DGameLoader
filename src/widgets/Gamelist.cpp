@@ -35,7 +35,7 @@ void Gamelist::RegisterObject(Context* context)
 }
 
 Gamelist::Gamelist(Context *context)
-    : UIElement(context)
+    : Widget(context)
 {
 }
 
@@ -142,6 +142,19 @@ void Gamelist::Update()
 bool Gamelist::HandleKeyDown(InputKey key)
 {
     if(!IsSelected()) return false;
+
+
+    if(key == InputKey::START_1P)
+    {
+        SetSelected(false);
+        Update();
+        using namespace LostSelected;
+        VariantMap& eventData = GetEventDataMap();
+        eventData[P_ELEMENT] = this;
+        eventData[P_KEY]     = (int)key;
+        SendEvent(E_LOSTSELECTED, eventData);
+        return true;
+    }
 
     bool indexChanged = false;
     bool handledKey = false;

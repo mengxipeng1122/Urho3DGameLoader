@@ -11,6 +11,7 @@ VideoPlayerComponent* tvc{nullptr};
 void HomeScreen::Enter()
 {
 	SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(HomeScreen, HandleUpdate));
+
     Screen::Enter();
     auto* uiRoot= context_->GetSubsystem<UI>()->GetRoot();
     auto* screen = uiRoot->CreateChild<UIElement>(GetName());
@@ -27,14 +28,23 @@ void HomeScreen::Enter()
 
     mainTab_ = static_cast<TabSelector*>(screen->GetChild(String("Main Tab")));
     ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
-    SubscribeToEvent(mainTab_, E_TABCHANGED, URHO3D_HANDLER(HomeScreen, HandleTabChanged));
+    SubscribeToEvent(mainTab_, E_ITEMCHANGED,    URHO3D_HANDLER(HomeScreen, HandleMainTabChanged));
+    SubscribeToEvent(mainTab_, E_LOSTSELECTED,  URHO3D_HANDLER(HomeScreen, HandleMainTabLostSelected));
     mainTab_->SetSelected(true);
     mainTab_->Update();
+    SelectWidget(mainTab_);
 
+    searchTab_ = static_cast<TabSelector*>(screen->GetChild(String("Search Tab")));
+    ASSERT_CPP(searchTab_!=nullptr, " can not found Search Tab");
+    SubscribeToEvent(searchTab_, E_ITEMCHANGED,      URHO3D_HANDLER(HomeScreen, HandleSearchTabChanged));
+    SubscribeToEvent(searchTab_, E_LOSTSELECTED,    URHO3D_HANDLER(HomeScreen, HandleSearchTabLostSelected));
+    searchTab_->SetSelected(false);
+    searchTab_->Update();
 
     gamelist_ = screen->GetChildStaticCast<Gamelist>(String("Gamelist"));
     ASSERT_CPP(gamelist_!=nullptr, " can not found Gamelist");
-    SubscribeToEvent(gamelist_, E_ITEMCHANGED, URHO3D_HANDLER(HomeScreen, HandleGamelistChanged));
+    SubscribeToEvent(gamelist_, E_ITEMCHANGED,  URHO3D_HANDLER(HomeScreen, HandleGamelistChanged));
+    SubscribeToEvent(gamelist_, E_LOSTSELECTED, URHO3D_HANDLER(HomeScreen, HandleGamelistLostSelected));
 
     videoPlayer_ = screen->GetChildStaticCast<VideoPlayer>(String("VideoPlayer"));
 
@@ -44,60 +54,103 @@ void HomeScreen::Enter()
 
 void HomeScreen::Leave()
 {
-    LOG_INFOS_CPP(" go here ");
-    UnsubscribeFromEvent(mainTab_, E_TABCHANGED);
-    UnsubscribeFromEvent(this, E_UPDATE);
+    selectedWidget_ ={nullptr};        
+    UnsubscribeFromEvent(mainTab_,      E_ITEMCHANGED);
+    UnsubscribeFromEvent(mainTab_,      E_LOSTSELECTED);
+    UnsubscribeFromEvent(searchTab_,    E_ITEMCHANGED);
+    UnsubscribeFromEvent(searchTab_,    E_LOSTSELECTED);
+    UnsubscribeFromEvent(gamelist_,     E_ITEMCHANGED);
+    UnsubscribeFromEvent(gamelist_,     E_LOSTSELECTED);
+    UnsubscribeFromEvent(this,          E_UPDATE);
     Screen::Leave();
 }
 
 bool HomeScreen::HandleKeyDown( InputKey key)
 {
-    using namespace KeyDown;
-    ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
-    ASSERT_CPP(gamelist_!=nullptr, " can not found Main Tab");
+    //using namespace KeyDown;
 
-    {
-        if (mainTab_->IsSelected() && key == InputKey::DOWN_1P)
-        {
-            mainTab_->SetSelected(false); mainTab_->Update();
-            gamelist_->SetSelected(true); gamelist_->Update();
-            return true;
-        }
-        else if(gamelist_->IsSelected() && key == InputKey::START_1P)
-        {
-            mainTab_->SetSelected(true); mainTab_->Update();
-            gamelist_->SetSelected(false); gamelist_->Update();
-            return true;
-        }
-    }
+    ASSERT_CPP(mainTab_!=nullptr,   " can not found Main Tab");
+    ASSERT_CPP(searchTab_!=nullptr, " can not found search Tab");
+    ASSERT_CPP(gamelist_!=nullptr,  " can not found Main Tab");
 
-    if(mainTab_->IsSelected())
+    LOG_INFOS_CPP("selectedWidget_", selectedWidget_, mainTab_.Get());
+
+    if(selectedWidget_!=nullptr)
     {
-        bool success = mainTab_->HandleKeyDown(key);
-        if(success) return true;
-    }
-    else if(gamelist_->IsSelected())
-    {
-        bool success = gamelist_->HandleKeyDown(key);
+        bool success = selectedWidget_->HandleKeyDown(key);
         if(success) return true;
     }
 
     return false;
 }
 
-void HomeScreen::HandleTabChanged(StringHash eventType, VariantMap& eventData)
+void HomeScreen::HandleMainTabChanged(StringHash eventType, VariantMap& eventData)
 {
 
     int index = mainTab_->GetIndex();
     switch(index)
     {
-        case 0: ChanageToState(State::GAMELIST ); break;
-        case 1: ChanageToState(State::RECENT   ); break;
-        case 2: ChanageToState(State::FAVORITE ); break;
+        case 0: ChanageToState(State::GAMELIST      ); break;
+        case 1: ChanageToState(State::RECENT        ); break;
+        case 2: ChanageToState(State::FAVORITE      ); break;
+        case 3: ChanageToState(State::SEARCH_LOCAL  ); break;
         default: break;
+    }
+}
+
+void HomeScreen::HandleMainTabLostSelected(StringHash eventType, VariantMap& eventData)
+{
+
+    int index = mainTab_->GetIndex();
+    switch(index)
+    {
+        case 0: 
+        case 1: 
+        case 2:
+        {
+            auto gameItemsCount = gamelist_->GetGameItemsCount();
+            if(gameItemsCount>0) { SelectWidget(gamelist_); gamelist_->Update(); }
+            else { SelectWidget(mainTab_); mainTab_->Update(); }
+        }
+        break;
+
+        case 3: 
+            SelectWidget(searchTab_.Get()); searchTab_->Update();
+        break;
+        default: ASSERT_CPP("error", index); break;
+    }
+}
+
+
+void HomeScreen::HandleSearchTabChanged(StringHash eventType, VariantMap& eventData)
+{
+
+    int index = searchTab_->GetIndex();
+    switch(index)
+    {
+        case 0: break;
+        case 1: break;
+        default: ASSERT_CPP("error", index); break;
+    }
+}
+
+void HomeScreen::HandleSearchTabLostSelected(StringHash eventType, VariantMap& eventData)
+{
+    using namespace LostSelected;
+
+    auto key = (InputKey)eventData[P_KEY].GetInt();
+    if(key ==  InputKey::UP_1P)
+    {
+        SelectWidget(mainTab_); mainTab_->Update();
+    }
+    else if(key ==  InputKey::DOWN_1P)
+    {
+        // TODO:
     }
 
 }
+
+
 
 void HomeScreen::HandleGamelistChanged(StringHash eventType, VariantMap& eventData)
 {
@@ -106,6 +159,12 @@ void HomeScreen::HandleGamelistChanged(StringHash eventType, VariantMap& eventDa
     UpdatePagerIndicator();
 
 }
+
+void HomeScreen::HandleGamelistLostSelected(StringHash eventType, VariantMap& eventData)
+{
+    SelectWidget(mainTab_); mainTab_->Update();
+}
+
 
 void HomeScreen::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
@@ -164,11 +223,25 @@ void HomeScreen::ChanageToState(State newState)
     // enter old state
     switch(newState)
     {
-        case State::GAMELIST:      break;
-        case State::RECENT:        break;
-        case State::FAVORITE:      break;
-        case State::SEARCH_LOCAL:  break;
-        case State::SEARCH_STORE:  break;
+        case State::GAMELIST:      
+            searchTab_->SetVisible(false);
+        break;
+
+        case State::RECENT:        
+            searchTab_->SetVisible(false);
+        break;
+
+        case State::FAVORITE:      
+            searchTab_->SetVisible(false);
+        break;
+
+        case State::SEARCH_LOCAL:  
+            searchTab_->SetVisible(true);
+        break;
+
+        case State::SEARCH_STORE:  
+            searchTab_->SetVisible(true);
+        break;
     }
 
     state_ = newState;

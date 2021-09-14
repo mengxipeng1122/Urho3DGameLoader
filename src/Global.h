@@ -36,3 +36,26 @@ private:
 // for ostream
 std::ostream& operator<< ( std::ostream& os, const Urho3D::String& c );
 const Urho3D::String Urho3DStringStrip(const Urho3D::String& s);
+
+////////////////////////////////////////////////////////////////////////////////
+// events
+namespace Urho3D
+{
+
+URHO3D_EVENT(E_ITEMCHANGED, ItemChanged)
+{
+    URHO3D_PARAM(P_ELEMENT, Element);              // UIElement pointer
+    URHO3D_PARAM(P_INDEX,   Index);                // Integer [in/out]
+}
+
+URHO3D_EVENT(E_LOSTSELECTED, LostSelected)
+{
+    URHO3D_PARAM(P_ELEMENT, Element);              // UIElement pointer
+    URHO3D_PARAM(P_KEY,     InputKey);             // pressed key;
+}
+
+
+}
+
+
+

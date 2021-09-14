@@ -1,23 +1,16 @@
 
 #pragma once
-#include "../Global.h"
+#include "Widget.hpp"
 #include "../utils/log.hpp"
 
 namespace Urho3D
 {
 
-URHO3D_EVENT(E_ITEMCHANGED, ItemChanged)
-{
-    URHO3D_PARAM(P_ELEMENT, Element);              // UIElement pointer
-    URHO3D_PARAM(P_INDEX,   Index);                // String [in/out]
-}
-
-
 
 
 //=============================================================================
 //=============================================================================
-class Gamelist : public UIElement
+class Gamelist : public Widget
 {
     URHO3D_OBJECT(Gamelist, UIElement);
 public:
@@ -27,7 +20,8 @@ public:
     virtual ~Gamelist()override=default;
 
 
-    bool HandleKeyDown(InputKey key);
+    bool HandleKeyDown(InputKey key) override;
+
 
 public:
     struct Item

@@ -6,26 +6,34 @@
 #include "ScreenBuilder.hpp"
 #include "Screen.hpp"
 #include "ScreenManager.hpp"
+#include "../widgets/Widget.hpp"
 #include "../widgets/Gamelist.hpp"
 #include "../widgets/PageIndicator.hpp"
 #include "../widgets/TabSelector.hpp"
 #include "../widgets/VideoPlayer.hpp"
+
 class HomeScreen : public Screen
 {
     private:
         WeakPtr<PageIndicator> pageIndicator_{nullptr};        
         WeakPtr<TabSelector>   mainTab_{nullptr};        
+        WeakPtr<TabSelector>   searchTab_{nullptr};        
         WeakPtr<Gamelist>      gamelist_{nullptr};        
         WeakPtr<VideoPlayer>   videoPlayer_{nullptr};        
+        Widget*                selectedWidget_{nullptr};        
 
         Vector<String>         videoList_; // have same id with game list data
         
-        void HandleTabChanged(StringHash eventType, VariantMap& eventData);
+        void HandleMainTabChanged(StringHash eventType, VariantMap& eventData);
+        void HandleMainTabLostSelected(StringHash eventType, VariantMap& eventData);
+        void HandleSearchTabChanged(StringHash eventType, VariantMap& eventData);
+        void HandleSearchTabLostSelected(StringHash eventType, VariantMap& eventData);
         void HandleGamelistChanged(StringHash eventType, VariantMap& eventData);
+        void HandleGamelistLostSelected(StringHash eventType, VariantMap& eventData);
         void HandleUpdate(StringHash eventType, VariantMap& eventData);
 
-        void SetGamelist();
-
+        void SelectWidget(Widget* p) {ASSERT_CPP(p!=nullptr, "can not select nullptr "); selectedWidget_ = p; p->SetSelected(true);}
+        
         enum class State
         {
             GAMELIST,
@@ -41,6 +49,8 @@ class HomeScreen : public Screen
 
         void UpdateVideoPlayer();
         void UpdatePagerIndicator();
+        void SetGamelist();
+
     public:
         HomeScreen(Context* context):Screen(context){}
         void Enter() override;

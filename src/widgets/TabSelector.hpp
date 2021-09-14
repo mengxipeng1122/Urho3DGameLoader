@@ -1,6 +1,7 @@
 //
 #pragma once
 #include "../Global.h"
+#include "Widget.hpp"
 
 #include "../utils/log.hpp"
 
@@ -8,17 +9,11 @@ namespace Urho3D
 {
 
 /// Text entry into a LineEdit. The text can be modified in the event data.
-URHO3D_EVENT(E_TABCHANGED, TabChanged)
-{
-    URHO3D_PARAM(P_ELEMENT, Element);              // UIElement pointer
-    URHO3D_PARAM(P_INDEX,   Index);                // String [in/out]
-}
-
 
 
 //=============================================================================
 //=============================================================================
-class TabSelector : public UIElement
+class TabSelector : public Widget
 {
     URHO3D_OBJECT(TabSelector, UIElement);
 public:
@@ -29,7 +24,7 @@ public:
 
     void Update();
 
-    bool HandleKeyDown(InputKey key);
+    bool HandleKeyDown(InputKey key) override;
 
 protected:
     void HandleUpdate(StringHash eventType, VariantMap& eventData);

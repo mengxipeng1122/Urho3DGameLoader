@@ -27,7 +27,7 @@ void TabSelector::RegisterObject(Context* context)
 }
 
 TabSelector::TabSelector(Context *context)
-    : UIElement(context)
+    : Widget(context)
 {
     //CreateChildren();
     //Update();
@@ -101,6 +101,22 @@ void TabSelector::Update()
 
 bool TabSelector::HandleKeyDown(InputKey key)
 {
+    if(!IsSelected()) return false;
+
+    if(     key == InputKey::UP_1P
+        ||  key == InputKey::DOWN_1P
+        )
+    {
+        SetSelected(false);
+        Update();
+        using namespace LostSelected;
+        VariantMap& eventData = GetEventDataMap();
+        eventData[P_ELEMENT] = this;
+        eventData[P_KEY]    = int(key);
+        SendEvent(E_LOSTSELECTED, eventData);
+        return true;
+    }
+
     bool indexChanged = false;
     bool handledKey = false;
     if(key == InputKey::LEFT_1P) 
@@ -127,11 +143,11 @@ bool TabSelector::HandleKeyDown(InputKey key)
     if(indexChanged)
     {
         Update();
-        using namespace TabChanged;
+        using namespace ItemChanged;
         VariantMap& eventData = GetEventDataMap();
         eventData[P_ELEMENT] = this;
         eventData[P_INDEX] = index_;
-        SendEvent(E_TABCHANGED, eventData);
+        SendEvent(E_ITEMCHANGED, eventData);
     }
 
     return (handledKey);
