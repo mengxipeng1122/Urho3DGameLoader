@@ -26,6 +26,7 @@
 
 #include "MainControl.hpp"
 
+#include "subsystems/Machine.h"
 #include "components/VideoPlayerComponent.hpp"
 #include "widgets/PageIndicator.hpp"
 #include "widgets/Gamelist.hpp"
@@ -40,13 +41,8 @@ URHO3D_DEFINE_APPLICATION_MAIN(MainControl)
 
 MainControl::MainControl(Context* context) 
     : Application(context)
-    , yaw_(0.0f)
-    , pitch_(0.0f)
-    , touchEnabled_(false)
-    , useMouseMode_(MM_ABSOLUTE)
     , screenJoystickIndex_(M_MAX_UNSIGNED)
     , screenJoystickSettingsIndex_(M_MAX_UNSIGNED)
-    , paused_(false)
     , settings_(context, "Settings.xml")
     , uiRoot_(GetSubsystem<UI>()->GetRoot())
     , wallpaperNames_{
@@ -88,6 +84,7 @@ void MainControl::RegisterWidgets()
 void MainControl::RegisterSubsystems()
 {
     context_->RegisterSubsystem(new Global(context_));
+    context_->RegisterSubsystem(new Machine(context_));
 }
 
 void MainControl::RegisterComponents()
@@ -181,25 +178,6 @@ void MainControl::Stop()
     engine_->DumpResources(true);
 }
 
-void MainControl::InitTouchInput()
-{
-    touchEnabled_ = true;
-
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-    Input* input = GetSubsystem<Input>();
-    XMLFile* layout = cache->GetResource<XMLFile>("UI/ScreenJoystick_Samples.xml");
-    const String& patchString = GetScreenJoystickPatchString();
-    if (!patchString.Empty())
-    {
-        // Patch the screen joystick layout further on demand
-        SharedPtr<XMLFile> patchFile(new XMLFile(context_));
-        if (patchFile->FromString(patchString))
-            layout->Patch(patchFile);
-    }
-    screenJoystickIndex_ = (unsigned)input->AddScreenJoystick(layout, cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
-    input->SetScreenJoystickVisible(screenJoystickSettingsIndex_, true);
-}
-
 void MainControl::CreateConsoleAndDebugHud()
 {
     // Get default style
@@ -256,24 +234,8 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
     {
         Renderer* renderer = GetSubsystem<Renderer>();
 
-        // Preferences / Pause
-        if (key == KEY_SELECT && touchEnabled_)
-        {
-            paused_ = !paused_;
-
-            Input* input = GetSubsystem<Input>();
-            if (screenJoystickSettingsIndex_ == M_MAX_UNSIGNED)
-            {
-                // Lazy initialization
-                ResourceCache* cache = GetSubsystem<ResourceCache>();
-                screenJoystickSettingsIndex_ = (unsigned)input->AddScreenJoystick(cache->GetResource<XMLFile>("UI/ScreenJoystickSettings_Samples.xml"), cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
-            }
-            else
-                input->SetScreenJoystickVisible(screenJoystickSettingsIndex_, paused_);
-        }
-
         // Switch Screen test
-        else if (key == '8')
+        if (key == '8')
         {
             static bool homescreen = true;
             if(homescreen)
