@@ -77,8 +77,8 @@ void Gamelist::Update()
         }
         ASSERT_CPP(gameIndex>=0 && gameIndex < games_.size(), "gameIndex is not correct", gameIndex, UIItems_.Size());
         UIItems_[t]->SetVisible(true);
-        auto thumbnailPath = games_[gameIndex]->thumbnailPath_;
-        auto name          = games_[gameIndex]->name_;
+        auto iconPath = games_[gameIndex]->iconPath_;
+        auto name     = games_[gameIndex]->name_;
         {
             auto texture = CACHE->GetResource<Texture2D>(listMaskTexture_);
             UIItems_[t]->GetChildStaticCast<Sprite>(String("listMark"))->SetTexture(texture);
@@ -86,13 +86,13 @@ void Gamelist::Update()
         {
             auto sprite  = UIItems_[t]->GetChildStaticCast<Sprite>(String("listIcon"));
             ASSERT_CPP(sprite!=nullptr, "can not find list Icon");
-            if(context_->GetSubsystem<FileSystem>()->FileExists(thumbnailPath))
+            if(context_->GetSubsystem<FileSystem>()->FileExists(iconPath))
             {
                 // load texture and set  
-                File file(context_, thumbnailPath);
+                File file(context_, iconPath);
                 auto texture = new Texture2D(context_);
                 auto success = texture->Load(file);
-                ASSERT_CPP(success, " load texture2D failed ", thumbnailPath.CString());
+                ASSERT_CPP(success, " load texture2D failed ", iconPath.CString());
                 sprite->SetTexture(texture);
                 auto width = texture->GetWidth();
                 auto height= texture->GetHeight();
@@ -101,7 +101,7 @@ void Gamelist::Update()
             }
         }
         {
-            auto s = string_format("%04d %s", gameIndex+1, name.CString());
+            auto s = ConstructStringWithFormat("%04d %s", gameIndex+1, name.CString());
             UIItems_[t]->GetChildStaticCast<Text>(String("name"))->SetText(ToString(s.c_str()));
         }
         {
@@ -186,7 +186,7 @@ bool Gamelist::HandleKeyDown(InputKey key)
     return handledKey;
 }
 
-void Gamelist::addItem(const Item& item)
+void Gamelist::AddItem(const Item& item)
 {
     auto newItem = std::make_unique<Item>(item);
     games_.push_back(std::move(newItem));

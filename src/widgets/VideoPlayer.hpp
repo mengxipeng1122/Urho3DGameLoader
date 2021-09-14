@@ -16,7 +16,7 @@ public:
 
     explicit VideoPlayer(Context *context);
     virtual ~VideoPlayer()override=default;
-    void OpenFileName(String fn);
+    void OpenFileName(const String& fn);
     void Close();
 
     void Update();

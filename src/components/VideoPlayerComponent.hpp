@@ -37,7 +37,7 @@ public:
 	virtual ~VideoPlayerComponent();
 	static void RegisterObject(Context* context);
 
-	bool OpenFileName(String name);
+	bool OpenFileName(const String& name);
     void Close();
     bool SetOutputMaterial(Material* m);
 	unsigned Advance(float timeStep);
@@ -74,7 +74,7 @@ private:
 
         VideoInfo videoInfo_;
 
-	bool OpenFile(String fileName);
+	bool OpenFile(const String& fileName);
 	int BufferData(void);
 	void DecodeVideoFrame(void);
 	bool InitTexture();

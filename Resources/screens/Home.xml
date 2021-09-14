@@ -34,8 +34,8 @@
 		</element>
 		<element type="VideoPlayer">
 			<attribute name="Name" value="VideoPlayer" />
-			<attribute name="Position" value="600 300" />
-			<attribute name="Size" value="200 200" />
+			<attribute name="Position" value="600 200" />
+			<attribute name="Size" value="600 500" />
 			<attribute name="Pivot" value="0 0" />
 			<attribute name="Texture" value="Texture2D;res/VideoPlayerBackground.png" />
 			<attribute name="Image Rect" value="0 0 1 1" />

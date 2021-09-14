@@ -31,7 +31,7 @@ void VideoPlayerComponent::RegisterObject(Context* context)
 	context->RegisterFactory<VideoPlayerComponent>();
 }
 
-bool VideoPlayerComponent::OpenFileName(String name)
+bool VideoPlayerComponent::OpenFileName(const String& name)
 {
 	bool ret = false;
 
@@ -84,7 +84,7 @@ void VideoPlayerComponent::HandleUpdate(StringHash eventType, VariantMap& eventD
 	prevFrame_ = frame;
 }
 
-bool VideoPlayerComponent::OpenFile(String fileName)
+bool VideoPlayerComponent::OpenFile(const String& fileName)
 {
 
     Close();
@@ -314,9 +314,13 @@ bool VideoPlayerComponent::VideoInfo::OpenVideo(const String& fn)
 
     //mutex_.lock();
 
+    int ret=0; 
+
     // Open video file  
-    if( avformat_open_input(&pFormatCtx_, fn.CString(), NULL, NULL) != 0 ) {  
-        LOG_INFOS_CPP(" avformat_open_input failed ", fn.CString());
+    if((ret =  avformat_open_input(&pFormatCtx_, fn.CString(), NULL, NULL)) != 0 ) {  
+        constexpr auto buffSize = 256;
+        char buff[buffSize]; av_strerror(ret, buff, buffSize);
+        LOG_INFOS_CPP(" avformat_open_input failed", fn.Length(), fn.CString(), buff);
         return false;
 
     }  

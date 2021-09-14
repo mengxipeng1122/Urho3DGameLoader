@@ -1,6 +1,7 @@
 
 #include "Settings.hpp"
 #include "../utils/log.hpp"
+#include "../Global.h"
 
 Settings::Settings(Context* context, const char* xmlfileName)
     : Object(context)
@@ -10,8 +11,8 @@ Settings::Settings(Context* context, const char* xmlfileName)
     ASSERT_CPP(success, "loading", xmlfileName, "failed");
 
     auto root = xmlFile_->GetRoot();
-    lang_           = root.GetChild("language").GetValue();
-    videoPath_      = root.GetChild("Video Path").GetValue();
-    thumbnailPath_  = root.GetChild("Thumbnail Path").GetValue();
-
+    { String key = "language";            if(root.HasChild(key)) lang_                = Urho3DStringStrip(root.GetChild(key).GetValue()); }
+    { String key = "VideoPathFormat";     if(root.HasChild(key)) videoPathFormat_     = Urho3DStringStrip(root.GetChild(key).GetValue()); }
+    { String key = "ThumbnailPathFormat"; if(root.HasChild(key)) thumbnailPathFormat_ = Urho3DStringStrip(root.GetChild(key).GetValue()); }
+    { String key = "IconPathFormat";      if(root.HasChild(key)) iconPathFormat_      = Urho3DStringStrip(root.GetChild(key).GetValue()); }
 }

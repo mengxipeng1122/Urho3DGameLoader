@@ -11,14 +11,16 @@ class Settings: public Object
     private:
         SharedPtr<XMLFile> xmlFile_{nullptr};
         String             lang_{"cn"};
-        String             videoPath_{"movie/"};
-        String             thumbnailPath_{"thumbnali/"};
+        String             videoPathFormat_{"movie/%s.avi"};
+        String             thumbnailPathFormat_{"thumbnali/%s.png"};
+        String             iconPathFormat_{"icon/%s.png"};
     public:
         Settings(Context* Context, const char* xmlfileName);
         //////////////////////////////////////////////////    
         // getters/setters
-        const String& getLanguage()         const noexcept {return lang_;           };
-        const String& getVideoPath()        const noexcept {return videoPath_;      };
-        const String& getThumbnaliPath()    const noexcept {return thumbnailPath_;  };
+        const String& GetLanguage()             const noexcept {return lang_;               };
+        const String& GetVideoPathFormat()      const noexcept {return videoPathFormat_;    };
+        const String& GetThumbnailPathFormat()  const noexcept {return thumbnailPathFormat_;};
+        const String& GetIconPathFormat()       const noexcept {return iconPathFormat_;     };
 
 };

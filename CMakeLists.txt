@@ -27,6 +27,7 @@ include (UrhoCommon)
 
 file (GLOB SRC_CPP_FILES 
     src/*.cpp
+    src/subsystems/*.cpp
     src/utils/*.cpp
     src/screens/*.cpp
     src/widgets/*.cpp
@@ -34,6 +35,7 @@ file (GLOB SRC_CPP_FILES
     )
 file (GLOB SRC_H_FILES 
     src/*.hpp
+    src/subsystems/*.hpp
     src/utils/*.hpp
     src/screens/*.hpp
     src/widgets/*.hpp

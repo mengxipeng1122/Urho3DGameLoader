@@ -55,7 +55,7 @@ void VideoPlayer::HandleUpdate(StringHash eventType, VariantMap& eventData)
 
 }
 
-void VideoPlayer::OpenFileName(String fn)
+void VideoPlayer::OpenFileName(const String& fn)
 {
     if(vp!=nullptr) vp->OpenFileName(fn);
 }

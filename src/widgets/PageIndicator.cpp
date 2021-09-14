@@ -51,7 +51,7 @@ void PageIndicator::SetText()
 {
     ASSERT_CPP(text_!=nullptr, " can not get text");
     LOG_INFOS_CPP(" go here ");
-    std::string s = string_format("%03d/%04d",curPageNo_, totalPageNo_);
+    std::string s = ConstructStringWithFormat("%03d/%04d",curPageNo_, totalPageNo_);
     text_->SetText(ToString(s.c_str()));
 }
 

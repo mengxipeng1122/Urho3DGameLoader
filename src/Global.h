@@ -10,6 +10,7 @@
 #define UI_ROOT     GetSubsystem<UI>()->GetRoot()
 #define RENDERER    GetSubsystem<Renderer>()
 
+////////////////////////////////////////////////////////////////////////////////
 // applications
 #include "subsystems/Settings.hpp"
 #include "subsystems/Machine.hpp"
@@ -29,3 +30,9 @@ public:
 private:
 
 };
+
+
+// extension to Urho3D library
+// for ostream
+std::ostream& operator<< ( std::ostream& os, const Urho3D::String& c );
+const Urho3D::String Urho3DStringStrip(const Urho3D::String& s);
