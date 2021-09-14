@@ -218,7 +218,7 @@
                 <attribute name="Blend Mode" value="alpha" />
             </element>
         </element>
-		<element type="SearchEdit" style="SearchEdit">
+		<element type="SearchEdit">
 			<attribute name="Name" value="Search Edit" />
 			<attribute name="Position" value="440 208" />
 			<attribute name="Pivot" value="0 0" />
@@ -228,5 +228,20 @@
             <attribute name="Text Font Size" value="12" />
 			<attribute name="Key Base Position" value="10 0" />
 			<attribute name="Count Base Position" value="50 0" />
+		</element>
+		<element type="KeyBoard">
+			<attribute name="Name" value="Keyboard" />
+			<attribute name="Position" value="440 238" />
+			<attribute name="Pivot" value="0 0" />
+			<attribute name="Text Unselect Color" value="0 0 0 1" />
+			<attribute name="Key Gap" value="2 2" />
+            <attribute name="Key Background Texture" value="Texture2D;res/key_bg.png" />
+            <attribute name="Key Select Texture" value="Texture2D;res/key_sel.png" />
+            <attribute name="Key Clear Texture" value="Texture2D;res/key_clear.png" />
+            <attribute name="Key Del Texture" value="Texture2D;res/key_del.png" />
+            <attribute name="Key Shift Texture" value="Texture2D;res/key_shift.png" />
+            <attribute name="Key Space Texture" value="Texture2D;res/key_space.png" />
+            <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+			<attribute name="Text Font Size" value="35" />
 		</element>
 </element>

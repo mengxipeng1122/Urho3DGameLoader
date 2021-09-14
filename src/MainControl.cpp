@@ -35,6 +35,7 @@
 #include "widgets/TabSelector.hpp"
 #include "widgets/VideoPlayer.hpp"
 #include "widgets/SearchEdit.hpp"
+#include "widgets/KeyBoard.hpp"
 #include "screens/ScreenManager.hpp"
 #include "screens/HomeScreen.hpp"
 #include "screens/IOTestScreen.hpp"
@@ -81,6 +82,7 @@ void MainControl::RegisterWidgets()
     PageIndicator::RegisterObject(context_);
     TabSelector  ::RegisterObject(context_);
     SearchEdit   ::RegisterObject(context_);
+    KeyBoard     ::RegisterObject(context_);
 }
 
 void MainControl::RegisterSubsystems()
