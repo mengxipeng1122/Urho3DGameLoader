@@ -1,7 +1,7 @@
 
 #pragma once 
 
-#include "Global.h"
+#include "../Global.h"
 
 enum class InputKey
 {
@@ -35,4 +35,12 @@ enum class InputKey
 };
 
 using namespace Urho3D;
-bool HasInputKey(VariantMap& eventData, InputKey& inputKey);
+class InputSystem: public Object
+{
+    URHO3D_OBJECT(InputSystem, Object);
+
+    public:
+        InputSystem(Context* context): Object(context){}
+        bool HasInputKey(VariantMap& eventData, InputKey& inputKey);
+};
+

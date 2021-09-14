@@ -1,9 +1,7 @@
 
 #pragma once
 #include "../Global.h"
-
 #include "../utils/log.hpp"
-#include "../InputSystem.hpp"
 
 namespace Urho3D
 {

@@ -2,15 +2,23 @@
 #include "Urho3DAll.h"
 
 
-// Макросы для более лаконичного кода.
-#define CACHE GetSubsystem<ResourceCache>()
-#define GLOBAL GetSubsystem<Global>()
-#define INPUT GetSubsystem<Input>()
-#define UI_ROOT GetSubsystem<UI>()->GetRoot()
-#define RENDERER GetSubsystem<Renderer>()
+// all shortcuts for subsystem
+// urho3d related
+#define CACHE       GetSubsystem<ResourceCache>()
+#define GLOBAL      GetSubsystem<Global>()
+#define INPUT       GetSubsystem<Input>()
+#define UI_ROOT     GetSubsystem<UI>()->GetRoot()
+#define RENDERER    GetSubsystem<Renderer>()
+
+// applications
+#include "subsystems/Settings.hpp"
+#include "subsystems/Machine.hpp"
+#include "subsystems/InputSystem.hpp"
+#define SETTINGS        GetSubsystem<Settings>()
+#define MACHINE         GetSubsystem<Machine>()
+#define INPUT_SYSTEM    GetSubsystem<InputSystem>()
 
 
-// Собственная подсистема для доступа к глобальным переменным и методам.
 class Global : public Object
 {
     URHO3D_OBJECT(Global, Object);

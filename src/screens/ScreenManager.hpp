@@ -9,7 +9,6 @@
 #include "Screen.hpp"
 #include "ScreenBuilder.hpp"
 #include "../DP/Factory.hpp"
-#include "../InputSystem.hpp"
 
 using namespace Urho3D;
 

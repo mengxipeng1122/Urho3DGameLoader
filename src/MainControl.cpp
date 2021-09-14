@@ -26,7 +26,9 @@
 
 #include "MainControl.hpp"
 
-#include "subsystems/Machine.h"
+#include "subsystems/Machine.hpp"
+#include "subsystems/Settings.hpp"
+#include "subsystems/InputSystem.hpp"
 #include "components/VideoPlayerComponent.hpp"
 #include "widgets/PageIndicator.hpp"
 #include "widgets/Gamelist.hpp"
@@ -35,7 +37,6 @@
 #include "screens/ScreenManager.hpp"
 #include "screens/HomeScreen.hpp"
 #include "screens/IOTestScreen.hpp"
-#include "InputSystem.hpp"
 
 URHO3D_DEFINE_APPLICATION_MAIN(MainControl)
 
@@ -43,7 +44,6 @@ MainControl::MainControl(Context* context)
     : Application(context)
     , screenJoystickIndex_(M_MAX_UNSIGNED)
     , screenJoystickSettingsIndex_(M_MAX_UNSIGNED)
-    , settings_(context, "Settings.xml")
     , uiRoot_(GetSubsystem<UI>()->GetRoot())
     , wallpaperNames_{
         "wallpaper/00.jpg",
@@ -85,6 +85,8 @@ void MainControl::RegisterSubsystems()
 {
     context_->RegisterSubsystem(new Global(context_));
     context_->RegisterSubsystem(new Machine(context_));
+    context_->RegisterSubsystem(new Settings(context_, "Settings.xml"));
+    context_->RegisterSubsystem(new InputSystem(context_));
 }
 
 void MainControl::RegisterComponents()
@@ -102,7 +104,7 @@ void MainControl::Setup()
     engineParameters_[EP_LOG_NAME]     = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
     engineParameters_[EP_FULL_SCREEN]  = false;
     engineParameters_[EP_HEADLESS]     = false;
-    engineParameters_[EP_SOUND]        = false;
+    engineParameters_[EP_SOUND]        = true;
 
     engineParameters_[EP_WINDOW_WIDTH] = 1280;
     engineParameters_[EP_WINDOW_HEIGHT]=  720;
@@ -214,7 +216,7 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
     using namespace KeyDown;
 
     InputKey inputKey;
-    if(HasInputKey(eventData, inputKey))
+    if(INPUT_SYSTEM->HasInputKey(eventData, inputKey))
     {
         ScreenManager::HandleKeyDown(inputKey);
     }

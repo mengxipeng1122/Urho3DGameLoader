@@ -1,7 +1,6 @@
 
 #include "../utils/log.hpp"
 #include "../utils/string.hpp"
-#include "../InputSystem.hpp"
 
 #include "Gamelist.hpp"
 
@@ -9,7 +8,7 @@ namespace Urho3D
 {
 extern const char* UI_CATEGORY;
 
-#include <Urho3D/DebugNew.h>
+//#include <Urho3D/DebugNew.h>
 //=============================================================================
 //=============================================================================
 void Gamelist::RegisterObject(Context* context)

@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 #include "../Global.h"
-#include "../InputSystem.hpp"
 
 
 class Screen : public UIElement

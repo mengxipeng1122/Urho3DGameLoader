@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Global.h"
-#include "Settings.hpp"
 
 
 /// MainControl class, as framework for all samples.
@@ -50,9 +49,6 @@ private:
     /// Screen joystick index for settings (mobile platforms only).
     unsigned screenJoystickSettingsIndex_;
 
-    ////////////////////////////////////////////////////////////////////////////////
-    // setttings
-    Settings settings_;
     ////////////////////////////////////////////////////////////////////////////////
     // screens
     void RegisterSubsystems();
