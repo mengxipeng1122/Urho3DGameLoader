@@ -28,17 +28,19 @@ class HomeScreen : public Screen
 
         enum class State
         {
-            STA_GAMELIST,
-            STA_RECENT,
-            STA_FAVORITE,
-            STA_SEARCH_LOCAL,
-            STA_SEARCH_STORE,
+            GAMELIST,
+            RECENT,
+            FAVORITE,
+            SEARCH_LOCAL,
+            SEARCH_STORE,
         };
 
-        State state_{State::STA_GAMELIST};
+        State state_{State::GAMELIST};
 
         void ChanageToState(State newState);
 
+        void UpdateVideoPlayer();
+        void UpdatePagerIndicator();
     public:
         HomeScreen(Context* context):Screen(context){}
         void Enter() override;

@@ -42,6 +42,7 @@ public:
     void ClearItems(){ games_.clear(); }
     void AddItem(const Item& item);
     void Update();
+    int  GetGameItemsCount() const noexcept { return games_.size() ; }
 
 #define DEF_TEXTURE_ATTR_SETTER_GETTER( n0, n1 ) \
     void Set ## n0 ## TextureAttr(const ResourceRef& value) { n1 ## Texture_ = value.name_ ; }  \
@@ -57,6 +58,9 @@ public:
     ResourceRef GetTextFontAttr() const { return ResourceRef(Font::GetTypeStatic(), textFont_ ); }
 
     int GetIndex() const noexcept { return firstIndex_+index_; }
+    void ResetIndex() { firstIndex_=0; index_=0;}
+
+    int GetPageItems() const noexcept { return pageItems_; }
 
 protected:
 

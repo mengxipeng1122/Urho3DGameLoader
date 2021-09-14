@@ -36,9 +36,9 @@ void HomeScreen::Enter()
     ASSERT_CPP(gamelist_!=nullptr, " can not found Gamelist");
     SubscribeToEvent(gamelist_, E_ITEMCHANGED, URHO3D_HANDLER(HomeScreen, HandleGamelistChanged));
 
-    SetGamelist();
-
     videoPlayer_ = screen->GetChildStaticCast<VideoPlayer>(String("VideoPlayer"));
+
+    ChanageToState(state_);
 
 }
 
@@ -87,18 +87,23 @@ bool HomeScreen::HandleKeyDown( InputKey key)
 
 void HomeScreen::HandleTabChanged(StringHash eventType, VariantMap& eventData)
 {
+
+    int index = mainTab_->GetIndex();
+    switch(index)
+    {
+        case 0: ChanageToState(State::GAMELIST ); break;
+        case 1: ChanageToState(State::RECENT   ); break;
+        case 2: ChanageToState(State::FAVORITE ); break;
+        default: break;
+    }
+
 }
 
 void HomeScreen::HandleGamelistChanged(StringHash eventType, VariantMap& eventData)
 {
-    
-    auto  index = gamelist_->GetIndex();
-    if(index < videoList_.Size())
-    {
-        auto path = videoList_[index];
-        LOG_INFOS_CPP(" video " , path.CString());
-        videoPlayer_->OpenFileName(path);
-    }
+
+    UpdateVideoPlayer();
+    UpdatePagerIndicator();
 
 }
 
@@ -131,20 +136,71 @@ void HomeScreen::SetGamelist()
     // add data 
     switch(state)
     {
-        case State::STA_GAMELIST:      MACHINE->HandleAllGames(cb);     break;
-        case State::STA_RECENT:        MACHINE->HandleRecentGames(cb);  break;
-        case State::STA_FAVORITE:      MACHINE->HandleFavoriteGames(cb);break;
-        case State::STA_SEARCH_LOCAL:  break;
-        case State::STA_SEARCH_STORE:  break;
+        case State::GAMELIST:      MACHINE->HandleAllGames(cb);     break;
+        case State::RECENT:        MACHINE->HandleRecentGames(cb);  break;
+        case State::FAVORITE:      MACHINE->HandleFavoriteGames(cb);break;
+        case State::SEARCH_LOCAL:  break;
+        case State::SEARCH_STORE:  break;
     }
 
     // update gamelist
+    gamelist_->ResetIndex();
     gamelist_->Update();
 }
 
 void HomeScreen::ChanageToState(State newState)
 {
+    // leave old state
+    State oldState = state_;
+    switch(oldState)
+    {
+        case State::GAMELIST:      break;
+        case State::RECENT:        break;
+        case State::FAVORITE:      break;
+        case State::SEARCH_LOCAL:  break;
+        case State::SEARCH_STORE:  break;
+    }
+
+    // enter old state
+    switch(newState)
+    {
+        case State::GAMELIST:      break;
+        case State::RECENT:        break;
+        case State::FAVORITE:      break;
+        case State::SEARCH_LOCAL:  break;
+        case State::SEARCH_STORE:  break;
+    }
+
+    state_ = newState;
+    SetGamelist();
+
+    UpdateVideoPlayer();
+    UpdatePagerIndicator();
 
 }
+
+void HomeScreen::UpdateVideoPlayer()
+{
+    auto  index = gamelist_->GetIndex();
+    if(index < videoList_.Size())
+    {
+        auto path = videoList_[index];
+        LOG_INFOS_CPP(" video " , path.CString());
+        videoPlayer_->OpenFileName(path);
+    }
+
+}
+
+void HomeScreen::UpdatePagerIndicator()
+{
+    auto index = gamelist_->GetIndex();
+    auto pageItems = gamelist_->GetPageItems();
+    auto gameItemsCount = gamelist_->GetGameItemsCount();
+    int c = int((index/pageItems))+1;
+    int t = int(((gameItemsCount+pageItems-1)/pageItems));
+    pageIndicator_->SetPage(c,t);
+
+}
+
 
 
