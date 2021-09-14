@@ -38,18 +38,13 @@ public:
     void Update();
     int  GetGameItemsCount() const noexcept { return games_.size() ; }
 
-#define DEF_TEXTURE_ATTR_SETTER_GETTER( n0, n1 ) \
-    void Set ## n0 ## TextureAttr(const ResourceRef& value) { n1 ## Texture_ = value.name_ ; }  \
-    ResourceRef Get ## n0 ## TextureAttr() const { return ResourceRef(Texture2D::GetTypeStatic(), n1 ## Texture_ ); } \
-
     DEF_TEXTURE_ATTR_SETTER_GETTER( ListMask, listMask)
     DEF_TEXTURE_ATTR_SETTER_GETTER( ListMaskSelect,  listMaskSelect)
     DEF_TEXTURE_ATTR_SETTER_GETTER( ListIconDefault, listIconDefault)
     DEF_TEXTURE_ATTR_SETTER_GETTER( ItemBackground,  itemBackground)
     DEF_TEXTURE_ATTR_SETTER_GETTER( ItemBackgroundSelect,  itemBackgroundSelect)
 
-    void SetTextFontAttr(const ResourceRef& value) { textFont_ = value.name_ ; }
-    ResourceRef GetTextFontAttr() const { return ResourceRef(Font::GetTypeStatic(), textFont_ ); }
+    DEF_FONT_ATTR_SETTER_GETTER( Text, text)
 
     int GetIndex() const noexcept { return firstIndex_+index_; }
     void ResetIndex() { firstIndex_=0; index_=0;}
