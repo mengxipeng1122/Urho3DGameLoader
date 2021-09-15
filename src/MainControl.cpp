@@ -178,6 +178,9 @@ void MainControl::Start()
     // Subscribe scene update event
     SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(MainControl, HandleSceneUpdate));
 
+//    SubscribeToEvent(E_JOYSTICKAXISMOVE,    URHO3D_HANDLER(MainControl, HandleJoyStickAxisMove));
+    SubscribeToEvent(E_JOYSTICKBUTTONDOWN,  URHO3D_HANDLER(MainControl, HandleJoyStickButtonDown));
+
 }
 
 void MainControl::Stop()
@@ -222,7 +225,7 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
 
     InputKey inputKey;
     int      inputIdx;
-    if(INPUT_SYSTEM->HasInputKey(eventData, inputKey, inputIdx))
+    if(INPUT_SYSTEM->KeyDownHasInputKey(eventData, inputKey, inputIdx))
     {
         ScreenManager::HandleKeyDown(inputKey, inputIdx);
     }
@@ -282,3 +285,21 @@ void MainControl::HandleSceneUpdate(StringHash /*eventType*/, VariantMap& eventD
 {
 }
 
+void MainControl::HandleJoyStickAxisMove(StringHash /*eventType*/, VariantMap& eventData)
+{
+    using namespace JoystickAxisMove;
+    auto joystickID = eventData[P_JOYSTICKID].GetInt();
+    auto axis       = eventData[P_AXIS      ].GetInt();
+    auto position   = eventData[P_POSITION  ].GetInt();
+}
+
+void MainControl::HandleJoyStickButtonDown(StringHash /*eventType*/, VariantMap& eventData)
+{
+    InputKey inputKey;
+    int      inputIdx;
+    if(INPUT_SYSTEM->JoystickButtonDownHasInputKey(eventData, inputKey, inputIdx))
+    {
+        ScreenManager::HandleKeyDown(inputKey, inputIdx);
+    }
+
+}

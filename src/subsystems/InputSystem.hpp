@@ -28,6 +28,7 @@ class InputSystem: public Object
 
     public:
         InputSystem(Context* context): Object(context){}
-        bool HasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx);
+        bool KeyDownHasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx);
+        bool JoystickButtonDownHasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx);
 };
 

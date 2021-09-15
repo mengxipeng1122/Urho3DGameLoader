@@ -3,7 +3,7 @@
 
 #include "InputSystem.hpp"
 
-bool InputSystem::HasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx)
+bool InputSystem::KeyDownHasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx)
 {
     using namespace KeyDown;
     int key = eventData[P_KEY].GetInt();
@@ -36,6 +36,30 @@ bool InputSystem::HasInputKey(VariantMap& eventData, InputKey& inputKey, int& in
         case KEY_B:     { inputKey = InputKey::FIRE_E; inputIdx=1; return true;}
         case KEY_N:     { inputKey = InputKey::FIRE_F; inputIdx=1; return true;}
         case KEY_9:     { inputKey = InputKey::SETTING;inputIdx=0; return true;} 
+        default: return false;
+    }
+}
+
+bool InputSystem::JoystickButtonDownHasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx)
+{
+    using namespace JoystickButtonDown;
+    int key = eventData[P_BUTTON].GetInt();
+
+    switch(key)
+    {
+        case 10:        { inputKey = InputKey::LEFT;   inputIdx=0; return true;}
+        case 11:        { inputKey = InputKey::RIGHT;  inputIdx=0; return true;}
+        case 8:         { inputKey = InputKey::UP;     inputIdx=0; return true;}
+        case 9:         { inputKey = InputKey::DOWN;   inputIdx=0; return true;}
+        case 6:         { inputKey = InputKey::START;  inputIdx=0; return true;}
+        case 7:         { inputKey = InputKey::SELECT; inputIdx=0; return true;}
+        case 0:         { inputKey = InputKey::FIRE_A; inputIdx=0; return true;}
+        case 1:         { inputKey = InputKey::FIRE_B; inputIdx=0; return true;}
+        case 2:         { inputKey = InputKey::FIRE_C; inputIdx=0; return true;}
+        case 3:         { inputKey = InputKey::FIRE_D; inputIdx=0; return true;}
+        case 4:         { inputKey = InputKey::FIRE_E; inputIdx=0; return true;}
+        case 5:         { inputKey = InputKey::FIRE_F; inputIdx=0; return true;}
+
         default: return false;
     }
 }

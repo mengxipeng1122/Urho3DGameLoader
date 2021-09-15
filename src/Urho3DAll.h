@@ -254,33 +254,33 @@
 #include <Urho3D/Urho2D/TmxFile2D.h>
 #include <Urho3D/Urho2D/Urho2D.h>
 
-#ifdef URHO3D_ANGELSCRIPT
-#    include <Urho3D/AngelScript/Addons.h>
-#    include <Urho3D/AngelScript/APITemplates.h>
-#    include <Urho3D/AngelScript/Script.h>
-#    include <Urho3D/AngelScript/ScriptAPI.h>
-#    include <Urho3D/AngelScript/ScriptEventListener.h>
-#    include <Urho3D/AngelScript/ScriptFile.h>
-#    include <Urho3D/AngelScript/ScriptInstance.h>
-#endif
-
-#ifdef URHO3D_NETWORK
-#    include <Urho3D/Network/Connection.h>
-#    include <Urho3D/Network/HttpRequest.h>
-#    include <Urho3D/Network/Network.h>
-#    include <Urho3D/Network/NetworkEvents.h>
-#    include <Urho3D/Network/NetworkPriority.h>
-#    include <Urho3D/Network/Protocol.h>
-#endif
-
-#ifdef URHO3D_PHYSICS
-#    include <Urho3D/Physics/CollisionShape.h>
-#    include <Urho3D/Physics/Constraint.h>
-#    include <Urho3D/Physics/PhysicsEvents.h>
-#    include <Urho3D/Physics/PhysicsUtils.h>
-#    include <Urho3D/Physics/PhysicsWorld.h>
-#    include <Urho3D/Physics/RigidBody.h>
-#endif
+//#ifdef URHO3D_ANGELSCRIPT
+//#    include <Urho3D/AngelScript/Addons.h>
+//#    include <Urho3D/AngelScript/APITemplates.h>
+//#    include <Urho3D/AngelScript/Script.h>
+//#    include <Urho3D/AngelScript/ScriptAPI.h>
+//#    include <Urho3D/AngelScript/ScriptEventListener.h>
+//#    include <Urho3D/AngelScript/ScriptFile.h>
+//#    include <Urho3D/AngelScript/ScriptInstance.h>
+//#endif
+//
+//#ifdef URHO3D_NETWORK
+//#    include <Urho3D/Network/Connection.h>
+//#    include <Urho3D/Network/HttpRequest.h>
+//#    include <Urho3D/Network/Network.h>
+//#    include <Urho3D/Network/NetworkEvents.h>
+//#    include <Urho3D/Network/NetworkPriority.h>
+//#    include <Urho3D/Network/Protocol.h>
+//#endif
+//
+//#ifdef URHO3D_PHYSICS
+//#    include <Urho3D/Physics/CollisionShape.h>
+//#    include <Urho3D/Physics/Constraint.h>
+//#    include <Urho3D/Physics/PhysicsEvents.h>
+//#    include <Urho3D/Physics/PhysicsUtils.h>
+//#    include <Urho3D/Physics/PhysicsWorld.h>
+//#    include <Urho3D/Physics/RigidBody.h>
+//#endif
 
 #if defined(URHO3D_DATABASE_ODBC) || defined(URHO3D_DATABASE_SQLITE)
 #    include <Urho3D/Database/Database.h>
