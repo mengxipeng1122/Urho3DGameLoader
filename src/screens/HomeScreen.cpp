@@ -36,6 +36,9 @@ void HomeScreen::Enter()
 
     searchEdit_ = screen->GetChildStaticCast<SearchEdit>(String("Search Edit"));
     ASSERT_CPP(searchEdit_!=nullptr, " can not found Search Edit");
+    searchEdit_ ->SetSelected(false);
+    searchEdit_ ->Update();
+    searchEdit_ ->SetVisible(false);
 
     searchTab_ = static_cast<TabSelector*>(screen->GetChild(String("Search Tab")));
     ASSERT_CPP(searchTab_!=nullptr, " can not found Search Tab");
@@ -56,6 +59,9 @@ void HomeScreen::Enter()
     ASSERT_CPP(keyboard_!=nullptr, " can not found keyboard_");
     SubscribeToEvent(keyboard_, E_STRINGCHANGED,     URHO3D_HANDLER(HomeScreen, HandleKeyboardStringChanged));
     SubscribeToEvent(keyboard_, E_LOSTSELECTED,      URHO3D_HANDLER(HomeScreen, HandleKeyboardLostSelected));
+    keyboard_->SetSelected(false);
+    keyboard_->Update();
+    keyboard_->SetVisible(false);
 
     ChanageToState(state_);
 
@@ -234,34 +240,40 @@ void HomeScreen::ChanageToState(State newState)
     State oldState = state_;
     switch(oldState)
     {
-        case State::GAMELIST:      break;
-        case State::RECENT:        break;
-        case State::FAVORITE:      break;
-        case State::SEARCH_LOCAL:  break;
-        case State::SEARCH_STORE:  break;
+        case State::GAMELIST:      
+        break;
+
+        case State::RECENT:        
+        break;
+
+        case State::FAVORITE:      
+        break;
+
+        case State::SEARCH_LOCAL:  
+        break;
+
+        case State::SEARCH_STORE:  
+        break;
     }
 
     // enter old state
     switch(newState)
     {
         case State::GAMELIST:      
-            searchTab_->SetVisible(false);
-        break;
-
         case State::RECENT:        
-            searchTab_->SetVisible(false);
-        break;
-
         case State::FAVORITE:      
-            searchTab_->SetVisible(false);
+            searchTab_  ->SetVisible(false);
+            videoPlayer_->SetVisible(true);
+            keyboard_   ->SetVisible(false);
+            searchEdit_ ->SetVisible(false);
         break;
 
         case State::SEARCH_LOCAL:  
-            searchTab_->SetVisible(true);
-        break;
-
         case State::SEARCH_STORE:  
-            searchTab_->SetVisible(true);
+            searchTab_  ->SetVisible(true);
+            videoPlayer_->SetVisible(false);
+            keyboard_   ->SetVisible(true);
+            searchEdit_ ->SetVisible(true);
         break;
     }
 

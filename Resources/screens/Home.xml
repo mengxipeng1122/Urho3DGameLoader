@@ -220,14 +220,15 @@
         </element>
 		<element type="SearchEdit">
 			<attribute name="Name" value="Search Edit" />
-			<attribute name="Position" value="440 208" />
+			<attribute name="Position" value="650 208" />
 			<attribute name="Pivot" value="0 0" />
 			<attribute name="Background Texture" value="Texture2D;res/search_edit_bg.png" />
-			<attribute name="Text Color" value="1 1 1 1" />
+			<attribute name="Text Color" value="0 1 0 1" />
             <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-            <attribute name="Text Font Size" value="12" />
-			<attribute name="Key Base Position" value="10 0" />
-			<attribute name="Count Base Position" value="50 0" />
+            <attribute name="Text Font Size" value="25" />
+			<attribute name="Key Base Position" value="10 15" />
+			<attribute name="Count Base Position" value="250 15" />
+			<attribute name="Key Text Gap" value="25" />
 		</element>
 		<element type="Keyboard">
 			<attribute name="Name" value="Keyboard" />
