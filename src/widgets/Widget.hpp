@@ -62,6 +62,59 @@ class Widget: public UIElement
             UIBatch::AddOrMerge(batch, batches);
         }
 
+        // NOTE:
+        // dx  in is in/out parameter, 
+        // output dx will add by string texture width;
+        // only support one line so far
+        void AddStringBatch(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor, const String& str, FontFace* face, const Color& color, int& dx, int dy, int gap=-1, int w=-1, int h=-1)
+        {
+            int stringWidth = 0;
+            int stringHeight= 0;
+            // calculate string texture width first
+            {
+                for(auto i = 0;i< str.Length(); i++)
+                {
+                    auto c = str[i];
+                    const FontGlyph* glyph = face->GetGlyph(c);
+                    stringWidth += glyph->texWidth_;
+                    stringHeight = glyph->texHeight_;
+                }
+            }
+
+            {
+                auto offsetx = 0;
+                auto offsety = 0;
+                // find string offset x y
+                if(w>=0 && h>=0)
+                {
+                    offsetx=(w-stringWidth)/2;
+                    offsety=(h-stringHeight)/2;
+                }
+                const Vector<SharedPtr<Texture2D> >& textures = face->GetTextures();
+                for(auto i = 0;i< str.Length(); i++)
+                {
+                    auto c = str[i];
+                    const FontGlyph* glyph = face->GetGlyph(c);
+                    auto page = glyph->page_;
+                    ASSERT_CPP(page < textures.Size(), "page is not correct", page, "/", textures.Size());
+                    UIBatch batch(this, BLEND_ALPHA, currentScissor, textures[page], &vertexData);
+                    auto transform = Matrix3x4::IDENTITY;
+                    auto position = GetPosition();
+                    transform.SetTranslation(Vector3((float)position.x_+dx+offsetx, (float)position.y_+dy+offsety, 0.0f));
+                    batch.SetColor(color);
+
+                    const IntVector2& size {glyph->texWidth_, glyph->texHeight_};
+                    batch.AddQuad(transform, 0, 0, size.x_, size.y_, glyph->x_, glyph->y_,  size.x_, size.y_);
+                    UIBatch::AddOrMerge(batch, batches);
+
+                    offsetx += gap>=0 ? gap : glyph->texWidth_;
+                }
+            }
+
+            dx += stringWidth;
+        }
+
+
         void SendLostSelectedEvent(InputKey key, int idx)
         {
             using namespace LostSelected;

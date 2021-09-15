@@ -13,7 +13,7 @@ extern const char* UI_CATEGORY;
 void SearchEdit::RegisterObject(Context* context)
 {
     context->RegisterFactory<SearchEdit>(UI_CATEGORY);
-    URHO3D_COPY_BASE_ATTRIBUTES(UIElement);
+    URHO3D_COPY_BASE_ATTRIBUTES(Widget);
 
     URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Background Texture", GetBackgroundTextureAttr, SetBackgroundTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
 
@@ -23,58 +23,50 @@ void SearchEdit::RegisterObject(Context* context)
 
     URHO3D_ATTRIBUTE("Key Base Position", Vector2, keyBasePosition_, Vector2::ZERO, AM_FILE);
     URHO3D_ATTRIBUTE("Count Base Position", Vector2, countBasePosition_, Vector2::ZERO, AM_FILE);
+
+    URHO3D_ATTRIBUTE("Key String Gap", int, keyStringGap_, 15, AM_FILE);
 }
 
 SearchEdit::SearchEdit(Context *context)
-    : UIElement(context)
+    : Widget(context)
 {
 }
 
-bool SearchEdit::LoadXML(const XMLElement& source, XMLFile* styleFile)
+void SearchEdit::ApplyAttributes()
 {
-    bool success = UIElement::LoadXML(source, styleFile);
-    ASSERT_CPP(success, "load XML failed ");
-
-    CreateChildren();
+    Widget::ApplyAttributes();
     Update();
-
-    return success;
+    return;
 }
 
 void SearchEdit::Update()
 {
-    GetChildStaticCast<Text>(String("key"))->SetText(key_);
-    GetChildStaticCast<Text>(String("count"))->SetText(String(count_));
 }
 
-void SearchEdit::CreateChildren()
+void SearchEdit::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
 {
-    RemoveAllChildren();
     {
         auto texture = CACHE->GetResource<Texture2D>(backgroundTexture_);
-        ASSERT_CPP(texture != nullptr, " load Texture2D of ", backgroundTexture_.CString(), "failed");
-        auto bg = CreateChild<Sprite>(String("bg"));
-        bg ->SetSize(texture->GetWidth(), texture->GetHeight());
-        bg ->SetTexture(texture);
-        bg ->SetBlendMode(BLEND_ALPHA);
+        Widget::AddTextureBatch(batches, vertexData, currentScissor, texture, 0, 0);
     }
     {
-        auto keyText = CreateChild<Text>(String("key"));
         auto font = CACHE->GetResource<Font>(textFont_);
-        keyText->SetTextAlignment(HA_CENTER);
-        keyText->SetFont(font, textFontSize_);
-        keyText->SetColor(textColor_);
+        FontFace* face = font->GetFace(textFontSize_);
+        auto str  = key_;
+        int dx=keyBasePosition_.x_;
+        int dy=keyBasePosition_.y_;
+        Widget::AddStringBatch(batches, vertexData, currentScissor, str, face, textColor_, dx, dy, keyStringGap_);
     }
     {
-        auto countText = CreateChild<Text>(String("count"));
         auto font = CACHE->GetResource<Font>(textFont_);
-        countText->SetTextAlignment(HA_CENTER);
-        countText->SetFont(font, textFontSize_);
-        countText->SetColor(textColor_);
+        FontFace* face = font->GetFace(textFontSize_);
+        auto str  = String(count_);
+        int dx=countBasePosition_.x_;
+        int dy=countBasePosition_.y_;
+        Widget::AddStringBatch(batches, vertexData, currentScissor, str, face, textColor_, dx, dy);
     }
-
-
 }
+
 
 
 }

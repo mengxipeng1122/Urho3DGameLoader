@@ -11,13 +11,15 @@ namespace Urho3D
 
 //=============================================================================
 //=============================================================================
-class SearchEdit : public UIElement
+class SearchEdit : public Widget
 {
-    URHO3D_OBJECT(SearchEdit, UIElement);
+    URHO3D_OBJECT(SearchEdit, Widget);
 public:
     static void RegisterObject(Context* context);
 
     explicit SearchEdit(Context *context);
+
+    bool HandleKeyDown(InputKey key, int idx)override {return false;}
 
 public:
     void Update();
@@ -28,22 +30,25 @@ public:
 
     void SetTexts(const String& key, int count) { key_=key; count_ = count; Update(); }
 
+    /// Return UI rendering batches.
+    void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor) override;
+
 protected:
 
-    void CreateChildren();
     String                              backgroundTexture_;
     Color                               textColor_{1,1,1,1};
     String                              textFont_;
     float                               textFontSize_{DEFAULT_FONT_SIZE};
 
     Vector2                             keyBasePosition_{10,0};
+    int                                 keyStringGap_{15};
     Vector2                             countBasePosition_{10,0};
 
     String                              key_{""};
     int                                 count_{0};
 
 private:
-    bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
+    void ApplyAttributes() override;
 
 
 };
