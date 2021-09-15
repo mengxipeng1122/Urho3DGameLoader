@@ -35,79 +35,47 @@ Keyboard::Keyboard(Context *context)
 {
 }
 
-bool Keyboard::LoadXML(const XMLElement& source, XMLFile* styleFile)
+void Keyboard::ApplyAttributes()
 {
-    bool success = UIElement::LoadXML(source, styleFile);
-    ASSERT_CPP(success, "load XML failed ");
-
-    //CreateChildren();
+    Widget::ApplyAttributes();
     Update();
-
-    return success;
 }
 
 void Keyboard::Update()
 {
-//    GetChildStaticCast<Text>(String("key"))->SetText(key_);
 }
 
-void Keyboard::CreateChildren()
+bool Keyboard::HandleKeyDown(InputKey key, int idx)
 {
-    RemoveAllChildren();
-    auto keyBackgroundTexture = CACHE->GetResource<Texture2D>(keyBackgroundTexture_);
-    ASSERT_CPP(keyBackgroundTexture != nullptr, " load Texture2D of ", keyBackgroundTexture_.CString(), "failed");
-    auto keySelectTexture = CACHE->GetResource<Texture2D>(keySelectTexture_);
-    ASSERT_CPP(keySelectTexture != nullptr, " load Texture2D of ", keySelectTexture_.CString(), "failed");
-    for(auto r=0;r<rows_;r++)
+    if(key == InputKey::START)
     {
-        for(auto c=0;c<cols_;c++)
-        {
-            auto idx = cols_*r+c;
-            {
-                auto& texture = keyBackgroundTexture;
-                auto bg = CreateChild<Sprite>(String("bg")+String(idx));
-                bg ->SetSize(texture->GetWidth(), texture->GetHeight());
-                bg ->SetTexture(texture);
-                bg ->SetBlendMode(BLEND_ALPHA);
-                auto x=c*(texture->GetWidth() +keyGap_.x_);
-                auto y=r*(texture->GetHeight()+keyGap_.y_);
-                bg->SetPosition(x,y);
-            }
-        }
+        SetSelected(false);
+        Update();
+        Widget::SendLostSelectedEvent(key, idx); 
+        return true;
     }
-    for(auto r=0;r<rows_;r++)
-    {
-        for(auto c=0;c<cols_;c++)
-        {
-            auto idx = cols_*r+c;
-            {
-                auto& texture = keyBackgroundTexture;
-                auto text = CreateChild<Text>(String("text")+String(idx));
-                text ->SetSize(texture->GetWidth(), texture->GetHeight());
-                text ->SetText(String(chars_[idx]));
-                //text ->SetTextAlignment(HA_CENTER);
-                auto font = CACHE->GetResource<Font>(textFont_);
-                text ->SetFont(font, textFontSize_);
-                text ->SetColor(textUnselectColor_);
-                auto x=c*(texture->GetWidth() +keyGap_.x_);
-                auto y=r*(texture->GetHeight()+keyGap_.y_);
-                text ->SetPosition(x,y);
-            }
-        }
-    }
-}
-
-bool Keyboard::HandleKeyDown(InputKey key)
-{
     {
         auto oldCurrChar = currChar_;
         auto keyGridsCount = cols_*rows_;
         if(currChar_>=0 &&  currChar_< keyGridsCount)
         {
-            if(key == InputKey::UP_1P     ){ if(currChar_-cols_>=0)currChar_ -=cols_;                           return true; }
-            if(key == InputKey::DOWN_1P   ){ if(currChar_+cols_<keyGridsCount)currChar_ +=cols_;                return true; }
-            if(key == InputKey::LEFT_1P   ){ currChar_ --;  currChar_ = std::max(currChar_, 0);                 return true; }
-            if(key == InputKey::RIGHT_1P  ){ currChar_ ++;  currChar_ = std::min(keyGridsCount-1, currChar_);   return true; }
+            if(key == InputKey::UP     )
+            { 
+                if(currChar_-cols_>=0)
+                {
+                    currChar_ -=cols_; 
+                }
+                else
+                {
+                    SetSelected(false);
+                    Update();
+                    Widget::SendLostSelectedEvent(key, idx);
+                }  
+                return true; 
+            }
+            if(key == InputKey::DOWN   ){ if(currChar_+cols_<keyGridsCount)currChar_ +=cols_;                return true; }
+            if(key == InputKey::LEFT   ){ currChar_ --;  currChar_ = std::max(currChar_, 0);                 return true; }
+            if(key == InputKey::RIGHT  ){ currChar_ ++;  currChar_ = std::min(keyGridsCount-1, currChar_);   return true; }
         }
         else
         {
@@ -116,7 +84,7 @@ bool Keyboard::HandleKeyDown(InputKey key)
 
     }
     {
-        if(key == InputKey::FIRE_A_1P)
+        if(key == InputKey::FIRE_A)
         {
             auto l = str_.Length();
             switch(currChar_)
@@ -163,7 +131,7 @@ bool Keyboard::HandleKeyDown(InputKey key)
                 case 39: {if(l>0){ str_ = str_.Substring(0, l-1);  }} break; // deltete the last character
             }
             {
-                LOG_INFOS_CPP(" displayText  ", str_);
+                SendStringChanagedEvent(str_);
             }
             return true;
         }
@@ -225,7 +193,7 @@ void Keyboard::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexD
                 }
                 else if( ch== CHAR_DEL)
                 {
-                    Widget::AddTextureBatch(batches, vertexData, currentScissor, keyClearTexture, x, y);
+                    Widget::AddTextureBatch(batches, vertexData, currentScissor, keyDelTexture,   x, y);
                 }
                 else if( ch== CHAR_SPACE)
                 {
@@ -233,7 +201,14 @@ void Keyboard::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexD
                 }
                 else
                 {
-                    Widget::AddCharBatch(batches, vertexData, currentScissor, ch, face, textUnselectColor_, x,y, textureWidth, textureHeight);
+                    if(IsSelected() && idx == currChar_)
+                    {
+                        Widget::AddCharBatch(batches, vertexData, currentScissor, ch, face, textSelectColor_, x,y, textureWidth, textureHeight);
+                    }
+                    else
+                    {
+                        Widget::AddCharBatch(batches, vertexData, currentScissor, ch, face, textUnselectColor_, x,y, textureWidth, textureHeight);
+                    }
                 }
             }
         }

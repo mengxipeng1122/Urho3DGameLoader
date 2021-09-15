@@ -26,7 +26,7 @@ public:
 
     DEF_FONT_ATTR_SETTER_GETTER( Text, text)
 
-    void setTexts(const String& key, int count) { key_=key; count_ = count; Update(); }
+    void SetTexts(const String& key, int count) { key_=key; count_ = count; Update(); }
 
 protected:
 

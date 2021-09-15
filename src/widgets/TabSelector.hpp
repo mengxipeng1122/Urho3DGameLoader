@@ -24,7 +24,7 @@ public:
 
     void Update();
 
-    bool HandleKeyDown(InputKey key) override;
+    bool HandleKeyDown(InputKey key, int idx) override;
 
 protected:
     void HandleUpdate(StringHash eventType, VariantMap& eventData);

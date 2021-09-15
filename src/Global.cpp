@@ -31,3 +31,4 @@ const Urho3D::String Urho3DStringStrip(const Urho3D::String& s)
 
     return ret;
 }
+

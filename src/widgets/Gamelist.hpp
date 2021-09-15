@@ -20,7 +20,7 @@ public:
     virtual ~Gamelist()override=default;
 
 
-    bool HandleKeyDown(InputKey key) override;
+    bool HandleKeyDown(InputKey key, int idx) override;
 
 
 public:
@@ -35,7 +35,7 @@ private :
 public:
     void ClearItems(){ games_.clear(); }
     void AddItem(const Item& item);
-    void Update();
+    void Update()override;
     int  GetGameItemsCount() const noexcept { return games_.size() ; }
 
     DEF_TEXTURE_ATTR_SETTER_GETTER( ListMask, listMask)

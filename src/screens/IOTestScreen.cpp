@@ -22,7 +22,7 @@ void IOTestScreen::Leave()
     Screen::Leave();
 }
 
-bool IOTestScreen::HandleKeyDown(InputKey)
+bool IOTestScreen::HandleKeyDown(InputKey, int idx)
 {
     return false;
 }

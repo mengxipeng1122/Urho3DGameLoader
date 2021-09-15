@@ -28,16 +28,19 @@ void HomeScreen::Enter()
 
     mainTab_ = static_cast<TabSelector*>(screen->GetChild(String("Main Tab")));
     ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
-    SubscribeToEvent(mainTab_, E_ITEMCHANGED,    URHO3D_HANDLER(HomeScreen, HandleMainTabChanged));
-    SubscribeToEvent(mainTab_, E_LOSTSELECTED,  URHO3D_HANDLER(HomeScreen, HandleMainTabLostSelected));
+    SubscribeToEvent(mainTab_, E_ITEMCHANGED,       URHO3D_HANDLER(HomeScreen, HandleMainTabChanged));
+    SubscribeToEvent(mainTab_, E_LOSTSELECTED,      URHO3D_HANDLER(HomeScreen, HandleMainTabLostSelected));
     mainTab_->SetSelected(true);
     mainTab_->Update();
     SelectWidget(mainTab_);
 
+    searchEdit_ = screen->GetChildStaticCast<SearchEdit>(String("Search Edit"));
+    ASSERT_CPP(searchEdit_!=nullptr, " can not found Search Edit");
+
     searchTab_ = static_cast<TabSelector*>(screen->GetChild(String("Search Tab")));
     ASSERT_CPP(searchTab_!=nullptr, " can not found Search Tab");
-    SubscribeToEvent(searchTab_, E_ITEMCHANGED,      URHO3D_HANDLER(HomeScreen, HandleSearchTabChanged));
-    SubscribeToEvent(searchTab_, E_LOSTSELECTED,    URHO3D_HANDLER(HomeScreen, HandleSearchTabLostSelected));
+    SubscribeToEvent(searchTab_, E_ITEMCHANGED,         URHO3D_HANDLER(HomeScreen, HandleSearchTabChanged));
+    SubscribeToEvent(searchTab_, E_LOSTSELECTED,        URHO3D_HANDLER(HomeScreen, HandleSearchTabLostSelected));
     searchTab_->SetSelected(false);
     searchTab_->Update();
 
@@ -47,6 +50,12 @@ void HomeScreen::Enter()
     SubscribeToEvent(gamelist_, E_LOSTSELECTED, URHO3D_HANDLER(HomeScreen, HandleGamelistLostSelected));
 
     videoPlayer_ = screen->GetChildStaticCast<VideoPlayer>(String("VideoPlayer"));
+    ASSERT_CPP(videoPlayer_!=nullptr, " can not found VideoPlayer");
+
+    keyboard_ = screen->GetChildStaticCast<Keyboard>(String("Keyboard"));
+    ASSERT_CPP(keyboard_!=nullptr, " can not found keyboard_");
+    SubscribeToEvent(keyboard_, E_STRINGCHANGED,     URHO3D_HANDLER(HomeScreen, HandleKeyboardStringChanged));
+    SubscribeToEvent(keyboard_, E_LOSTSELECTED,      URHO3D_HANDLER(HomeScreen, HandleKeyboardLostSelected));
 
     ChanageToState(state_);
 
@@ -65,7 +74,7 @@ void HomeScreen::Leave()
     Screen::Leave();
 }
 
-bool HomeScreen::HandleKeyDown( InputKey key)
+bool HomeScreen::HandleKeyDown( InputKey key, int idx)
 {
     //using namespace KeyDown;
 
@@ -73,11 +82,9 @@ bool HomeScreen::HandleKeyDown( InputKey key)
     ASSERT_CPP(searchTab_!=nullptr, " can not found search Tab");
     ASSERT_CPP(gamelist_!=nullptr,  " can not found Main Tab");
 
-    LOG_INFOS_CPP("selectedWidget_", selectedWidget_, mainTab_.Get());
-
     if(selectedWidget_!=nullptr)
     {
-        bool success = selectedWidget_->HandleKeyDown(key);
+        bool success = selectedWidget_->HandleKeyDown(key, idx);
         if(success) return true;
     }
 
@@ -139,13 +146,15 @@ void HomeScreen::HandleSearchTabLostSelected(StringHash eventType, VariantMap& e
     using namespace LostSelected;
 
     auto key = (InputKey)eventData[P_KEY].GetInt();
-    if(key ==  InputKey::UP_1P)
+    if(key ==  InputKey::UP)
     {
         SelectWidget(mainTab_); mainTab_->Update();
     }
-    else if(key ==  InputKey::DOWN_1P)
+    else if(key ==  InputKey::DOWN)
     {
-        // TODO:
+        SelectWidget(keyboard_); 
+        keyboard_->ClearString();
+        keyboard_->Update();
     }
 
 }
@@ -165,6 +174,18 @@ void HomeScreen::HandleGamelistLostSelected(StringHash eventType, VariantMap& ev
     SelectWidget(mainTab_); mainTab_->Update();
 }
 
+void HomeScreen::HandleKeyboardLostSelected(StringHash eventType, VariantMap& eventData)
+{
+    SelectWidget(searchTab_); searchTab_->Update();
+}
+
+void HomeScreen::HandleKeyboardStringChanged(StringHash eventType, VariantMap& eventData)
+{
+    using namespace StringChanged;
+    const String s = eventData[P_STRING].GetString();
+    searchEdit_->SetTexts(s, 0);
+
+}
 
 void HomeScreen::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {

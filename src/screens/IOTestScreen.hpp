@@ -14,7 +14,7 @@ class IOTestScreen : public Screen
         IOTestScreen(Context* context):Screen(context){}
         void Enter() override;
         void Leave() override;
-        bool HandleKeyDown(InputKey key) override;
+        bool HandleKeyDown(InputKey key, int idx) override;
         static const char* GetName() {return "IOTest";}
 };
 

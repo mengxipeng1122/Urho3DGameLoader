@@ -14,6 +14,6 @@ class Screen : public UIElement
         virtual ~Screen()=default;
         virtual void Enter() ;
         virtual void Leave() ;
-        virtual bool HandleKeyDown(InputKey key)=0;
+        virtual bool HandleKeyDown(InputKey key, int idx)=0;
 };
 

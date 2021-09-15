@@ -28,7 +28,7 @@ class ScreenManager
         static void setCurrentScreen(ScreenTypes, Context* context);
         static void setCurrentScreen(std::unique_ptr<Screen> ptr);
 
-        static bool HandleKeyDown(InputKey key) {return s_currentScreen->HandleKeyDown(key);};
+        static bool HandleKeyDown(InputKey key, int idx) {return s_currentScreen->HandleKeyDown(key, idx);};
 };
 
 

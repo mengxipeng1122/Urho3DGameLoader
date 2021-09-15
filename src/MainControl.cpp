@@ -35,7 +35,7 @@
 #include "widgets/TabSelector.hpp"
 #include "widgets/VideoPlayer.hpp"
 #include "widgets/SearchEdit.hpp"
-#include "widgets/KeyBoard.hpp"
+#include "widgets/Keyboard.hpp"
 #include "screens/ScreenManager.hpp"
 #include "screens/HomeScreen.hpp"
 #include "screens/IOTestScreen.hpp"
@@ -82,7 +82,7 @@ void MainControl::RegisterWidgets()
     PageIndicator::RegisterObject(context_);
     TabSelector  ::RegisterObject(context_);
     SearchEdit   ::RegisterObject(context_);
-    KeyBoard     ::RegisterObject(context_);
+    Keyboard     ::RegisterObject(context_);
 }
 
 void MainControl::RegisterSubsystems()
@@ -220,9 +220,10 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
     using namespace KeyDown;
 
     InputKey inputKey;
-    if(INPUT_SYSTEM->HasInputKey(eventData, inputKey))
+    int      inputIdx;
+    if(INPUT_SYSTEM->HasInputKey(eventData, inputKey, inputIdx))
     {
-        ScreenManager::HandleKeyDown(inputKey);
+        ScreenManager::HandleKeyDown(inputKey, inputIdx);
     }
 
     int key = eventData[P_KEY].GetInt();

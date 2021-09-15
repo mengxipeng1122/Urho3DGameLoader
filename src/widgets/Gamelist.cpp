@@ -139,47 +139,43 @@ void Gamelist::Update()
 
 }
 
-bool Gamelist::HandleKeyDown(InputKey key)
+bool Gamelist::HandleKeyDown(InputKey key, int idx)
 {
     if(!IsSelected()) return false;
 
 
-    if(key == InputKey::START_1P)
+    if(key == InputKey::START)
     {
         SetSelected(false);
         Update();
-        using namespace LostSelected;
-        VariantMap& eventData = GetEventDataMap();
-        eventData[P_ELEMENT] = this;
-        eventData[P_KEY]     = (int)key;
-        SendEvent(E_LOSTSELECTED, eventData);
+        Widget::SendLostSelectedEvent(key, idx);
         return true;
     }
 
     bool indexChanged = false;
     bool handledKey = false;
     auto totalGames = games_.size();
-    if(key == InputKey::LEFT_1P) 
+    if(key == InputKey::LEFT) 
     {
         LOG_INFOS_CPP(" LEFT");
         goPreviousPage();
         indexChanged = true;
         handledKey = true;
     }
-    else if(key == InputKey::RIGHT_1P)
+    else if(key == InputKey::RIGHT)
     {
         LOG_INFOS_CPP(" RIGHT");
         goNextPage();
         indexChanged = true;
         handledKey = true;
     }
-    else if(key == InputKey::UP_1P)
+    else if(key == InputKey::UP)
     {
         goPreviousItem();
         indexChanged = true;
         handledKey = true;
     }
-    else if(key == InputKey::DOWN_1P)
+    else if(key == InputKey::DOWN)
     {
         goNextItem();
         indexChanged = true;
@@ -189,11 +185,7 @@ bool Gamelist::HandleKeyDown(InputKey key)
     if(indexChanged)
     {
         Update();
-        using namespace ItemChanged;
-        VariantMap& eventData = GetEventDataMap();
-        eventData[P_ELEMENT] = this;
-        eventData[P_INDEX] = firstIndex_+index_;
-        SendEvent(E_ITEMCHANGED, eventData);
+        Widget::SendItemChangedEvent(firstIndex_+index_);
     }
     
     return handledKey;

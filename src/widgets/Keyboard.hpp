@@ -19,7 +19,7 @@ public:
 
     explicit Keyboard(Context *context);
 
-    bool HandleKeyDown(InputKey key) override;
+    bool HandleKeyDown(InputKey key, int idx) override;
 
 public:
     void Update();
@@ -36,9 +36,11 @@ public:
     /// Return UI rendering batches.
     void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor) override;
 
+    //
+    void ClearString(){ str_.Clear() ;}
+
 protected:
 
-    void CreateChildren();
     String                              keyBackgroundTexture_;
     String                              keySelectTexture_;
     String                              keyClearTexture_;
@@ -55,7 +57,7 @@ protected:
     String                              str_{""};
 
 private:
-    bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
+    void ApplyAttributes() override;
 
     int                 currChar_{0};
 
@@ -68,8 +70,8 @@ private:
     static constexpr std::array<char, cols_*rows_> chars_ = {
         '1', '2', '3', '4', '5',        '6', '7', '8', '9', '0',
         'Q', 'W', 'E', 'R', 'T',        'Y', 'U', 'I', 'O', 'P',
-        'A', 'S', 'D', 'F', 'G',        'H', 'J', 'K', 'L', CHAR_DEL,
-        'Z', 'X', 'C', 'V', CHAR_SPACE, 'B', 'N', 'M', '-', CHAR_SPACE,
+        'A', 'S', 'D', 'F', 'G',        'H', 'J', 'K', 'L', CHAR_CLEAR,
+        'Z', 'X', 'C', 'V', CHAR_SPACE, 'B', 'N', 'M', '-', CHAR_DEL,
         };
 
 

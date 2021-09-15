@@ -10,7 +10,7 @@ class Widget: public UIElement
 {
     public:
         Widget(Context* context) : UIElement(context) {}
-        virtual bool HandleKeyDown(InputKey key)=0;
+        virtual bool HandleKeyDown(InputKey key, int idx)=0;
 
     protected:
         void AddTextureBatch(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor, Texture2D* texture, int dx, int dy, int w=-1, int h=-1)
@@ -61,6 +61,36 @@ class Widget: public UIElement
 
             UIBatch::AddOrMerge(batch, batches);
         }
+
+        void SendLostSelectedEvent(InputKey key, int idx)
+        {
+            using namespace LostSelected;
+            VariantMap& eventData = GetEventDataMap();
+            eventData[P_ELEMENT] = this;
+            eventData[P_KEY]     = (int)key;
+            eventData[P_INDEX]   = (int)idx;
+            SendEvent(E_LOSTSELECTED, eventData);
+        }
+
+        void SendItemChangedEvent(int idx)
+        {
+            using namespace ItemChanged;
+            VariantMap& eventData = GetEventDataMap();
+            eventData[P_ELEMENT] = this;
+            eventData[P_INDEX]   = (int)idx;
+            SendEvent(E_ITEMCHANGED, eventData);
+        }
+
+        void SendStringChanagedEvent(const String& str)
+        {
+            using namespace StringChanged;
+            VariantMap& eventData = GetEventDataMap();
+            eventData[P_ELEMENT] = this;
+            eventData[P_STRING]  = str;
+            SendEvent(E_STRINGCHANGED, eventData);
+        }
+
+        virtual void Update()=0;
 
 };
 

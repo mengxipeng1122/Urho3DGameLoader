@@ -99,27 +99,23 @@ void TabSelector::Update()
 
 }
 
-bool TabSelector::HandleKeyDown(InputKey key)
+bool TabSelector::HandleKeyDown(InputKey key, int idx)
 {
     if(!IsSelected()) return false;
 
-    if(     key == InputKey::UP_1P
-        ||  key == InputKey::DOWN_1P
+    if(     key == InputKey::UP
+        ||  key == InputKey::DOWN
         )
     {
         SetSelected(false);
         Update();
-        using namespace LostSelected;
-        VariantMap& eventData = GetEventDataMap();
-        eventData[P_ELEMENT] = this;
-        eventData[P_KEY]    = int(key);
-        SendEvent(E_LOSTSELECTED, eventData);
+        Widget::SendLostSelectedEvent(key, idx);
         return true;
     }
 
     bool indexChanged = false;
     bool handledKey = false;
-    if(key == InputKey::LEFT_1P) 
+    if(key == InputKey::LEFT) 
     {
         LOG_INFOS_CPP(" LEFT");
         if(index_>0)
@@ -129,7 +125,7 @@ bool TabSelector::HandleKeyDown(InputKey key)
         }
         handledKey = true;
     }
-    else if(key == InputKey::RIGHT_1P)
+    else if(key == InputKey::RIGHT)
     {
         LOG_INFOS_CPP(" RIGHT");
         if(index_<tabs_.Size()-1) 
