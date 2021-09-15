@@ -11,13 +11,13 @@ namespace Urho3D
 
 //=============================================================================
 //=============================================================================
-class KeyBoard : public Widget
+class Keyboard : public Widget
 {
-    URHO3D_OBJECT(KeyBoard, UIElement);
+    URHO3D_OBJECT(Keyboard, UIElement);
 public:
     static void RegisterObject(Context* context);
 
-    explicit KeyBoard(Context *context);
+    explicit Keyboard(Context *context);
 
     bool HandleKeyDown(InputKey key) override;
 
@@ -56,6 +56,10 @@ protected:
 
 private:
     bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
+
+    int                 currChar_{0};
+
+    static constexpr int MAX_TEXT_LANGTH=20;
     static constexpr const int cols_ = 10;
     static constexpr const int rows_ = 4;
     static constexpr const char CHAR_CLEAR = '\x0';
