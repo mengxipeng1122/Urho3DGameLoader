@@ -40,7 +40,7 @@ bool KeyBoard::LoadXML(const XMLElement& source, XMLFile* styleFile)
     bool success = UIElement::LoadXML(source, styleFile);
     ASSERT_CPP(success, "load XML failed ");
 
-    CreateChildren();
+    //CreateChildren();
     Update();
 
     return success;
@@ -58,19 +58,11 @@ void KeyBoard::CreateChildren()
     ASSERT_CPP(keyBackgroundTexture != nullptr, " load Texture2D of ", keyBackgroundTexture_.CString(), "failed");
     auto keySelectTexture = CACHE->GetResource<Texture2D>(keySelectTexture_);
     ASSERT_CPP(keySelectTexture != nullptr, " load Texture2D of ", keySelectTexture_.CString(), "failed");
-    constexpr const int cols = 10;
-    constexpr const int rows = 4;
-    constexpr std::array<char, cols*rows> chars = {
-        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-        'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
-        'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '\x0', // clear
-        'Z', 'X', 'C', 'V', ' ', 'B', 'N', 'M', '-', '\x8', // backspace
-        };
-    for(auto r=0;r<rows;r++)
+    for(auto r=0;r<rows_;r++)
     {
-        for(auto c=0;c<cols;c++)
+        for(auto c=0;c<cols_;c++)
         {
-            auto idx = cols*r+c;
+            auto idx = cols_*r+c;
             {
                 auto& texture = keyBackgroundTexture;
                 auto bg = CreateChild<Sprite>(String("bg")+String(idx));
@@ -81,17 +73,28 @@ void KeyBoard::CreateChildren()
                 auto y=r*(texture->GetHeight()+keyGap_.y_);
                 bg->SetPosition(x,y);
             }
+        }
+    }
+    for(auto r=0;r<rows_;r++)
+    {
+        for(auto c=0;c<cols_;c++)
+        {
+            auto idx = cols_*r+c;
             {
-                // auto& texture = keyBackgroundTexture;
-                // auto text = CreateChild<Text>(String("bg")+String(idx));
-                // text ->SetSize(texture->GetWidth(), texture->GetHeight());
-                // text ->SetTexture(texture);
-                // text ->SetBlendMode(BLEND_ALPHA);
+                auto& texture = keyBackgroundTexture;
+                auto text = CreateChild<Text>(String("text")+String(idx));
+                text ->SetSize(texture->GetWidth(), texture->GetHeight());
+                text ->SetText(String(chars_[idx]));
+                //text ->SetTextAlignment(HA_CENTER);
+                auto font = CACHE->GetResource<Font>(textFont_);
+                text ->SetFont(font, textFontSize_);
+                text ->SetColor(textUnselectColor_);
+                auto x=c*(texture->GetWidth() +keyGap_.x_);
+                auto y=r*(texture->GetHeight()+keyGap_.y_);
+                text ->SetPosition(x,y);
             }
         }
     }
-
-
 }
 
 bool KeyBoard::HandleKeyDown(InputKey key)
@@ -99,6 +102,50 @@ bool KeyBoard::HandleKeyDown(InputKey key)
     return false;
 }
 
+void KeyBoard::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
+{
+    auto keyBackgroundTexture = CACHE->GetResource<Texture2D>(keyBackgroundTexture_ );
+    auto keyClearTexture      = CACHE->GetResource<Texture2D>(keyClearTexture_      );
+    auto keyDelTexture        = CACHE->GetResource<Texture2D>(keyDelTexture_        );
+    auto keySpaceTexture      = CACHE->GetResource<Texture2D>(keySpaceTexture_      );
+
+    auto font = CACHE->GetResource<Font>(textFont_);
+    FontFace* face = font->GetFace(textFontSize_);
+
+    auto textureWidth = keyBackgroundTexture->GetWidth();
+    auto textureHeight= keyBackgroundTexture->GetHeight();
+
+    for(auto r=0;r<rows_;r++)
+    {
+        for(auto c=0;c<cols_;c++)
+        {
+            auto idx = cols_*r+c;
+            {
+                auto x=c*(textureWidth   +keyGap_.x_);
+                auto y=r*(textureHeight  +keyGap_.y_);
+                Widget::AddTextureBatch(batches, vertexData, currentScissor, keyBackgroundTexture, x, y);
+                auto c = chars_[idx];
+                if(c == CHAR_CLEAR)
+                {
+                    Widget::AddTextureBatch(batches, vertexData, currentScissor, keyClearTexture, x, y);
+                }
+                else if( c== CHAR_DEL)
+                {
+                    Widget::AddTextureBatch(batches, vertexData, currentScissor, keyClearTexture, x, y);
+                }
+                else if( c== CHAR_SPACE)
+                {
+                    Widget::AddTextureBatch(batches, vertexData, currentScissor, keySpaceTexture, x, y);
+                }
+                else
+                {
+                    Widget::AddCharBatch(batches, vertexData, currentScissor, c, face, textUnselectColor_, x,y, textureWidth, textureHeight);
+                }
+            }
+        }
+    }
+    return ;
+}
 
 
 }

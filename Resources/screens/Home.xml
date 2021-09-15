@@ -231,9 +231,10 @@
 		</element>
 		<element type="KeyBoard">
 			<attribute name="Name" value="Keyboard" />
-			<attribute name="Position" value="440 238" />
+			<attribute name="Position" value="650 258" />
 			<attribute name="Pivot" value="0 0" />
-			<attribute name="Text Unselect Color" value="0 0 0 1" />
+			<attribute name="Text Unselect Color" value="0 0 1 1" />
+			<attribute name="Text Select Color" value="1 1 1 1" />
 			<attribute name="Key Gap" value="2 2" />
             <attribute name="Key Background Texture" value="Texture2D;res/key_bg.png" />
             <attribute name="Key Select Texture" value="Texture2D;res/key_sel.png" />
@@ -242,6 +243,6 @@
             <attribute name="Key Shift Texture" value="Texture2D;res/key_shift.png" />
             <attribute name="Key Space Texture" value="Texture2D;res/key_space.png" />
             <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-			<attribute name="Text Font Size" value="35" />
+			<attribute name="Text Font Size" value="25" />
 		</element>
 </element>

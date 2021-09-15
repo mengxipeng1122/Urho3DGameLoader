@@ -33,6 +33,8 @@ public:
 
     DEF_FONT_ATTR_SETTER_GETTER( Text, text)
 
+    /// Return UI rendering batches.
+    void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor) override;
 
 protected:
 
@@ -54,6 +56,17 @@ protected:
 
 private:
     bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
+    static constexpr const int cols_ = 10;
+    static constexpr const int rows_ = 4;
+    static constexpr const char CHAR_CLEAR = '\x0';
+    static constexpr const char CHAR_DEL   = '\x8';
+    static constexpr const char CHAR_SPACE = ' ';
+    static constexpr std::array<char, cols_*rows_> chars_ = {
+        '1', '2', '3', '4', '5',        '6', '7', '8', '9', '0',
+        'Q', 'W', 'E', 'R', 'T',        'Y', 'U', 'I', 'O', 'P',
+        'A', 'S', 'D', 'F', 'G',        'H', 'J', 'K', 'L', CHAR_DEL,
+        'Z', 'X', 'C', 'V', CHAR_SPACE, 'B', 'N', 'M', '-', CHAR_SPACE,
+        };
 
 
 };
