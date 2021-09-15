@@ -10,14 +10,14 @@ ScreenManager::ScreenManager()
 {
 }
 
-void ScreenManager::setCurrentScreen(ScreenTypes name, Context* context)
+void ScreenManager::SetCurrentScreen(ScreenTypes name, Context* context)
 {
     auto  newScreen = std::unique_ptr<Screen>( s_screenFactory.Build(name, context));
-    setCurrentScreen(std::move(newScreen));
+    SetCurrentScreen(std::move(newScreen));
     return ;
 }
 
-void ScreenManager::setCurrentScreen(std::unique_ptr<Screen> ptr)
+void ScreenManager::SetCurrentScreen(std::unique_ptr<Screen> ptr)
 {
     if(s_currentScreen!=nullptr)
     {

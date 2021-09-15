@@ -1,0 +1,11 @@
+<element>
+    <attribute name="Size" value="1280 720" />
+        <element type="Text">
+            <attribute name="Name" value="r  " />
+            <attribute name="Position" value="185 65" />
+            <attribute name="Pivot" value="0 0" />
+            <attribute name="Font" value="Font;res/geometr415.ttf" />
+            <attribute name="Font Size" value="35" />
+            <attribute name="Text" value="SETTINGS" />
+        </element>
+</element>

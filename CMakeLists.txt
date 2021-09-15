@@ -55,7 +55,7 @@ target_compile_features(${TARGET_NAME} PRIVATE cxx_std_17)
 target_link_libraries(${TARGET_NAME}   -lavformat -lavcodec -lavutil)
 
 
-add_subdirectory(Samples/61_UITest)
+#add_subdirectory(Samples/61_UITest)
 
 
 

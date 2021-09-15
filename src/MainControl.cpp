@@ -39,6 +39,7 @@
 #include "screens/ScreenManager.hpp"
 #include "screens/HomeScreen.hpp"
 #include "screens/IOTestScreen.hpp"
+#include "screens/SettingsScreen.hpp"
 
 URHO3D_DEFINE_APPLICATION_MAIN(MainControl)
 
@@ -71,8 +72,9 @@ MainControl::MainControl(Context* context)
 
 void MainControl::RegisterScreens()
 {
-    { std::string name(HomeScreen  ::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<HomeScreen  >()); }
-    { std::string name(IOTestScreen::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<IOTestScreen>()); }
+    { std::string name(HomeScreen       ::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<HomeScreen       >()); }
+    { std::string name(IOTestScreen     ::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<IOTestScreen     >()); }
+    { std::string name(SettingsScreen   ::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<SettingsScreen   >()); }
 }
 
 void MainControl::RegisterWidgets()
@@ -95,7 +97,6 @@ void MainControl::RegisterSubsystems()
 
 void MainControl::RegisterComponents()
 {
-    
 	VideoPlayerComponent::RegisterObject(context_);
 }
 
@@ -165,10 +166,10 @@ void MainControl::Start()
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
 
-    ScreenManager::setCurrentScreen(HomeScreen::GetName(), context_);
+    ScreenManager::SetCurrentScreen(HomeScreen::GetName(), context_);
 
     // Create console and debug HUD
-    //CreateConsoleAndDebugHud();
+    CreateConsoleAndDebugHud();
 
     // Subscribe key down event
     SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(MainControl, HandleKeyDown));
@@ -210,7 +211,7 @@ void MainControl::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
     // Close console (if open) or exit when ESC is pressed
     if (key == KEY_ESCAPE)
     {
-        ScreenManager::setCurrentScreen(nullptr);
+        ScreenManager::SetCurrentScreen(nullptr);
         engine_->Exit();
     }
 }
@@ -247,12 +248,12 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
             static bool homescreen = true;
             if(homescreen)
             {
-                ScreenManager::setCurrentScreen(IOTestScreen::GetName(), context_);
+                ScreenManager::SetCurrentScreen(IOTestScreen::GetName(), context_);
                 homescreen = false;
             }
             else
             {
-                ScreenManager::setCurrentScreen(HomeScreen::GetName(), context_);
+                ScreenManager::SetCurrentScreen(HomeScreen::GetName(), context_);
                 homescreen = true;
             }
         }
@@ -265,15 +266,15 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
         }
 
         // Take screenshot
-        else if (key == '9')
-        {
-            Graphics* graphics = GetSubsystem<Graphics>();
-            Image screenshot(context_);
-            graphics->TakeScreenShot(screenshot);
-            // Here we save in the Data folder with date and time appended
-            screenshot.SavePNG(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Screenshot_" +
-                Time::GetTimeStamp().Replaced(':', '_').Replaced('.', '_').Replaced(' ', '_') + ".png");
-        }
+        // else if (key == '9')
+        // {
+        //     Graphics* graphics = GetSubsystem<Graphics>();
+        //     Image screenshot(context_);
+        //     graphics->TakeScreenShot(screenshot);
+        //     // Here we save in the Data folder with date and time appended
+        //     screenshot.SavePNG(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Screenshot_" +
+        //         Time::GetTimeStamp().Replaced(':', '_').Replaced('.', '_').Replaced(' ', '_') + ".png");
+        // }
     }
 }
 

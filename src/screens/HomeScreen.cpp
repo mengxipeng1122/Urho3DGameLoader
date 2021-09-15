@@ -2,6 +2,7 @@
 
 
 #include "HomeScreen.hpp"
+#include "SettingsScreen.hpp"
 #include "../widgets/VideoPlayer.hpp"
 #include "../components/VideoPlayerComponent.hpp"
 #include "../utils/string.hpp"
@@ -83,6 +84,10 @@ void HomeScreen::Leave()
 bool HomeScreen::HandleKeyDown( InputKey key, int idx)
 {
     //using namespace KeyDown;
+    if(key == InputKey::SETTING){
+        ScreenManager::SetCurrentScreen(SettingsScreen::GetName(), context_);
+        return true;
+    }
 
     ASSERT_CPP(mainTab_!=nullptr,   " can not found Main Tab");
     ASSERT_CPP(searchTab_!=nullptr, " can not found search Tab");
@@ -162,10 +167,7 @@ void HomeScreen::HandleSearchTabLostSelected(StringHash eventType, VariantMap& e
         keyboard_->ClearString();
         keyboard_->Update();
     }
-
 }
-
-
 
 void HomeScreen::HandleGamelistChanged(StringHash eventType, VariantMap& eventData)
 {

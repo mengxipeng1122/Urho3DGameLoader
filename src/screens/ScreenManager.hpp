@@ -25,8 +25,8 @@ class ScreenManager
 
         static void RegistScreen(ScreenTypes& name, ScreenBuilder* builder) { s_screenFactory.AddBuilder(name, builder); }
 
-        static void setCurrentScreen(ScreenTypes, Context* context);
-        static void setCurrentScreen(std::unique_ptr<Screen> ptr);
+        static void SetCurrentScreen(ScreenTypes, Context* context);
+        static void SetCurrentScreen(std::unique_ptr<Screen> ptr);
 
         static bool HandleKeyDown(InputKey key, int idx) {return s_currentScreen->HandleKeyDown(key, idx);};
 };
