@@ -10,7 +10,7 @@ class Widget: public UIElement
 {
     public:
         Widget(Context* context) : UIElement(context) {}
-        virtual bool HandleKeyDown(InputKey key, int idx)=0;
+        virtual bool HandleKeyDown(InputKey key, int idx){return false;};
 
     protected:
         void AddTextureBatch(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor, Texture2D* texture, int dx, int dy, int w=-1, int h=-1)
@@ -23,12 +23,10 @@ class Widget: public UIElement
             auto tw = texture->GetWidth();
             auto th = texture->GetHeight();
             const IntVector2  size{tw,th};
-            if(w <0 || h<0) 
-            {
+            if(w <0 || h<0) {
                 batch.AddQuad(transform, 0, 0, size.x_, size.y_, 0, 0, size.x_, size.y_);
             }
-            else 
-            {
+            else {
                 batch.AddQuad(transform, 0, 0, w, h, 0, 0, size.x_, size.y_);
             }
             UIBatch::AddOrMerge(batch, batches);
@@ -48,12 +46,10 @@ class Widget: public UIElement
             batch.SetColor(color);
             const IntVector2& size {glyph->texWidth_, glyph->texHeight_};
 
-            if(w<0 || h<0)
-            {
+            if(w<0 || h<0) {
                 batch.AddQuad(transform, 0, 0, size.x_, size.y_, glyph->x_, glyph->y_,  size.x_, size.y_);
             }
-            else
-            {
+            else {
                 auto offsetx=(w-size.x_)/2;
                 auto offsety=(h-size.y_)/2;
                 batch.AddQuad(transform, offsetx, offsety, size.x_, size.y_, glyph->x_, glyph->y_,  size.x_, size.y_);
@@ -72,8 +68,7 @@ class Widget: public UIElement
             int stringHeight= 0;
             // calculate string texture width first
             {
-                for(auto i = 0;i< str.Length(); i++)
-                {
+                for(auto i = 0;i< str.Length(); i++) {
                     auto c = str[i];
                     const FontGlyph* glyph = face->GetGlyph(c);
                     stringWidth += glyph->texWidth_;
@@ -85,14 +80,12 @@ class Widget: public UIElement
                 auto offsetx = 0;
                 auto offsety = 0;
                 // find string offset x y
-                if(w>=0 && h>=0)
-                {
+                if(w>=0 && h>=0) {
                     offsetx=(w-stringWidth)/2;
                     offsety=(h-stringHeight)/2;
                 }
                 const Vector<SharedPtr<Texture2D> >& textures = face->GetTextures();
-                for(auto i = 0;i< str.Length(); i++)
-                {
+                for(auto i = 0;i< str.Length(); i++) {
                     auto c = str[i];
                     const FontGlyph* glyph = face->GetGlyph(c);
                     auto page = glyph->page_;
@@ -143,7 +136,6 @@ class Widget: public UIElement
             SendEvent(E_STRINGCHANGED, eventData);
         }
 
-        // virtual void Update()=0;
 
 };
 

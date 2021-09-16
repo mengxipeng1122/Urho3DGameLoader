@@ -69,13 +69,13 @@ protected:
 
     int                                 firstIndex_{0};
     int                                 index_{0};
-    Vector<WeakPtr<UIElement>>          UIItems_; // this vector store all UI items for display one game 
+//    Vector<WeakPtr<UIElement>>          UIItems_; // this vector store all UI items for display one game 
 
-    void CreateChildren();
+//    void CreateChildren();
 
 
 private:
-    bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
+//    bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
 
     int goNextPage();
     int goPreviousPage();

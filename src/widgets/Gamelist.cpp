@@ -39,26 +39,26 @@ Gamelist::Gamelist(Context *context)
 {
 }
 
-bool Gamelist::LoadXML(const XMLElement& source, XMLFile* styleFile)
-{
-    bool success = UIElement::LoadXML(source, styleFile);
-    ASSERT_CPP(success, "load XML failed ");
-
-    // 
-//    UIItems_.Clear();
-//    for(auto&& c : GetChildren())
-//    {
-//        WeakPtr<UIElement>  item { static_cast<UIElement*>(c.Get())};
-//        ASSERT_CPP(item!=nullptr, " element is nullptr");
-//        UIItems_.Push(item);
-//    }
-//    ASSERT_CPP(UIItems_.Size()==pageItems_, "page Items ", UIItems_.Size(), "/", pageItems_);
-//
-    CreateChildren();
-    //Update();
-
-    return success;
-}
+// bool Gamelist::LoadXML(const XMLElement& source, XMLFile* styleFile)
+// {
+//     bool success = UIElement::LoadXML(source, styleFile);
+//     ASSERT_CPP(success, "load XML failed ");
+// 
+//     // 
+// //    UIItems_.Clear();
+// //    for(auto&& c : GetChildren())
+// //    {
+// //        WeakPtr<UIElement>  item { static_cast<UIElement*>(c.Get())};
+// //        ASSERT_CPP(item!=nullptr, " element is nullptr");
+// //        UIItems_.Push(item);
+// //    }
+// //    ASSERT_CPP(UIItems_.Size()==pageItems_, "page Items ", UIItems_.Size(), "/", pageItems_);
+// //
+//     CreateChildren();
+//     //Update();
+// 
+//     return success;
+// }
 
 //void Gamelist::Update()
 //{
@@ -197,54 +197,54 @@ void Gamelist::AddItem(const Item& item)
     games_.push_back(std::move(newItem));
 }
 
-void Gamelist::CreateChildren()
-{
-    RemoveAllChildren();
-    UIItems_.Clear();
-    auto listMaskTexture = CACHE->GetResource<Texture2D>(listMaskTexture_);
-    ASSERT_CPP(listMaskTexture != nullptr, " load Texture2D of ", listMaskTexture_.CString(), "failed");
-    for(auto i = 0;i<pageItems_ ;i++)
-    {
-        auto* item = CreateChild<UIElement>();
-        item->SetPosition(0, (listMaskTexture->GetHeight()+itemGap_)*i);
-        auto listMark = item->CreateChild<Sprite>(String("listMark"));
-        {
-            auto texture = CACHE->GetResource<Texture2D>(listMaskTexture_);
-            ASSERT_CPP(texture!=nullptr, " can not open texture2d with name ", listMaskTexture_.CString());
-            listMark ->SetSize(texture->GetWidth(), texture->GetHeight());
-            listMark ->SetTexture(texture);
-            listMark ->SetBlendMode(BLEND_ALPHA);
-        }
-        {
-            auto texture = CACHE->GetResource<Texture2D>(listIconDefaultTexture_);
-            ASSERT_CPP(texture!=nullptr, " can not open texture2d with name ", listIconDefaultTexture_.CString());
-            auto listIcon = item->CreateChild<Sprite>(String("listIcon"));
-            listIcon ->SetTexture(texture);
-            listIcon ->SetSize(listIconSize_);
-            listIcon ->SetBlendMode(BLEND_ALPHA);
-            listIcon ->SetPosition(listMark->GetWidth(), 0);
-        }
-        {
-            auto texture = CACHE->GetResource<Texture2D>(itemBackgroundTexture_);
-            ASSERT_CPP(texture!=nullptr, " can not open texture2d with name ", itemBackgroundTexture_.CString());
-            auto cursor = item->CreateChild<Sprite>(String("cursor"));
-            cursor ->SetSize(texture->GetWidth(), texture->GetHeight());
-            cursor ->SetTexture(texture);
-            cursor ->SetBlendMode(BLEND_ALPHA);
-            cursor ->SetPosition(itemBasePosition_);
-        }
-        {
-            auto name = item->CreateChild<Text>(String("name"));
-            auto font = CACHE->GetResource<Font>(textFont_);
-            name->SetTextAlignment(HA_CENTER);
-            name->SetFont(font, textFontSize_);
-            name->SetColor(unselectColor_);
-        }
-        WeakPtr<UIElement>  pitem { item};
-        UIItems_.Push(pitem);
-    }
-
-}
+// void Gamelist::CreateChildren()
+// {
+//     RemoveAllChildren();
+//     UIItems_.Clear();
+//     auto listMaskTexture = CACHE->GetResource<Texture2D>(listMaskTexture_);
+//     ASSERT_CPP(listMaskTexture != nullptr, " load Texture2D of ", listMaskTexture_.CString(), "failed");
+//     for(auto i = 0;i<pageItems_ ;i++)
+//     {
+//         auto* item = CreateChild<UIElement>();
+//         item->SetPosition(0, (listMaskTexture->GetHeight()+itemGap_)*i);
+//         auto listMark = item->CreateChild<Sprite>(String("listMark"));
+//         {
+//             auto texture = CACHE->GetResource<Texture2D>(listMaskTexture_);
+//             ASSERT_CPP(texture!=nullptr, " can not open texture2d with name ", listMaskTexture_.CString());
+//             listMark ->SetSize(texture->GetWidth(), texture->GetHeight());
+//             listMark ->SetTexture(texture);
+//             listMark ->SetBlendMode(BLEND_ALPHA);
+//         }
+//         {
+//             auto texture = CACHE->GetResource<Texture2D>(listIconDefaultTexture_);
+//             ASSERT_CPP(texture!=nullptr, " can not open texture2d with name ", listIconDefaultTexture_.CString());
+//             auto listIcon = item->CreateChild<Sprite>(String("listIcon"));
+//             listIcon ->SetTexture(texture);
+//             listIcon ->SetSize(listIconSize_);
+//             listIcon ->SetBlendMode(BLEND_ALPHA);
+//             listIcon ->SetPosition(listMark->GetWidth(), 0);
+//         }
+//         {
+//             auto texture = CACHE->GetResource<Texture2D>(itemBackgroundTexture_);
+//             ASSERT_CPP(texture!=nullptr, " can not open texture2d with name ", itemBackgroundTexture_.CString());
+//             auto cursor = item->CreateChild<Sprite>(String("cursor"));
+//             cursor ->SetSize(texture->GetWidth(), texture->GetHeight());
+//             cursor ->SetTexture(texture);
+//             cursor ->SetBlendMode(BLEND_ALPHA);
+//             cursor ->SetPosition(itemBasePosition_);
+//         }
+//         {
+//             auto name = item->CreateChild<Text>(String("name"));
+//             auto font = CACHE->GetResource<Font>(textFont_);
+//             name->SetTextAlignment(HA_CENTER);
+//             name->SetFont(font, textFontSize_);
+//             name->SetColor(unselectColor_);
+//         }
+//         WeakPtr<UIElement>  pitem { item};
+//         UIItems_.Push(pitem);
+//     }
+// 
+// }
 
 
 int Gamelist::goPreviousItem()
