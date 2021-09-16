@@ -16,9 +16,8 @@ public:
     explicit PageIndicator(Context *context);
     virtual ~PageIndicator()override=default;
 
-    void SetPage(int c, int t ) noexcept { curPageNo_ = c ; totalPageNo_ = t; SetText();  }
+    void SetPage(int c, int t ) noexcept { curPageNo_ = c ; totalPageNo_ = t; }
 
-    void Update();
 
 protected:
     void HandleUpdate(StringHash eventType, VariantMap& eventData);
@@ -27,7 +26,7 @@ protected:
     int curPageNo_{1};
     int totalPageNo_{1000};
 
-    void SetText();
+    // void SetText();
 
 private:
     bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;

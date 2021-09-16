@@ -19,7 +19,7 @@ public:
     void OpenFileName(const String& fn);
     void Close();
 
-    void Update();
+//    void Update();
 
 protected:
 	SharedPtr<VideoPlayerComponent> vp;

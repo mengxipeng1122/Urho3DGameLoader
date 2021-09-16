@@ -35,6 +35,9 @@
 #include "widgets/TabSelector.hpp"
 #include "widgets/VideoPlayer.hpp"
 #include "widgets/SearchEdit.hpp"
+#include "widgets/NormalMenuItem.hpp"
+#include "widgets/TextSelectMenuItem.hpp"
+#include "widgets/ImageSelectMenuItem.hpp"
 #include "widgets/Keyboard.hpp"
 #include "screens/ScreenManager.hpp"
 #include "screens/HomeScreen.hpp"
@@ -67,7 +70,6 @@ MainControl::MainControl(Context* context)
     RegisterComponents();
     RegisterWidgets();
     RegisterScreens();
-
 }
 
 void MainControl::RegisterScreens()
@@ -79,12 +81,14 @@ void MainControl::RegisterScreens()
 
 void MainControl::RegisterWidgets()
 {
-    Gamelist     ::RegisterObject(context_);
-    VideoPlayer  ::RegisterObject(context_);
-    PageIndicator::RegisterObject(context_);
-    TabSelector  ::RegisterObject(context_);
-    SearchEdit   ::RegisterObject(context_);
-    Keyboard     ::RegisterObject(context_);
+    Gamelist                ::RegisterObject(context_);
+    VideoPlayer             ::RegisterObject(context_);
+    PageIndicator           ::RegisterObject(context_);
+    TabSelector             ::RegisterObject(context_);
+    SearchEdit              ::RegisterObject(context_);
+    Keyboard                ::RegisterObject(context_);
+    NormalMenuItem          ::RegisterObject(context_);
+    ImageSelectMenuItem     ::RegisterObject(context_);
 }
 
 void MainControl::RegisterSubsystems()

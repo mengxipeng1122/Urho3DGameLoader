@@ -35,22 +35,11 @@ Keyboard::Keyboard(Context *context)
 {
 }
 
-void Keyboard::ApplyAttributes()
-{
-    Widget::ApplyAttributes();
-    Update();
-}
-
-void Keyboard::Update()
-{
-}
-
 bool Keyboard::HandleKeyDown(InputKey key, int idx)
 {
     if(key == InputKey::START)
     {
         SetSelected(false);
-        Update();
         Widget::SendLostSelectedEvent(key, idx); 
         return true;
     }
@@ -68,7 +57,6 @@ bool Keyboard::HandleKeyDown(InputKey key, int idx)
                 else
                 {
                     SetSelected(false);
-                    Update();
                     Widget::SendLostSelectedEvent(key, idx);
                 }  
                 return true; 

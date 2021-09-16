@@ -35,7 +35,7 @@ private :
 public:
     void ClearItems(){ games_.clear(); }
     void AddItem(const Item& item);
-    void Update()override;
+    //void Update()override;
     int  GetGameItemsCount() const noexcept { return games_.size() ; }
 
     DEF_TEXTURE_ATTR_SETTER_GETTER( ListMask, listMask)

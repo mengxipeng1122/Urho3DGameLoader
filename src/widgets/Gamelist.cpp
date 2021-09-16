@@ -55,89 +55,89 @@ bool Gamelist::LoadXML(const XMLElement& source, XMLFile* styleFile)
 //    ASSERT_CPP(UIItems_.Size()==pageItems_, "page Items ", UIItems_.Size(), "/", pageItems_);
 //
     CreateChildren();
-    Update();
+    //Update();
 
     return success;
 }
 
-void Gamelist::Update()
-{
-    // set all UIItems_;
-    for(auto& item : UIItems_) {item->SetVisible(false);}
-    auto totalGames = games_.size();
-
-    LOG_INFOS_CPP(" firstIndex_ ", firstIndex_ , " index_", index_);
-    
-    for(auto t=0; t<pageItems_ ; t++)
-    {
-        auto gameIndex = firstIndex_+t;
-        if(gameIndex>=totalGames) {
-            UIItems_[t]->SetVisible(false);
-            continue;
-        }
-        ASSERT_CPP(gameIndex>=0 && gameIndex < games_.size(), "gameIndex is not correct", gameIndex, UIItems_.Size());
-        UIItems_[t]->SetVisible(true);
-        auto iconPath = games_[gameIndex]->iconPath_;
-        auto name     = games_[gameIndex]->name_;
-        {
-            auto texture = CACHE->GetResource<Texture2D>(listMaskTexture_);
-            UIItems_[t]->GetChildStaticCast<Sprite>(String("listMark"))->SetTexture(texture);
-        }
-        {
-            auto sprite  = UIItems_[t]->GetChildStaticCast<Sprite>(String("listIcon"));
-            ASSERT_CPP(sprite!=nullptr, "can not find list Icon");
-            if(context_->GetSubsystem<FileSystem>()->FileExists(iconPath))
-            {
-                // load texture and set  
-                File file(context_, iconPath);
-                auto texture = new Texture2D(context_);
-                auto success = texture->Load(file);
-                ASSERT_CPP(success, " load texture2D failed ", iconPath.CString());
-                sprite->SetTexture(texture);
-                auto width = texture->GetWidth();
-                auto height= texture->GetHeight();
-                IntRect imageRect(0, 0, width, height);
-                sprite->SetImageRect(imageRect);
-            }
-        }
-        {
-            auto s = ConstructStringWithFormat("%04d %s", gameIndex+1, name.CString());
-            UIItems_[t]->GetChildStaticCast<Text>(String("name"))->SetText(ToString(s.c_str()));
-        }
-        {
-            auto texture = CACHE->GetResource<Texture2D>(itemBackgroundTexture_);
-            UIItems_[t]->GetChildStaticCast<Sprite>(String("cursor"))->SetTexture(texture);
-        }
-        {
-            auto* cursor =  UIItems_[t]->GetChildStaticCast<Sprite>(String("cursor"));
-            auto* txt    =  UIItems_[t]->GetChildStaticCast<Text>  (String("name"));
-            auto x = (cursor->GetWidth() -txt->GetWidth())/2;
-            auto y = (cursor->GetHeight()-txt->GetHeight())/2;
-            auto cursorPosition = cursor->GetPosition();
-            txt->SetPosition(cursorPosition.x_+3 ,cursorPosition.y_+y);
-            txt->SetColor(unselectColor_);
-        }
-
-        if(t == index_ && IsSelected())
-        {
-            {
-                auto texture = CACHE->GetResource<Texture2D>(listMaskSelectTexture_);
-                UIItems_[t]->GetChildStaticCast<Sprite>(String("listMark"))->SetTexture(texture);
-            }
-            {
-                auto texture = CACHE->GetResource<Texture2D>(itemBackgroundSelectTexture_);
-                UIItems_[t]->GetChildStaticCast<Sprite>(String("cursor"))->SetTexture(texture);
-            }
-            {
-                auto* txt    =  UIItems_[t]->GetChildStaticCast<Text>  (String("name"));
-                txt->SetColor(selectColor_);
-            }
-        }
-
-    }
-
-
-}
+//void Gamelist::Update()
+//{
+//    // set all UIItems_;
+//    for(auto& item : UIItems_) {item->SetVisible(false);}
+//    auto totalGames = games_.size();
+//
+//    LOG_INFOS_CPP(" firstIndex_ ", firstIndex_ , " index_", index_);
+//    
+//    for(auto t=0; t<pageItems_ ; t++)
+//    {
+//        auto gameIndex = firstIndex_+t;
+//        if(gameIndex>=totalGames) {
+//            UIItems_[t]->SetVisible(false);
+//            continue;
+//        }
+//        ASSERT_CPP(gameIndex>=0 && gameIndex < games_.size(), "gameIndex is not correct", gameIndex, UIItems_.Size());
+//        UIItems_[t]->SetVisible(true);
+//        auto iconPath = games_[gameIndex]->iconPath_;
+//        auto name     = games_[gameIndex]->name_;
+//        {
+//            auto texture = CACHE->GetResource<Texture2D>(listMaskTexture_);
+//            UIItems_[t]->GetChildStaticCast<Sprite>(String("listMark"))->SetTexture(texture);
+//        }
+//        {
+//            auto sprite  = UIItems_[t]->GetChildStaticCast<Sprite>(String("listIcon"));
+//            ASSERT_CPP(sprite!=nullptr, "can not find list Icon");
+//            if(context_->GetSubsystem<FileSystem>()->FileExists(iconPath))
+//            {
+//                // load texture and set  
+//                File file(context_, iconPath);
+//                auto texture = new Texture2D(context_);
+//                auto success = texture->Load(file);
+//                ASSERT_CPP(success, " load texture2D failed ", iconPath.CString());
+//                sprite->SetTexture(texture);
+//                auto width = texture->GetWidth();
+//                auto height= texture->GetHeight();
+//                IntRect imageRect(0, 0, width, height);
+//                sprite->SetImageRect(imageRect);
+//            }
+//        }
+//        {
+//            auto s = ConstructStringWithFormat("%04d %s", gameIndex+1, name.CString());
+//            UIItems_[t]->GetChildStaticCast<Text>(String("name"))->SetText(ToString(s.c_str()));
+//        }
+//        {
+//            auto texture = CACHE->GetResource<Texture2D>(itemBackgroundTexture_);
+//            UIItems_[t]->GetChildStaticCast<Sprite>(String("cursor"))->SetTexture(texture);
+//        }
+//        {
+//            auto* cursor =  UIItems_[t]->GetChildStaticCast<Sprite>(String("cursor"));
+//            auto* txt    =  UIItems_[t]->GetChildStaticCast<Text>  (String("name"));
+//            auto x = (cursor->GetWidth() -txt->GetWidth())/2;
+//            auto y = (cursor->GetHeight()-txt->GetHeight())/2;
+//            auto cursorPosition = cursor->GetPosition();
+//            txt->SetPosition(cursorPosition.x_+3 ,cursorPosition.y_+y);
+//            txt->SetColor(unselectColor_);
+//        }
+//
+//        if(t == index_ && IsSelected())
+//        {
+//            {
+//                auto texture = CACHE->GetResource<Texture2D>(listMaskSelectTexture_);
+//                UIItems_[t]->GetChildStaticCast<Sprite>(String("listMark"))->SetTexture(texture);
+//            }
+//            {
+//                auto texture = CACHE->GetResource<Texture2D>(itemBackgroundSelectTexture_);
+//                UIItems_[t]->GetChildStaticCast<Sprite>(String("cursor"))->SetTexture(texture);
+//            }
+//            {
+//                auto* txt    =  UIItems_[t]->GetChildStaticCast<Text>  (String("name"));
+//                txt->SetColor(selectColor_);
+//            }
+//        }
+//
+//    }
+//
+//
+//}
 
 bool Gamelist::HandleKeyDown(InputKey key, int idx)
 {
@@ -147,7 +147,7 @@ bool Gamelist::HandleKeyDown(InputKey key, int idx)
     if(key == InputKey::START)
     {
         SetSelected(false);
-        Update();
+        //Update();
         Widget::SendLostSelectedEvent(key, idx);
         return true;
     }
@@ -184,7 +184,7 @@ bool Gamelist::HandleKeyDown(InputKey key, int idx)
 
     if(indexChanged)
     {
-        Update();
+        //Update();
         Widget::SendItemChangedEvent(firstIndex_+index_);
     }
     

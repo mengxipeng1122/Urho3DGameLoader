@@ -36,7 +36,7 @@ bool PageIndicator::LoadXML(const XMLElement& source, XMLFile* styleFile)
     ASSERT_CPP(bg_!=nullptr, " can not found bg ");
     text_ = static_cast<Text*>(GetChild(String("text")));
     ASSERT_CPP(text_!=nullptr, " can not found text ");
-    SetText();
+    //SetText();
 
     return success;
 }
@@ -47,21 +47,22 @@ void PageIndicator::HandleUpdate(StringHash eventType, VariantMap& eventData)
 
 }
 
-void PageIndicator::SetText()
-{
-    ASSERT_CPP(text_!=nullptr, " can not get text");
-    LOG_INFOS_CPP(" go here ");
-    std::string s = ConstructStringWithFormat("%03d/%04d",curPageNo_, totalPageNo_);
-    text_->SetText(ToString(s.c_str()));
-}
+// void PageIndicator::SetText()
+// {
+//     ASSERT_CPP(text_!=nullptr, " can not get text");
+//     LOG_INFOS_CPP(" go here ");
+//     std::string s = ConstructStringWithFormat("%03d/%04d",curPageNo_, totalPageNo_);
+//     text_->SetText(ToString(s.c_str()));
+// }
+// 
+// 
+// void PageIndicator::Update()
+// {
+//     bg_=static_cast<Sprite*>(GetChild(String("bg")));
+//     ASSERT_CPP(bg_!=nullptr, " can not get bg");
+//     text_=static_cast<Text*>(GetChild(String("bg")));
+//     ASSERT_CPP(text_!=nullptr, " can not get text");
+//     SetText();
+// }
 
-
-void PageIndicator::Update()
-{
-    bg_=static_cast<Sprite*>(GetChild(String("bg")));
-    ASSERT_CPP(bg_!=nullptr, " can not get bg");
-    text_=static_cast<Text*>(GetChild(String("bg")));
-    ASSERT_CPP(text_!=nullptr, " can not get text");
-    SetText();
-}
 }

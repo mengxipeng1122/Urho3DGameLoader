@@ -61,7 +61,7 @@ void HomeScreen::Enter()
     SubscribeToEvent(keyboard_, E_STRINGCHANGED,     URHO3D_HANDLER(HomeScreen, HandleKeyboardStringChanged));
     SubscribeToEvent(keyboard_, E_LOSTSELECTED,      URHO3D_HANDLER(HomeScreen, HandleKeyboardLostSelected));
     keyboard_->SetSelected(false);
-    keyboard_->Update();
+    //keyboard_->Update();
     keyboard_->SetVisible(false);
 
     ChanageToState(state_);
@@ -127,8 +127,12 @@ void HomeScreen::HandleMainTabLostSelected(StringHash eventType, VariantMap& eve
         case 2:
         {
             auto gameItemsCount = gamelist_->GetGameItemsCount();
-            if(gameItemsCount>0) { SelectWidget(gamelist_); gamelist_->Update(); }
-            else { SelectWidget(mainTab_); mainTab_->Update(); }
+            if(gameItemsCount>0) { 
+                SelectWidget(gamelist_);
+            }
+            else { 
+                SelectWidget(mainTab_);
+            }
         }
         break;
 
@@ -165,7 +169,7 @@ void HomeScreen::HandleSearchTabLostSelected(StringHash eventType, VariantMap& e
     {
         SelectWidget(keyboard_); 
         keyboard_->ClearString();
-        keyboard_->Update();
+        //keyboard_->Update();
     }
 }
 
@@ -233,7 +237,7 @@ void HomeScreen::SetGamelist()
 
     // update gamelist
     gamelist_->ResetIndex();
-    gamelist_->Update();
+    // gamelist_->Update();
 }
 
 void HomeScreen::ChanageToState(State newState)

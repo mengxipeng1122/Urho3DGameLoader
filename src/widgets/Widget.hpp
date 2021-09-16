@@ -143,7 +143,7 @@ class Widget: public UIElement
             SendEvent(E_STRINGCHANGED, eventData);
         }
 
-        virtual void Update()=0;
+        // virtual void Update()=0;
 
 };
 

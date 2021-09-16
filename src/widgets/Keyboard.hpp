@@ -22,7 +22,7 @@ public:
     bool HandleKeyDown(InputKey key, int idx) override;
 
 public:
-    void Update();
+    // void Update();
 
     DEF_TEXTURE_ATTR_SETTER_GETTER( KeyBackground, keyBackground)
     DEF_TEXTURE_ATTR_SETTER_GETTER( KeySelect,     keySelect)      
@@ -57,7 +57,7 @@ protected:
     String                              str_{""};
 
 private:
-    void ApplyAttributes() override;
+    // void ApplyAttributes() override;
 
     int                 currChar_{0};
 
