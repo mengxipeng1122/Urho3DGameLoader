@@ -34,7 +34,6 @@ class Widget: public UIElement
 
         void AddCharBatch(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor, char c, FontFace* face, const Color& color, int dx, int dy, int w=-1, int h=-1)
         {
-
             const FontGlyph* glyph = face->GetGlyph(c);
             auto page = glyph->page_;
             const Vector<SharedPtr<Texture2D> >& textures = face->GetTextures();

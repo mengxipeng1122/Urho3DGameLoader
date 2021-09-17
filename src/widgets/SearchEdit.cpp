@@ -24,7 +24,7 @@ void SearchEdit::RegisterObject(Context* context)
     URHO3D_ATTRIBUTE("Key Base Position", Vector2, keyBasePosition_, Vector2::ZERO, AM_FILE);
     URHO3D_ATTRIBUTE("Count Base Position", Vector2, countBasePosition_, Vector2::ZERO, AM_FILE);
 
-    URHO3D_ATTRIBUTE("Key String Gap", int, keyStringGap_, 15, AM_FILE);
+    URHO3D_ATTRIBUTE("Key Text Gap", int, keyStringGap_, 15, AM_FILE);
 }
 
 SearchEdit::SearchEdit(Context *context)

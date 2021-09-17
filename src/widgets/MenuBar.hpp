@@ -1,8 +1,8 @@
+
 //
 #pragma once
-#include "../Global.h"
 #include "Widget.hpp"
-
+#include "../Global.h"
 #include "../utils/log.hpp"
 
 namespace Urho3D
@@ -10,32 +10,26 @@ namespace Urho3D
 
 /// Text entry into a LineEdit. The text can be modified in the event data.
 
+extern const char* UI_CATEGORY;
 
 //=============================================================================
 //=============================================================================
-class TabSelector : public Widget
+class MenuBar : public Widget
 {
-    URHO3D_OBJECT(TabSelector, UIElement);
+    URHO3D_OBJECT(MenuBar, Widget);
+
 public:
     static void RegisterObject(Context* context);
 
-    explicit TabSelector(Context *context);
-    virtual ~TabSelector()override=default;
+    explicit MenuBar(Context *context);
+    virtual ~MenuBar()override=default;
 
-    void Update();
-
-    bool HandleKeyDown(InputKey key, int idx) override;
 
 protected:
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
-    void CreateChildren();
-    void Quit();
-
+    void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor) override;
+    bool HandleKeyDown(InputKey key, int idx) override;
 
 public:
-    void SetBackgroundTextureAttr(const ResourceRef& value) { backgroundTexture_ = value.name_ ; }
-    ResourceRef GetBackgroundTextureAttr() const { return ResourceRef(Texture2D::GetTypeStatic(), backgroundTexture_ ); }
-
     void SetTextsAttr(const VariantVector& value) {
         texts_.Clear();
         if (!value.Size()) return ;
@@ -47,14 +41,10 @@ public:
         }
     VariantVector GetTextsAttr() const { VariantVector value; for (auto& text : texts_) { value.Push(text); } return value;  }
 
-    void SetSelectCursorTextureAttr(const ResourceRef& value) { selectCursorTexture_ = value.name_ ; }
-    ResourceRef GetSelectCursorTextureAttr() const { return ResourceRef(Texture2D::GetTypeStatic(), selectCursorTexture_ ); }
-
-    void SetUnselectCursorTextureAttr(const ResourceRef& value) { unselectCursorTexture_ = value.name_ ; }
-    ResourceRef GetUnselectCursorTextureAttr() const { return ResourceRef(Texture2D::GetTypeStatic(), unselectCursorTexture_ ); }
-
-    void SetTextFontAttr(const ResourceRef& value) { textFont_ = value.name_ ; }
-    ResourceRef GetTextFontAttr() const { return ResourceRef(Font::GetTypeStatic(), textFont_ ); }
+    DEF_TEXTURE_ATTR_SETTER_GETTER(Background, background)
+    DEF_TEXTURE_ATTR_SETTER_GETTER(SelectCursor, selectCursor)
+    DEF_TEXTURE_ATTR_SETTER_GETTER(UnselectCursor, unselectCursor)
+    DEF_FONT_ATTR_SETTER_GETTER(Text, text)
 
     int GetIndex() const noexcept { return index_; }
 
@@ -69,17 +59,15 @@ protected:
     float                   textFontSize_{DEFAULT_FONT_SIZE};
     bool                    textAutoLocalization_{false};
     Vector2                 cursorBasePosition_{0,0};
+    bool                    autoLocalizable_;
 
     int                     index_{0};
-    WeakPtr<Sprite>         cursor_;
-    Vector<WeakPtr<Text>>   tabs_;
 
 
-private:
-    bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
 
-protected:
+
 };
+
 }
 
 

@@ -32,7 +32,8 @@
 #include "components/VideoPlayerComponent.hpp"
 #include "widgets/PageIndicator.hpp"
 #include "widgets/Gamelist.hpp"
-#include "widgets/TabSelector.hpp"
+#include "widgets/MenuBar.hpp"
+#include "widgets/TestWidget.hpp"
 #include "widgets/VideoPlayer.hpp"
 #include "widgets/SearchEdit.hpp"
 #include "widgets/NormalMenuItem.hpp"
@@ -84,7 +85,8 @@ void MainControl::RegisterWidgets()
     Gamelist                ::RegisterObject(context_);
     VideoPlayer             ::RegisterObject(context_);
     PageIndicator           ::RegisterObject(context_);
-    TabSelector             ::RegisterObject(context_);
+    MenuBar                 ::RegisterObject(context_);
+    TestWidget              ::RegisterObject(context_);
     SearchEdit              ::RegisterObject(context_);
     Keyboard                ::RegisterObject(context_);
     NormalMenuItem          ::RegisterObject(context_);
@@ -103,8 +105,6 @@ void MainControl::RegisterComponents()
 {
 	VideoPlayerComponent::RegisterObject(context_);
 }
-
-
 
 void MainControl::Setup()
 {

@@ -17,7 +17,6 @@ void Machine::HandleAllGames(std::function<void(const GameItem& gameItem)> cb)
         GameItem item;
         item.name_ = game.Get("name").GetString();
         item.rom_ = game.Get("rom").GetString();
-        LOG_INFOS_CPP(item.name_, item.rom_);
         cb(item);
     }
 }

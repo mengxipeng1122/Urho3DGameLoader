@@ -23,8 +23,6 @@ public:
     DEF_FONT_ATTR_SETTER_GETTER( Text, text)
 
 protected:
-//    void HandleUpdate(StringHash eventType, VariantMap& eventData);
-    void Quit();
 
     int curPageNo_{1};
     int totalPageNo_{1000};
@@ -40,12 +38,6 @@ protected:
     // void SetText();
     void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor) override;
 
-private:
-//    bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
-
-protected:
-//    WeakPtr<Sprite>      bg_{nullptr};
-//    WeakPtr<Text>        text_{nullptr};
 };
 }
 

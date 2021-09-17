@@ -5,28 +5,27 @@
 
 #include "ScreenBuilder.hpp"
 #include "Screen.hpp"
-#include "ScreenManager.hpp"
 #include "../widgets/Widget.hpp"
 #include "../widgets/Keyboard.hpp"
+#include "../widgets/MenuBar.hpp"
 #include "../widgets/Gamelist.hpp"
 #include "../widgets/PageIndicator.hpp"
-#include "../widgets/TabSelector.hpp"
 #include "../widgets/VideoPlayer.hpp"
 #include "../widgets/SearchEdit.hpp"
 
 class HomeScreen : public Screen
 {
     private:
-        WeakPtr<PageIndicator> pageIndicator_{nullptr};        
-        WeakPtr<Keyboard>      keyboard_{nullptr};        
-        WeakPtr<TabSelector>   mainTab_{nullptr};        
-        WeakPtr<TabSelector>   searchTab_{nullptr};        
-        WeakPtr<Gamelist>      gamelist_{nullptr};        
-        WeakPtr<VideoPlayer>   videoPlayer_{nullptr};        
-        WeakPtr<SearchEdit>    searchEdit_{nullptr};        
-        Widget*                selectedWidget_{nullptr};        
+        WeakPtr<PageIndicator>  pageIndicator_{nullptr};        
+        WeakPtr<Keyboard>       keyboard_{nullptr};        
+        WeakPtr<MenuBar>        mainTab_{nullptr};        
+        WeakPtr<MenuBar>        searchTab_{nullptr};        
+        WeakPtr<Gamelist>       gamelist_{nullptr};        
+        WeakPtr<VideoPlayer>    videoPlayer_{nullptr};        
+        WeakPtr<SearchEdit>     searchEdit_{nullptr};        
+        Widget*                 selectedWidget_{nullptr};        
 
-        Vector<String>         videoList_; // have same id with game list data
+        Vector<String>          videoList_; // have same id with game list data
         
         void HandleMainTabChanged(StringHash eventType, VariantMap& eventData);
         void HandleMainTabLostSelected(StringHash eventType, VariantMap& eventData);

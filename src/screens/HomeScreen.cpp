@@ -8,11 +8,8 @@
 #include "../utils/string.hpp"
 
 
-VideoPlayerComponent* tvc{nullptr};
 void HomeScreen::Enter()
 {
-	SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(HomeScreen, HandleUpdate));
-
     Screen::Enter();
     auto* uiRoot= context_->GetSubsystem<UI>()->GetRoot();
     auto* screen = uiRoot->CreateChild<UIElement>(GetName());
@@ -27,26 +24,23 @@ void HomeScreen::Enter()
     pageIndicator_ = static_cast<PageIndicator*>(screen->GetChild(String("pageIndicator")));
     ASSERT_CPP(pageIndicator_!=nullptr, " can not found pageIndicator ");
 
-    mainTab_ = static_cast<TabSelector*>(screen->GetChild(String("Main Tab")));
+    mainTab_ = static_cast<MenuBar*>(screen->GetChild(String("Main Tab")));
     ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
     SubscribeToEvent(mainTab_, E_ITEMCHANGED,       URHO3D_HANDLER(HomeScreen, HandleMainTabChanged));
     SubscribeToEvent(mainTab_, E_LOSTSELECTED,      URHO3D_HANDLER(HomeScreen, HandleMainTabLostSelected));
     mainTab_->SetSelected(true);
-    mainTab_->Update();
     SelectWidget(mainTab_);
 
     searchEdit_ = screen->GetChildStaticCast<SearchEdit>(String("Search Edit"));
     ASSERT_CPP(searchEdit_!=nullptr, " can not found Search Edit");
     searchEdit_ ->SetSelected(false);
-    searchEdit_ ->Update();
     searchEdit_ ->SetVisible(false);
 
-    searchTab_ = static_cast<TabSelector*>(screen->GetChild(String("Search Tab")));
+    searchTab_ = static_cast<MenuBar*>(screen->GetChild(String("Search Tab")));
     ASSERT_CPP(searchTab_!=nullptr, " can not found Search Tab");
     SubscribeToEvent(searchTab_, E_ITEMCHANGED,         URHO3D_HANDLER(HomeScreen, HandleSearchTabChanged));
     SubscribeToEvent(searchTab_, E_LOSTSELECTED,        URHO3D_HANDLER(HomeScreen, HandleSearchTabLostSelected));
     searchTab_->SetSelected(false);
-    searchTab_->Update();
 
     gamelist_ = screen->GetChildStaticCast<Gamelist>(String("Gamelist"));
     ASSERT_CPP(gamelist_!=nullptr, " can not found Gamelist");
@@ -61,7 +55,6 @@ void HomeScreen::Enter()
     SubscribeToEvent(keyboard_, E_STRINGCHANGED,     URHO3D_HANDLER(HomeScreen, HandleKeyboardStringChanged));
     SubscribeToEvent(keyboard_, E_LOSTSELECTED,      URHO3D_HANDLER(HomeScreen, HandleKeyboardLostSelected));
     keyboard_->SetSelected(false);
-    //keyboard_->Update();
     keyboard_->SetVisible(false);
 
     ChanageToState(state_);
@@ -137,7 +130,7 @@ void HomeScreen::HandleMainTabLostSelected(StringHash eventType, VariantMap& eve
         break;
 
         case 3: 
-            SelectWidget(searchTab_.Get()); searchTab_->Update();
+            SelectWidget(searchTab_.Get());
         break;
         default: ASSERT_CPP("error", index); break;
     }
@@ -163,13 +156,12 @@ void HomeScreen::HandleSearchTabLostSelected(StringHash eventType, VariantMap& e
     auto key = (InputKey)eventData[P_KEY].GetInt();
     if(key ==  InputKey::UP)
     {
-        SelectWidget(mainTab_); mainTab_->Update();
+        SelectWidget(mainTab_);
     }
     else if(key ==  InputKey::DOWN)
     {
         SelectWidget(keyboard_); 
         keyboard_->ClearString();
-        //keyboard_->Update();
     }
 }
 
@@ -183,12 +175,12 @@ void HomeScreen::HandleGamelistChanged(StringHash eventType, VariantMap& eventDa
 
 void HomeScreen::HandleGamelistLostSelected(StringHash eventType, VariantMap& eventData)
 {
-    SelectWidget(mainTab_); mainTab_->Update();
+    SelectWidget(mainTab_); 
 }
 
 void HomeScreen::HandleKeyboardLostSelected(StringHash eventType, VariantMap& eventData)
 {
-    SelectWidget(searchTab_); searchTab_->Update();
+    SelectWidget(searchTab_); 
 }
 
 void HomeScreen::HandleKeyboardStringChanged(StringHash eventType, VariantMap& eventData)
@@ -197,10 +189,6 @@ void HomeScreen::HandleKeyboardStringChanged(StringHash eventType, VariantMap& e
     const String s = eventData[P_STRING].GetString();
     searchEdit_->SetTexts(s, 0);
 
-}
-
-void HomeScreen::HandleUpdate(StringHash eventType, VariantMap& eventData)
-{
 }
 
 
@@ -214,7 +202,6 @@ void HomeScreen::SetGamelist()
     auto cb = [&](const Machine::GameItem& gameItem)->void{
                 std::string s = SETTINGS->GetVideoPathFormat().CString();
                 auto gameVideoPath = ConstructStringWithFormat(s, gameItem.rom_.CString());
-                LOG_INFOS_CPP(" gameVideoPath", gameVideoPath);
                 videoList_.Push(ToString(gameVideoPath.c_str()));
                 {
                     Gamelist::Item item;
@@ -237,7 +224,6 @@ void HomeScreen::SetGamelist()
 
     // update gamelist
     gamelist_->ResetIndex();
-    // gamelist_->Update();
 }
 
 void HomeScreen::ChanageToState(State newState)

@@ -9,6 +9,7 @@
 #define INPUT       GetSubsystem<Input>()
 #define UI_ROOT     GetSubsystem<UI>()->GetRoot()
 #define RENDERER    GetSubsystem<Renderer>()
+#define L10N        GetSubsystem<Localization>()
 
 ////////////////////////////////////////////////////////////////////////////////
 // applications
@@ -68,7 +69,6 @@ URHO3D_EVENT(E_STRINGCHANGED,   StringChanged)
 #define DEF_TEXTURE_ATTR_SETTER_GETTER( n0, n1 ) \
     void Set ## n0 ## TextureAttr(const ResourceRef& value) { n1 ## Texture_ = value.name_ ; }  \
     ResourceRef Get ## n0 ## TextureAttr() const { return ResourceRef(Texture2D::GetTypeStatic(), n1 ## Texture_ ); } \
-
 
 #define DEF_FONT_ATTR_SETTER_GETTER( n0, n1 ) \
     void Set ## n0 ## FontAttr(const ResourceRef& value) { n1 ## Font_ = value.name_ ; }  \
