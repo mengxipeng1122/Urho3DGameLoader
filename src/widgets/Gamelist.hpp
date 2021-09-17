@@ -19,10 +19,6 @@ public:
     explicit Gamelist(Context *context);
     virtual ~Gamelist()override=default;
 
-
-    bool HandleKeyDown(InputKey key, int idx) override;
-
-
 public:
     struct Item
     {
@@ -30,13 +26,14 @@ public:
         String name_;
         bool   marked{false};
     };
+
 private :
-    std::vector<std::unique_ptr<Item>>  games_;
+    Vector<Item>  games_;
+
 public:
-    void ClearItems(){ games_.clear(); }
+    void ClearItems(){ games_.Clear(); }
     void AddItem(const Item& item);
-    //void Update()override;
-    int  GetGameItemsCount() const noexcept { return games_.size() ; }
+    int  GetGameItemsCount() const noexcept { return games_.Size() ; }
 
     DEF_TEXTURE_ATTR_SETTER_GETTER( ListMask, listMask)
     DEF_TEXTURE_ATTR_SETTER_GETTER( ListMaskSelect,  listMaskSelect)
@@ -48,6 +45,7 @@ public:
 
     int GetIndex() const noexcept { return firstIndex_+index_; }
     void ResetIndex() { firstIndex_=0; index_=0;}
+    void UpdateDrawItems();
 
     int GetPageItems() const noexcept { return pageItems_; }
 
@@ -69,13 +67,28 @@ protected:
 
     int                                 firstIndex_{0};
     int                                 index_{0};
-//    Vector<WeakPtr<UIElement>>          UIItems_; // this vector store all UI items for display one game 
 
-//    void CreateChildren();
+    struct  DrawItem
+    {
+        IntVector2              listMaskPosition_;
+        SharedPtr<Texture2D>    listMaskTexture_{nullptr};
+        IntVector2              iconPosition_;
+        SharedPtr<Texture2D>    iconTexture_{nullptr};
+        IntVector2              listBackgroundPosition_;
+        SharedPtr<Texture2D>    listBackgroundTexture_{nullptr};
 
+        SharedPtr<FontFace>     noFace_{nullptr};
+        IntVector2              noPosition_;
+        Color                   noColor_;
+        String                  no_;
+    };
+    Vector<DrawItem>          drawItems_; // this vector store all UI items for display one game 
 
 private:
 //    bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
+    void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor) override;
+    bool HandleKeyDown(InputKey key, int idx) override;
+    //void Start() override;
 
     int goNextPage();
     int goPreviousPage();

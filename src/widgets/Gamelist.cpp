@@ -64,7 +64,7 @@ Gamelist::Gamelist(Context *context)
 //{
 //    // set all UIItems_;
 //    for(auto& item : UIItems_) {item->SetVisible(false);}
-//    auto totalGames = games_.size();
+//    auto totalGames = games_.Size();
 //
 //    LOG_INFOS_CPP(" firstIndex_ ", firstIndex_ , " index_", index_);
 //    
@@ -75,7 +75,7 @@ Gamelist::Gamelist(Context *context)
 //            UIItems_[t]->SetVisible(false);
 //            continue;
 //        }
-//        ASSERT_CPP(gameIndex>=0 && gameIndex < games_.size(), "gameIndex is not correct", gameIndex, UIItems_.Size());
+//        ASSERT_CPP(gameIndex>=0 && gameIndex < games_.Size(), "gameIndex is not correct", gameIndex, UIItems_.Size());
 //        UIItems_[t]->SetVisible(true);
 //        auto iconPath = games_[gameIndex]->iconPath_;
 //        auto name     = games_[gameIndex]->name_;
@@ -154,7 +154,7 @@ bool Gamelist::HandleKeyDown(InputKey key, int idx)
 
     bool indexChanged = false;
     bool handledKey = false;
-    auto totalGames = games_.size();
+    auto totalGames = games_.Size();
     if(key == InputKey::LEFT) 
     {
         LOG_INFOS_CPP(" LEFT");
@@ -193,8 +193,7 @@ bool Gamelist::HandleKeyDown(InputKey key, int idx)
 
 void Gamelist::AddItem(const Item& item)
 {
-    auto newItem = std::make_unique<Item>(item);
-    games_.push_back(std::move(newItem));
+    games_.Push(item);
 }
 
 // void Gamelist::CreateChildren()
@@ -254,16 +253,17 @@ int Gamelist::goPreviousItem()
         index_ = pageItems_-1;
         firstIndex_-=pageItems_;
         if(firstIndex_<0) {
-            firstIndex_ = ((games_.size()-1)/pageItems_)*pageItems_;
-            if(firstIndex_+index_>=(int)games_.size()) { index_ = games_.size()-1-firstIndex_; }
+            firstIndex_ = ((games_.Size()-1)/pageItems_)*pageItems_;
+            if(firstIndex_+index_>=(int)games_.Size()) { index_ = games_.Size()-1-firstIndex_; }
         }
     }
+    UpdateDrawItems();
     return 0;
 }
 
 int Gamelist::goNextItem()
 {
-    if(firstIndex_+index_+1>=(int)games_.size())
+    if(firstIndex_+index_+1>=(int)games_.Size())
     {
         firstIndex_ = 0;
         index_ = 0;
@@ -275,9 +275,10 @@ int Gamelist::goNextItem()
     if(index_>=pageItems_) { 
         index_=0; 
         firstIndex_+=pageItems_;
-        if(firstIndex_>=(int)games_.size()) { firstIndex_=0; }
-        if(firstIndex_+index_>=(int)games_.size()) { index_ = games_.size()-1-firstIndex_; }
+        if(firstIndex_>=(int)games_.Size()) { firstIndex_=0; }
+        if(firstIndex_+index_>=(int)games_.Size()) { index_ = games_.Size()-1-firstIndex_; }
     }
+    UpdateDrawItems();
     return 0;
 }
 
@@ -285,19 +286,114 @@ int Gamelist::goPreviousPage()
 {
     firstIndex_-=pageItems_;
     if(firstIndex_<0) {
-        firstIndex_ = ((games_.size()-1)/pageItems_)*pageItems_;
-        if(firstIndex_+index_>=(int)games_.size()) { index_ = games_.size()-1-firstIndex_; }
+        firstIndex_ = ((games_.Size()-1)/pageItems_)*pageItems_;
+        if(firstIndex_+index_>=(int)games_.Size()) { index_ = games_.Size()-1-firstIndex_; }
     }
+    UpdateDrawItems();
     return 0;
 }
 
 int Gamelist::goNextPage()     
 {
     firstIndex_+=pageItems_;
-    if(firstIndex_>=(int)games_.size()) { firstIndex_=0; }
-    if(firstIndex_+index_>=(int)games_.size()) { index_ = games_.size()-1-firstIndex_; }
+    if(firstIndex_>=(int)games_.Size()) { firstIndex_=0; }
+    if(firstIndex_+index_>=(int)games_.Size()) { index_ = games_.Size()-1-firstIndex_; }
+    UpdateDrawItems();
     return 0;
 }
 
+
+void Gamelist::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
+{
+    // draw background
+    const auto listMaskTexture = CACHE->GetResource<Texture2D>(listMaskTexture_);
+    const auto listMaskSelectTexture = CACHE->GetResource<Texture2D>(listMaskSelectTexture_);
+    const auto itemHeight = listMaskTexture->GetHeight();
+    for(auto i = 0; i<drawItems_.Size(); i++) {
+        const auto& item = drawItems_[i];
+        // draw list mark
+        {
+            Widget::AddTextureBatch(batches, vertexData, currentScissor, item.listMaskTexture_, item.listMaskPosition_.x_, item.listMaskPosition_.y_);
+        }
+        
+        // draw icon
+        {
+            Widget::AddTextureBatch(batches, vertexData, currentScissor, item.iconTexture_, item.iconPosition_.x_, item.iconPosition_.y_, listIconSize_.x_, listIconSize_.y_ );
+        }
+
+        // draw background
+        {
+            Widget::AddTextureBatch(batches, vertexData, currentScissor, item.listBackgroundTexture_, item.listBackgroundPosition_.x_, item.listBackgroundPosition_.y_);
+        }
+
+        // draw name
+        {
+            Widget::AddStringBatch(batches, vertexData, currentScissor, item.no_, item.noFace_, item.noColor_, item.noPosition_.x_, item.noPosition_.y_);
+        }
+    }
+}
+
+void Gamelist::UpdateDrawItems()
+{
+    drawItems_.Clear();
+    for(auto i = 0; i+firstIndex_<games_.Size() && i<pageItems_; i++) {
+        DrawItem newItem;
+        auto selected = IsSelected() && i == index_;
+        auto* listMaskTexture = CACHE->GetResource<Texture2D>(listMaskTexture_);
+        const auto  itemHeight = listMaskTexture->GetHeight();
+        {
+            auto* listMaskSelectTexture = CACHE->GetResource<Texture2D>(listMaskSelectTexture_);
+            newItem.listMaskPosition_.x_ = 0;
+            newItem.listMaskPosition_.y_ = i*(itemHeight+itemGap_);
+            newItem.listMaskTexture_ = selected ? listMaskSelectTexture : listMaskTexture;
+        }
+        {
+            auto* texture = [&](){
+                    const auto& iconPath = games_[firstIndex_+i].iconPath_;
+                    if(context_->GetSubsystem<FileSystem>()->FileExists(iconPath)){
+                        auto texture = new Texture2D(context_);
+                        File iconFile(context_, iconPath);
+                        texture->Load(iconFile);
+                        return texture;
+                    } 
+                    else {
+                        return CACHE->GetResource<Texture2D>(listIconDefaultTexture_);
+                    }
+                } ();
+            ASSERT_CPP(texture!=nullptr, "can not get texture for game ", i+firstIndex_);
+            newItem.iconPosition_.x_ = listMaskTexture->GetWidth();
+            newItem.iconPosition_.y_ = i*(itemHeight+itemGap_);
+            newItem.iconTexture_ = texture;
+        }
+        {
+            auto* itemBackgroundTexture = CACHE->GetResource<Texture2D>(itemBackgroundTexture_);
+            auto* itemBackgroundSelectTexture = CACHE->GetResource<Texture2D>(itemBackgroundSelectTexture_);
+            newItem.listBackgroundPosition_.x_ = itemBasePosition_.x_;
+            newItem.listBackgroundPosition_.y_ = i*(itemHeight+itemGap_) + itemBasePosition_.y_;
+            newItem.listBackgroundTexture_ = selected ?  itemBackgroundSelectTexture : itemBackgroundTexture;
+        }
+        {
+            auto font = CACHE->GetResource<Font>(textFont_);
+            FontFace* face = font->GetFace(textFontSize_);
+            newItem.noFace_ = face;
+            auto no  = i+firstIndex_+1;
+            String name{"0000"};
+            name[0] = ((no/1000)%10) + '0';
+            name[1] = ((no/100 )%10) + '0';
+            name[2] = ((no/10  )%10) + '0';
+            name[3] = ((no/1   )%10) + '0';
+            const auto& gameName = games_[i+firstIndex_].name_;
+            name += " ";
+            name += gameName;
+            newItem.no_ =name;
+            LOG_INFOS_CPP(gameName, name);
+            auto offsety = (listMaskTexture->GetHeight()-face->GetRowHeight())/2;
+            newItem.noPosition_.x_ = itemBasePosition_.x_+offsety;
+            newItem.noPosition_.y_ = i*(itemHeight+itemGap_)+itemBasePosition_.y_+offsety;
+            newItem.noColor_ = selected ? selectColor_ : unselectColor_;
+        }
+        drawItems_.Push(newItem);
+    }
+}
 
 }

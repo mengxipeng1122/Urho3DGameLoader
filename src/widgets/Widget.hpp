@@ -76,52 +76,73 @@ class Widget: public UIElement
         }
 
         // NOTE:
-        // dx  in is in/out parameter, 
-        // output dx will add by string texture width;
         // only support one line so far
-        void AddStringBatch(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor, const String& str, FontFace* face, const Color& color, int& dx, int dy, int gap=-1, int w=-1, int h=-1)
+        void AddStringBatch(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor, const String& str, FontFace* face, const Color& color, int dx, int dy, int spacing=1,int gap=-1)
         {
-            int stringWidth = 0;
-            int stringHeight= 0;
-            // calculate string texture width first
-            {
-                for(auto i = 0;i< str.Length(); i++) {
-                    auto c = str[i];
-                    const FontGlyph* glyph = face->GetGlyph(c);
-                    stringWidth += glyph->texWidth_;
-                    stringHeight = glyph->texHeight_;
-                }
-            }
+            PODVector<unsigned> unicodeText;
+            for (unsigned i = 0; i < str.Length();) unicodeText.Push(str.NextUTF8Char(i));
 
+            AddStringBatch(
+                  batches
+                , vertexData
+                , currentScissor
+                , unicodeText
+                , face
+                , color
+                , dx
+                , dy
+                , spacing
+                , gap
+                );
+
+        }
+
+        int GetStringLineWidth(const String& str, FontFace* face)
+        {
+            PODVector<unsigned> unicodeText;
+            for (unsigned i = 0; i < str.Length();) unicodeText.Push(str.NextUTF8Char(i));
+            return GetStringLineWidth(unicodeText, face);
+        }
+
+
+        int GetStringLineWidth(const PODVector<unsigned>& unicodeText, FontFace* face)
+        {
+            int width=0;
+            for(const auto& c : unicodeText)
             {
+                const FontGlyph* glyph = face->GetGlyph(c);
+                width += glyph->advanceX_ + glyph->offsetX_;
+            }
+            return width;
+        }
+
+
+        // NOTE:
+        // only support one line so far
+        void AddStringBatch(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor, const PODVector<unsigned>& unicodeText, FontFace* face, const Color& color, int dx, int dy,  int spacing=1, int gap=-1)
+        {
+            {
+                auto position = GetPosition();
                 auto offsetx = 0;
-                auto offsety = 0;
                 // find string offset x y
-                if(w>=0 && h>=0) {
-                    offsetx=(w-stringWidth)/2;
-                    offsety=(h-stringHeight)/2;
-                }
                 const Vector<SharedPtr<Texture2D> >& textures = face->GetTextures();
-                for(auto i = 0;i< str.Length(); i++) {
-                    auto c = str[i];
+                for(const auto& c: unicodeText) {
                     const FontGlyph* glyph = face->GetGlyph(c);
                     auto page = glyph->page_;
                     ASSERT_CPP(page < textures.Size(), "page is not correct", page, "/", textures.Size());
                     UIBatch batch(this, BLEND_ALPHA, currentScissor, textures[page], &vertexData);
                     auto transform = Matrix3x4::IDENTITY;
-                    auto position = GetPosition();
-                    transform.SetTranslation(Vector3((float)position.x_+dx+offsetx, (float)position.y_+dy+offsety, 0.0f));
+                    transform.SetTranslation(Vector3((float)position.x_+dx+offsetx, (float)position.y_+dy, 0.0f));
                     batch.SetColor(color);
 
                     const IntVector2& size {glyph->texWidth_, glyph->texHeight_};
-                    batch.AddQuad(transform, 0, 0, size.x_, size.y_, glyph->x_, glyph->y_,  size.x_, size.y_);
+                    batch.AddQuad(transform,  glyph->offsetX_, glyph->offsetY_, size.x_, size.y_, glyph->x_, glyph->y_,  size.x_, size.y_);
                     UIBatch::AddOrMerge(batch, batches);
 
-                    offsetx += gap>=0 ? gap : glyph->texWidth_;
+                    offsetx += gap>=0 ? gap : glyph->advanceX_+glyph->offsetX_;
+                    offsetx += spacing;
                 }
             }
-
-            dx += stringWidth;
         }
 
 

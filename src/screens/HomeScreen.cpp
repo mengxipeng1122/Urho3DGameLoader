@@ -122,6 +122,7 @@ void HomeScreen::HandleMainTabLostSelected(StringHash eventType, VariantMap& eve
             auto gameItemsCount = gamelist_->GetGameItemsCount();
             if(gameItemsCount>0) { 
                 SelectWidget(gamelist_);
+                gamelist_->UpdateDrawItems();
             }
             else { 
                 SelectWidget(mainTab_);
@@ -223,6 +224,7 @@ void HomeScreen::SetGamelist()
     }
 
     // update gamelist
+    gamelist_->UpdateDrawItems();
     gamelist_->ResetIndex();
 }
 

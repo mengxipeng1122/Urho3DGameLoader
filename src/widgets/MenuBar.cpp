@@ -102,13 +102,16 @@ void MenuBar::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDa
         const IntVector2 cursorSize{selectCursorTexture->GetWidth(), selectCursorTexture->GetHeight()};
         for( int i = 0; i<displayTexts_.Size() ;i++) {
             auto str = displayTexts_[i];
-            int dx=cursorBasePosition_.x_+cursorSize.x_*i;
-            int dy=cursorBasePosition_.y_;
+            auto strWidth = Widget::GetStringLineWidth(str, face);
+            auto offsetx = (cursorSize.x_-strWidth)/2;
+            auto offsety = (cursorSize.y_-face->GetRowHeight())/2;
+            int dx=cursorBasePosition_.x_+cursorSize.x_*i+offsetx;
+            int dy=cursorBasePosition_.y_+offsety;
             if( i == index_) {
-                Widget::AddStringBatch(batches, vertexData, currentScissor, str, face, selectColor_, dx, dy, -1, cursorSize.x_, cursorSize.y_);
+                Widget::AddStringBatch(batches, vertexData, currentScissor, str, face, selectColor_, dx, dy);
             }
             else {
-                Widget::AddStringBatch(batches, vertexData, currentScissor, str, face, unselectColor_, dx, dy, -1, cursorSize.x_, cursorSize.y_);
+                Widget::AddStringBatch(batches, vertexData, currentScissor, str, face, unselectColor_, dx, dy);
             }
         }
     }
