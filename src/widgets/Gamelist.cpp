@@ -25,7 +25,7 @@ void Gamelist::RegisterObject(Context* context)
     URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Item Background Texture", GetItemBackgroundTextureAttr, SetItemBackgroundTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
     URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Item Background Select Texture", GetItemBackgroundSelectTextureAttr, SetItemBackgroundSelectTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
     URHO3D_ATTRIBUTE("Select Color", Color, selectColor_, Color::TRANSPARENT_BLACK, AM_FILE);
-    URHO3D_ATTRIBUTE("UnSelect Color", Color, unselectColor_, Color::TRANSPARENT_BLACK, AM_FILE);
+    URHO3D_ATTRIBUTE("Unselect Color", Color, unselectColor_, Color::TRANSPARENT_BLACK, AM_FILE);
     URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Text Font", GetTextFontAttr, SetTextFontAttr, ResourceRef, ResourceRef(Font::GetTypeStatic()), AM_FILE);
     URHO3D_ATTRIBUTE("Text Font Size", float, textFontSize_, DEFAULT_FONT_SIZE, AM_FILE);
 

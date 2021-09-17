@@ -17,12 +17,11 @@ void MenuBar::RegisterObject(Context* context)
     URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Select Cursor Texture", GetSelectCursorTextureAttr, SetSelectCursorTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
     URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Unselect Cursor Texture", GetUnselectCursorTextureAttr, SetUnselectCursorTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
     URHO3D_ATTRIBUTE("Select Color", Color, selectColor_, Color::TRANSPARENT_BLACK, AM_FILE);
-    URHO3D_ATTRIBUTE("UnSelect Color", Color, unselectColor_, Color::TRANSPARENT_BLACK, AM_FILE);
+    URHO3D_ATTRIBUTE("Unselect Color", Color, unselectColor_, Color::TRANSPARENT_BLACK, AM_FILE);
     URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Text Font", GetTextFontAttr, SetTextFontAttr, ResourceRef, ResourceRef(Font::GetTypeStatic()), AM_FILE);
     URHO3D_ATTRIBUTE("Text Font Size", float, textFontSize_, DEFAULT_FONT_SIZE, AM_FILE);
-    URHO3D_ATTRIBUTE("Text Auto Localization", bool, textAutoLocalization_, false, AM_FILE);
+    URHO3D_ATTRIBUTE("Text Auto Localizable", bool, textAutoLocalizable_, false, AM_FILE);
     URHO3D_ATTRIBUTE("Cursor Base Position", Vector2, cursorBasePosition_, Vector2::ZERO, AM_FILE);
-    URHO3D_ATTRIBUTE("Auto Localizable", bool, autoLocalizable_, false, AM_FILE);
 }
 
 MenuBar::MenuBar(Context *context)
@@ -101,10 +100,8 @@ void MenuBar::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDa
         FontFace* face = font->GetFace(textFontSize_);
         auto selectCursorTexture = CACHE->GetResource<Texture2D>(selectCursorTexture_);
         const IntVector2 cursorSize{selectCursorTexture->GetWidth(), selectCursorTexture->GetHeight()};
-        for( int i = 0; i<texts_.Size() ;i++) {
-            auto str = texts_[i];
-            if(autoLocalizable_) str = L10N->Get(str);
-
+        for( int i = 0; i<displayTexts_.Size() ;i++) {
+            auto str = displayTexts_[i];
             int dx=cursorBasePosition_.x_+cursorSize.x_*i;
             int dy=cursorBasePosition_.y_;
             if( i == index_) {
@@ -113,6 +110,21 @@ void MenuBar::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDa
             else {
                 Widget::AddStringBatch(batches, vertexData, currentScissor, str, face, unselectColor_, dx, dy, -1, cursorSize.x_, cursorSize.y_);
             }
+        }
+    }
+}
+
+void MenuBar::Start()
+{
+    displayTexts_.Clear();
+    for(const auto& text : texts_)
+    {
+        if(textAutoLocalizable_) {
+            String ss = L10N->Get(text);
+            LOG_INFOS_CPP("ss", ss);
+            displayTexts_.Push(ss);
+        } else {
+            displayTexts_.Push(text);
         }
     }
 }

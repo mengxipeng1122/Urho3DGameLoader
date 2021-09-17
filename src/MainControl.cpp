@@ -154,7 +154,6 @@ void MainControl::Start()
     // resource path 
     auto* cache = GetSubsystem<ResourceCache>(); 
     auto success = cache->AddResourceDir("Resources");
-
     // initialize laguage 
     {
         Localization* l10n = GetSubsystem<Localization>();
@@ -162,7 +161,6 @@ void MainControl::Start()
         l10n->SetLanguage("En");
         LOG_INFOS_CPP(" lang " , l10n->GetNumLanguages());
     }
-
 
     // Load XML file containing default UI style sheet
     auto* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");

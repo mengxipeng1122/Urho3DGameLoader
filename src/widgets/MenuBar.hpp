@@ -28,17 +28,19 @@ public:
 protected:
     void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor) override;
     bool HandleKeyDown(InputKey key, int idx) override;
+    void Start() override;
+
 
 public:
     void SetTextsAttr(const VariantVector& value) {
         texts_.Clear();
         if (!value.Size()) return ;
-         for (VariantVector::ConstIterator i = value.Begin(); i != value.End(); ++i)
-         {
-             auto text = i->GetString();
-             texts_.Push(text);
-         }
+        for (VariantVector::ConstIterator i = value.Begin(); i != value.End(); ++i)
+        {
+            auto text = i->GetString();
+            texts_.Push(text);
         }
+    }
     VariantVector GetTextsAttr() const { VariantVector value; for (auto& text : texts_) { value.Push(text); } return value;  }
 
     DEF_TEXTURE_ATTR_SETTER_GETTER(Background, background)
@@ -53,13 +55,13 @@ protected:
     Color                   unselectColor_{1,1,1,1};
     String                  backgroundTexture_;
     Vector<String>          texts_;
+    Vector<String>          displayTexts_;
     String                  selectCursorTexture_;
     String                  unselectCursorTexture_;
     String                  textFont_;
     float                   textFontSize_{DEFAULT_FONT_SIZE};
-    bool                    textAutoLocalization_{false};
+    bool                    textAutoLocalizable_{false};
     Vector2                 cursorBasePosition_{0,0};
-    bool                    autoLocalizable_;
 
     int                     index_{0};
 

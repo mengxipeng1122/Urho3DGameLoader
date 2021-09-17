@@ -26,7 +26,7 @@
             <attribute name="Item Background Texture" value="Texture2D;res/list_item_bg.png" />
             <attribute name="Item Background Select Texture" value="Texture2D;res/list_item_bg_sel.png" />
     		<attribute name="Select Color" value="0 .8 .2 1" />
-    		<attribute name="UnSelect Color" value="1 1 1 1" />
+    		<attribute name="Unselect Color" value="1 1 1 1" />
             <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
             <attribute name="Text Font Size" value="12" />
             <attribute name="Item Base Position" value="70 0" />
@@ -45,7 +45,7 @@
 			<attribute name="Size" value="60 50" />
 			<attribute name="Name" value="Main Tab" />
 			<attribute name="Pivot" value="0 0" />
-            <attribute name="Text Auto Localization" value="true" />
+            <attribute name="Text Auto Localizable" value="true" />
             <attribute name="Background Texture" value="Texture2D;res/main_tab_bg.png" />
             <attribute name="Unselect Cursor Texture" value="Texture2D;res/main_tab.png" />
             <attribute name="Select Cursor Texture" value="Texture2D;res/main_tab_sel.png" />
@@ -57,7 +57,7 @@
 				<variant type="String" value="SEARCH" />
 			</attribute>
 			<attribute name="Select Color" value="0 0 0 1" />
-			<attribute name="UnSelect Color" value="1 1 1 1" />
+			<attribute name="Unselect Color" value="1 1 1 1" />
 			<attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
 		</element>
 		<element type="MenuBar">
@@ -65,7 +65,7 @@
 			<attribute name="Size" value="60 50" />
 			<attribute name="Name" value="Search Tab" />
 			<attribute name="Pivot" value="0 0" />
-            <attribute name="Text Auto Localization" value="true" />
+            <attribute name="Text Auto Localizable" value="true" />
             <attribute name="Background Texture" value="Texture2D;res/main_tab_bg.png" />
             <attribute name="Unselect Cursor Texture" value="Texture2D;res/main_tab.png" />
             <attribute name="Select Cursor Texture" value="Texture2D;res/main_tab_sel.png" />
@@ -75,7 +75,7 @@
 				<variant type="String" value="STORE" />
 			</attribute>
 			<attribute name="Select Color" value="0 0 0 1" />
-			<attribute name="UnSelect Color" value="1 1 1 1" />
+			<attribute name="Unselect Color" value="1 1 1 1" />
 			<attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
 		</element>
         <element type="PageIndicator">

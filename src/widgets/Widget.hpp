@@ -13,6 +13,24 @@ class Widget: public UIElement
         virtual bool HandleKeyDown(InputKey key, int idx){return false;};
 
     protected:
+
+        virtual void Start(){};
+
+        bool LoadXML(const XMLElement& source) override
+        {
+            bool success = Widget::LoadXML(source);
+            ASSERT_CPP(success, "load XML failed ");
+            Start();
+            return success;
+        }
+
+        void ApplyAttributes() override
+        {
+            UIElement::ApplyAttributes();
+            Start();
+            return;
+        }
+
         void AddTextureBatch(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor, Texture2D* texture, int dx, int dy, int w=-1, int h=-1)
         {
             ASSERT_CPP(texture != nullptr, "texture is null");
