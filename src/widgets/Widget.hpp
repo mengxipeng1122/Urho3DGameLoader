@@ -9,7 +9,8 @@ namespace Urho3D
 class Widget: public UIElement
 {
     public:
-        Widget(Context* context) : UIElement(context) {}
+        static void RegisterObject(Context* context);
+        explicit Widget(Context* context);
         virtual bool HandleKeyDown(InputKey key, int idx){return false;};
 
     protected:
@@ -18,7 +19,7 @@ class Widget: public UIElement
 
         bool LoadXML(const XMLElement& source) override
         {
-            bool success = Widget::LoadXML(source);
+            bool success = UIElement::LoadXML(source);
             ASSERT_CPP(success, "load XML failed ");
             Start();
             return success;

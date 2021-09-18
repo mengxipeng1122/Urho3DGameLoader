@@ -3,10 +3,11 @@
 
 void Screen::Enter()
 {
-    auto* cache = context_->GetSubsystem<ResourceCache>(); 
-    auto* uiRoot= context_->GetSubsystem<UI>()->GetRoot();
-    String fileName= ToString("screens/%s.xml", "ScreenBase");
-    SharedPtr<File> file = cache->GetFile(fileName); uiRoot->LoadXML(*file);
+    {
+        String fileName= ToString("screens/%s.xml", "ScreenBase");
+        SharedPtr<File> file = CACHE->GetFile(fileName); 
+        UI_ROOT->LoadXML(*file);
+    }
 }
 
 void Screen::Leave()

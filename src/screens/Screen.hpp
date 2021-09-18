@@ -8,12 +8,20 @@
 
 class Screen : public UIElement
 {
-    protected:
     public:
         Screen(Context* context):UIElement(context){}
         virtual ~Screen()=default;
         virtual void Enter() ;
         virtual void Leave() ;
-        virtual bool HandleKeyDown(InputKey key, int idx)=0;
+        virtual bool HandleKeyDown(InputKey key, int idx){return false;}
+        virtual bool HandleKeyUp(InputKey key, int idx){ return false;}
+
+    protected:
+        void LoadScreen(const String& resPath)
+        {
+            auto* screen = UI_ROOT->CreateChild<UIElement>(String("Screen"));
+            SharedPtr<File> file = CACHE->GetFile(resPath); 
+            screen->LoadXML(*file);
+        }
 };
 

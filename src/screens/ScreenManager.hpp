@@ -29,6 +29,7 @@ class ScreenManager
         static void SetCurrentScreen(std::unique_ptr<Screen> ptr);
 
         static bool HandleKeyDown(InputKey key, int idx) {return s_currentScreen->HandleKeyDown(key, idx);};
+        static bool HandleKeyUp(InputKey key, int idx) {return s_currentScreen->HandleKeyUp(key, idx);};
 };
 
 

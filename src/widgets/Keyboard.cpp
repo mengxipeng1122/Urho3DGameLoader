@@ -13,7 +13,7 @@ extern const char* UI_CATEGORY;
 void Keyboard::RegisterObject(Context* context)
 {
     context->RegisterFactory<Keyboard>(UI_CATEGORY);
-    URHO3D_COPY_BASE_ATTRIBUTES(UIElement);
+    URHO3D_COPY_BASE_ATTRIBUTES(Widget);
 
     URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Key Background Texture", GetKeyBackgroundTextureAttr, SetKeyBackgroundTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
     URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Key Select Texture", GetKeySelectTextureAttr, SetKeySelectTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);

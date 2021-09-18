@@ -3,7 +3,7 @@
 
 #include "InputSystem.hpp"
 
-bool InputSystem::KeyDownHasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx)
+bool InputSystem::KeyHasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx)
 {
     using namespace KeyDown;
     int key = eventData[P_KEY].GetInt();

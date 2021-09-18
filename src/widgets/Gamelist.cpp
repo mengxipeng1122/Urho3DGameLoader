@@ -14,7 +14,7 @@ extern const char* UI_CATEGORY;
 void Gamelist::RegisterObject(Context* context)
 {
     context->RegisterFactory<Gamelist>(UI_CATEGORY);
-    URHO3D_COPY_BASE_ATTRIBUTES(UIElement);
+    URHO3D_COPY_BASE_ATTRIBUTES(Widget);
 
     URHO3D_ATTRIBUTE("Page Items", int, pageItems_, 10, AM_FILE);
     URHO3D_ATTRIBUTE("Item Gap",   int, pageItems_,  3, AM_FILE);

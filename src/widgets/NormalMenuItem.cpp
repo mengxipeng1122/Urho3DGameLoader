@@ -13,7 +13,7 @@ extern const char* UI_CATEGORY;
 void NormalMenuItem::RegisterObject(Context* context)
 {
     context->RegisterFactory<NormalMenuItem>(UI_CATEGORY);
-    URHO3D_COPY_BASE_ATTRIBUTES(Widget);
+    URHO3D_COPY_BASE_ATTRIBUTES(MenuItem);
 
     URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Unselect Background Texture", GetUnselectBackgroundTextureAttr, SetUnselectBackgroundTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);
     URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Select Background Texture", GetSelectBackgroundTextureAttr, SetSelectBackgroundTextureAttr, ResourceRef, ResourceRef(Texture2D::GetTypeStatic()), AM_FILE);

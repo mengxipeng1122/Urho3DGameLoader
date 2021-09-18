@@ -33,13 +33,16 @@
 #include "widgets/PageIndicator.hpp"
 #include "widgets/Gamelist.hpp"
 #include "widgets/MenuBar.hpp"
-#include "widgets/TestWidget.hpp"
 #include "widgets/VideoPlayer.hpp"
 #include "widgets/SearchEdit.hpp"
+#include "widgets/Widget.hpp"
 #include "widgets/NormalMenuItem.hpp"
+#include "widgets/SelectMenuItem.hpp"
 #include "widgets/TextSelectMenuItem.hpp"
 #include "widgets/ImageSelectMenuItem.hpp"
 #include "widgets/Keyboard.hpp"
+#include "widgets/JoystickDir.hpp"
+#include "widgets/JoystickKey.hpp"
 #include "screens/ScreenManager.hpp"
 #include "screens/HomeScreen.hpp"
 #include "screens/IOTestScreen.hpp"
@@ -76,22 +79,27 @@ MainControl::MainControl(Context* context)
 void MainControl::RegisterScreens()
 {
     { std::string name(HomeScreen       ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<HomeScreen       >()); }
-    { std::string name(IOTestScreen     ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<IOTestScreen     >()); }
     { std::string name(SettingsScreen   ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<SettingsScreen   >()); }
+    { std::string name(IOTestScreen     ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<IOTestScreen     >()); }
 }
 
 void MainControl::RegisterWidgets()
 {
+    // should every widget in hierarchy tree
     Gamelist                ::RegisterObject(context_);
     VideoPlayer             ::RegisterObject(context_);
     PageIndicator           ::RegisterObject(context_);
     MenuBar                 ::RegisterObject(context_);
-    TestWidget              ::RegisterObject(context_);
     SearchEdit              ::RegisterObject(context_);
     Keyboard                ::RegisterObject(context_);
+    Widget                  ::RegisterObject(context_);
+    MenuItem                ::RegisterObject(context_);
     NormalMenuItem          ::RegisterObject(context_);
+    SelectMenuItem          ::RegisterObject(context_);
     TextSelectMenuItem      ::RegisterObject(context_);
     ImageSelectMenuItem     ::RegisterObject(context_);
+    JoystickDir             ::RegisterObject(context_);
+    JoystickKey             ::RegisterObject(context_);
 }
 
 void MainControl::RegisterSubsystems()
@@ -169,7 +177,7 @@ void MainControl::Start()
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
 
-    ScreenManager::SetCurrentScreen(SettingsScreen::GetName(), context_);
+    ScreenManager::SetCurrentScreen(IOTestScreen::GetName(), context_);
 
     // Create console and debug HUD
     CreateConsoleAndDebugHud();
@@ -212,8 +220,13 @@ void MainControl::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
 {
     using namespace KeyUp;
 
-    int key = eventData[P_KEY].GetInt();
+    InputKey inputKey;
+    int      inputIdx;
+    if(INPUT_SYSTEM->KeyHasInputKey(eventData, inputKey, inputIdx)) {
+        ScreenManager::HandleKeyUp(inputKey, inputIdx);
+    }
 
+    int key = eventData[P_KEY].GetInt();
     // Close console (if open) or exit when ESC is pressed
     if (key == KEY_ESCAPE)
     {
@@ -228,8 +241,7 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
 
     InputKey inputKey;
     int      inputIdx;
-    if(INPUT_SYSTEM->KeyDownHasInputKey(eventData, inputKey, inputIdx))
-    {
+    if(INPUT_SYSTEM->KeyHasInputKey(eventData, inputKey, inputIdx)) {
         ScreenManager::HandleKeyDown(inputKey, inputIdx);
     }
 

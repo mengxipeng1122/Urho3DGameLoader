@@ -17,11 +17,10 @@ class MenuItem : public Widget
 public:
     static void RegisterObject(Context* context);
 
-    explicit MenuItem(Context *context) :Widget(context){ }
+    explicit MenuItem(Context *context);
 
 
 public:
-    void Update();
 
 
 protected:

@@ -17,8 +17,10 @@ enum class InputKey
     FIRE_D,
     FIRE_E,
     FIRE_F,
+
+    NUMS_KEY,
     
-    SETTING,
+    SETTING=NUMS_KEY,
 };
 
 using namespace Urho3D;
@@ -28,7 +30,7 @@ class InputSystem: public Object
 
     public:
         InputSystem(Context* context): Object(context){}
-        bool KeyDownHasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx);
+        bool KeyHasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx);
         bool JoystickButtonDownHasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx);
 };
 

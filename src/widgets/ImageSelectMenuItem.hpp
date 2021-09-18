@@ -1,7 +1,7 @@
 
 
 #pragma once
-#include "NormalMenuItem.hpp"
+#include "SelectMenuItem.hpp"
 #include "../utils/log.hpp"
 
 namespace Urho3D
@@ -11,54 +11,25 @@ namespace Urho3D
 
 //=============================================================================
 //=============================================================================
-class ImageSelectMenuItem : public NormalMenuItem
+class ImageSelectMenuItem : public SelectMenuItem
 {
-    URHO3D_OBJECT(ImageSelectMenuItem, NormalMenuItem);
+    URHO3D_OBJECT(ImageSelectMenuItem, SelectMenuItem);
 public:
     static void RegisterObject(Context* context);
 
     explicit ImageSelectMenuItem(Context *context);
 
-    DEF_TEXTURE_ATTR_SETTER_GETTER(UnselectLeftArrow, unselectLeftArrow)
-    DEF_TEXTURE_ATTR_SETTER_GETTER(SelectLeftArrow, selectLeftArrow)
-    DEF_TEXTURE_ATTR_SETTER_GETTER(UnselectRightArrow, unselectRightArrow)
-    DEF_TEXTURE_ATTR_SETTER_GETTER(SelectRightArrow, selectRightArrow)
-
-public:
-    void SetOptionsAttr(const VariantVector& value) {
-        options_.Clear();
-        if (!value.Size()) return ;
-        for (VariantVector::ConstIterator i = value.Begin(); i != value.End(); ++i) {
-            auto option = i->GetResourceRef().name_;
-            options_.Push(option);
-        }
-    }
-    VariantVector GetOptionsAttr() const { 
-        VariantVector value; 
-        for (auto& option : options_) { 
-            ResourceRef ref(Texture2D::GetTypeStatic(), option);
-            value.Push(ref);
-        } 
-        return value;  
-    }
-
-    int getOptionIndex() const noexcept { return optionsIndex_; }
-
 protected:
-    Vector<String>          options_;
-    int                     optionsIndex_{0};
-    Vector2                 optionPosition_;
-    String                  unselectLeftArrowTexture_;
-    String                  selectLeftArrowTexture_;
-    Vector2                 leftArrowPosition_;
-    String                  unselectRightArrowTexture_;
-    String                  selectRightArrowTexture_;
-    Vector2                 rightArrowPosition_;
-
-    bool HandleKeyDown(InputKey key, int idx)override;
-    void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor) override;
-
-private:
+    String   GetOptionFromVariantVectorItem(VariantVector::ConstIterator& i) override
+    {
+        return i->GetResourceRef().name_;
+    }
+    Variant  SetOptionToVariantVectorItem(const String& option) const override
+    {
+        ResourceRef ref(Texture2D::GetTypeStatic(), option);
+        return ref;
+    }
+    void GetBatchesForOption(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor) override;
 
 };
 

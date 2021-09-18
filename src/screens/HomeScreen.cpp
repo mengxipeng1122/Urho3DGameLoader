@@ -11,12 +11,8 @@
 void HomeScreen::Enter()
 {
     Screen::Enter();
-    auto* uiRoot= context_->GetSubsystem<UI>()->GetRoot();
-    auto* screen = uiRoot->CreateChild<UIElement>(GetName());
-    auto* cache = context_->GetSubsystem<ResourceCache>(); 
-    String fileName= ToString("screens/%s.xml", GetName());
-    SharedPtr<File> file = cache->GetFile(fileName); 
-    screen->LoadXML(*file);
+    Screen::LoadScreen(ToString("screens/%s.xml", GetName()));
+    const auto* screen = UI_ROOT->GetChildStaticCast<UIElement>(String("Screen"));
 
     pageIndicator_ = static_cast<PageIndicator*>(screen->GetChild(String("Page Indicator")));
     ASSERT_CPP(pageIndicator_!=nullptr, " can not found Page Indicator ");
