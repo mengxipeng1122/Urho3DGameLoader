@@ -34,7 +34,12 @@ public:
         }
     }
     VariantVector GetOptionsAttr() const { 
-        VariantVector value; for (auto& option : options_) { value.Push(option); } return value;  
+        VariantVector value; 
+        for (auto& option : options_) { 
+            ResourceRef ref(Texture2D::GetTypeStatic(), option);
+            value.Push(ref);
+        } 
+        return value;  
     }
 
     int getOptionIndex() const noexcept { return optionsIndex_; }
