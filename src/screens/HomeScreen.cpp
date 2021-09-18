@@ -18,11 +18,8 @@ void HomeScreen::Enter()
     SharedPtr<File> file = cache->GetFile(fileName); 
     screen->LoadXML(*file);
 
-    auto* tipHome = screen->GetChild(String("tipHome"));
-    ASSERT_CPP(tipHome!=nullptr, " can not found tipHome ");
-
-    pageIndicator_ = static_cast<PageIndicator*>(screen->GetChild(String("pageIndicator")));
-    ASSERT_CPP(pageIndicator_!=nullptr, " can not found pageIndicator ");
+    pageIndicator_ = static_cast<PageIndicator*>(screen->GetChild(String("Page Indicator")));
+    ASSERT_CPP(pageIndicator_!=nullptr, " can not found Page Indicator ");
 
     mainTab_ = static_cast<MenuBar*>(screen->GetChild(String("Main Tab")));
     ASSERT_CPP(mainTab_!=nullptr, " can not found Main Tab");
@@ -42,13 +39,13 @@ void HomeScreen::Enter()
     SubscribeToEvent(searchTab_, E_LOSTSELECTED,        URHO3D_HANDLER(HomeScreen, HandleSearchTabLostSelected));
     searchTab_->SetSelected(false);
 
-    gamelist_ = screen->GetChildStaticCast<Gamelist>(String("Gamelist"));
-    ASSERT_CPP(gamelist_!=nullptr, " can not found Gamelist");
+    gamelist_ = screen->GetChildStaticCast<Gamelist>(String("Game List"));
+    ASSERT_CPP(gamelist_!=nullptr, " can not found Game List");
     SubscribeToEvent(gamelist_, E_ITEMCHANGED,  URHO3D_HANDLER(HomeScreen, HandleGamelistChanged));
     SubscribeToEvent(gamelist_, E_LOSTSELECTED, URHO3D_HANDLER(HomeScreen, HandleGamelistLostSelected));
 
-    videoPlayer_ = screen->GetChildStaticCast<VideoPlayer>(String("VideoPlayer"));
-    ASSERT_CPP(videoPlayer_!=nullptr, " can not found VideoPlayer");
+    videoPlayer_ = screen->GetChildStaticCast<VideoPlayer>(String("Video Player"));
+    ASSERT_CPP(videoPlayer_!=nullptr, " can not found Video Player");
 
     keyboard_ = screen->GetChildStaticCast<Keyboard>(String("Keyboard"));
     ASSERT_CPP(keyboard_!=nullptr, " can not found keyboard_");

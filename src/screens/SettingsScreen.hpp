@@ -5,15 +5,14 @@
 #include "ScreenBuilder.hpp"
 #include "Screen.hpp"
 #include "ScreenManager.hpp"
+#include "../widgets/NormalMenuItem.hpp"
 
 
 class SettingsScreen : public Screen
 {
     private:
-        //WeakPtr<PageIndicator> pageIndicator_{nullptr};        
-
-        //void HandleMainTabChanged(StringHash eventType, VariantMap& eventData);
-
+        Vector<WeakPtr<Widget>>    menuitems_;
+        int                        menuIndex_;
 
     public:
         SettingsScreen(Context* context):Screen(context){}

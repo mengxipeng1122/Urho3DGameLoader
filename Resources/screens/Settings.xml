@@ -1,11 +1,235 @@
 <element>
     <attribute name="Size" value="1280 720" />
-        <element type="Text">
-            <attribute name="Name" value="r  " />
-            <attribute name="Position" value="185 65" />
-            <attribute name="Pivot" value="0 0" />
-            <attribute name="Font" value="Font;res/geometr415.ttf" />
-            <attribute name="Font Size" value="35" />
-            <attribute name="Text" value="SETTINGS" />
-        </element>
+    <element type="Text">
+        <attribute name="Position" value="185 65" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="35" />
+        <attribute name="Text" value="SETTINGS" />
+    </element>
+    <element type="NormalMenuItem">
+        <attribute name="Position" value="205 165" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="IO_TESTING" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="IO Testing" />
+    </element>
+    <element type="NormalMenuItem">
+        <attribute name="Position" value="205 201" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="IO_SETTING" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="IO Setting" />
+    </element>
+    <element type="TextSelectMenuItem">
+        <attribute name="Position" value="205 237" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="USB_START_PORT" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="USB Start Port" />
+        <attribute name="Unselect Left Arrow Texture" value="Texture2D;res/set_arrow_left.png" />
+        <attribute name="Select Left Arrow Texture" value="Texture2D;res/set_arrow_left_sel.png" />
+        <attribute name="Left Arrow Position" value="300 0" />
+        <attribute name="Unselect Right Arrow Texture" value="Texture2D;res/set_arrow_right.png" />
+        <attribute name="Select Right Arrow Texture" value="Texture2D;res/set_arrow_right_sel.png" />
+        <attribute name="Right Arrow Position" value="580 0" />
+		<attribute name="Options">
+			<variant type="String" value="Player 1" />
+			<variant type="String" value="Player 2" />
+			<variant type="String" value="Player 3" />
+		</attribute>
+        <attribute name="Option Position" value="440 0" />
+    </element>
+    <element type="NormalMenuItem">
+        <attribute name="Position" value="205 273" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="GAME_SETTING" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="Game Setting" />
+    </element>
+    <element type="TextSelectMenuItem">
+        <attribute name="Position" value="205 309" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="NEOGEO_HOME_TRAINING_MODE" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="Neogeo Home Training Mode" />
+        <attribute name="Unselect Left Arrow Texture" value="Texture2D;res/set_arrow_left.png" />
+        <attribute name="Select Left Arrow Texture" value="Texture2D;res/set_arrow_left_sel.png" />
+        <attribute name="Left Arrow Position" value="300 0" />
+        <attribute name="Unselect Right Arrow Texture" value="Texture2D;res/set_arrow_right.png" />
+        <attribute name="Select Right Arrow Texture" value="Texture2D;res/set_arrow_right_sel.png" />
+        <attribute name="Right Arrow Position" value="580 0" />
+		<attribute name="Options">
+			<variant type="String" value="OFF" />
+			<variant type="String" value="ON" />
+		</attribute>
+        <attribute name="Option Position" value="440 0" />
+    </element>
+    <element type="TextSelectMenuItem">
+        <attribute name="Position" value="205 345" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="BACKGROUND_MUSIC" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="Background Music" />
+        <attribute name="Unselect Left Arrow Texture" value="Texture2D;res/set_arrow_left.png" />
+        <attribute name="Select Left Arrow Texture" value="Texture2D;res/set_arrow_left_sel.png" />
+        <attribute name="Left Arrow Position" value="300 0" />
+        <attribute name="Unselect Right Arrow Texture" value="Texture2D;res/set_arrow_right.png" />
+        <attribute name="Select Right Arrow Texture" value="Texture2D;res/set_arrow_right_sel.png" />
+        <attribute name="Right Arrow Position" value="580 0" />
+		<attribute name="Options">
+			<variant type="String" value="OFF" />
+			<variant type="String" value="ON" />
+		</attribute>
+        <attribute name="Option Position" value="440 0" />
+    </element>
+    <element type="TextSelectMenuItem">
+        <attribute name="Position" value="205 381" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="WALLPAPER" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="Wallpaper" />
+        <attribute name="Unselect Left Arrow Texture" value="Texture2D;res/set_arrow_left.png" />
+        <attribute name="Select Left Arrow Texture" value="Texture2D;res/set_arrow_left_sel.png" />
+        <attribute name="Left Arrow Position" value="300 0" />
+        <attribute name="Unselect Right Arrow Texture" value="Texture2D;res/set_arrow_right.png" />
+        <attribute name="Select Right Arrow Texture" value="Texture2D;res/set_arrow_right_sel.png" />
+        <attribute name="Right Arrow Position" value="580 0" />
+		<attribute name="Options">
+			<variant type="String" value="0" />
+			<variant type="String" value="1" />
+			<variant type="String" value="2" />
+			<variant type="String" value="3" />
+			<variant type="String" value="4" />
+			<variant type="String" value="5" />
+			<variant type="String" value="6" />
+			<variant type="String" value="7" />
+			<variant type="String" value="8" />
+			<variant type="String" value="9" />
+		</attribute>
+        <attribute name="Option Position" value="440 0" />
+    </element>
+    <element type="ImageSelectMenuItem">
+        <attribute name="Position" value="205 417" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="LANGUAGE" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="Language" />
+        <attribute name="Unselect Left Arrow Texture" value="Texture2D;res/set_arrow_left.png" />
+        <attribute name="Select Left Arrow Texture" value="Texture2D;res/set_arrow_left_sel.png" />
+        <attribute name="Left Arrow Position" value="300 0" />
+        <attribute name="Unselect Right Arrow Texture" value="Texture2D;res/set_arrow_right.png" />
+        <attribute name="Select Right Arrow Texture" value="Texture2D;res/set_arrow_right_sel.png" />
+        <attribute name="Right Arrow Position" value="580 0" />
+		<attribute name="Options">
+			<variant type="ResourceRef" value="Texture;res/set_flag_cn.png" />
+			<variant type="ResourceRef" value="Texture;res/set_flag_en.png" />
+			<variant type="ResourceRef" value="Texture;res/set_flag_es.png" />
+			<variant type="ResourceRef" value="Texture;res/set_flag_ko.png" />
+			<variant type="ResourceRef" value="Texture;res/set_flag_pt.png" />
+			<variant type="ResourceRef" value="Texture;res/set_flag_cl.png" />
+			<variant type="ResourceRef" value="Texture;res/set_flag_br.png" />
+		</attribute>
+        <attribute name="Option Position" value="440 0" />
+    </element>
+    <element type="NormalMenuItem">
+        <attribute name="Position" value="205 453" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="NETWORK_SETTING" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="Network Setting" />
+    </element>
+    <element type="NormalMenuItem">
+        <attribute name="Position" value="205 489" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="CLEAR_RECENT_LIST" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="Clear Recent List" />
+    </element>
+    <element type="NormalMenuItem">
+        <attribute name="Position" value="205 522" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="DEFAULT_SETTING_AND_QUIT" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="Default Setting And Quit" />
+    </element>
+    <element type="NormalMenuItem">
+        <attribute name="Position" value="205 561" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="SAVE_SETTING_AND_QUIT" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="Save Setting And Quit" />
+    </element>
 </element>

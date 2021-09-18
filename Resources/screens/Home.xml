@@ -1,240 +1,237 @@
 <element>
     <attribute name="Size" value="1280 720" />
+    <element type="Text">
+        <attribute name="Position" value="185 65" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="35" />
+        <attribute name="Text" value="HOME" />
+    </element>
+    <element type="Sprite">
+        <attribute name="Position" value=" 700 200" />
+        <attribute name="Size" value="555 450" />
+        <attribute name="Texture" value="Texture2D;res/key_bg.png" />
+        <attribute name="Image Rect" value="0 0 55 53" />
+        <attribute name="Blend Mode" value="multiply" />
+    </element>
+    <element type="Gamelist">
+    	<attribute name="Name" value="Game List" />
+    	<attribute name="Pivot" value="0 0" />
+        <attribute name="Position" value="40 208" />
+        <attribute name="List Mask Texture" value="Texture2D;res/main_list_mark.png" />
+        <attribute name="List Mask Select Texture" value="Texture2D;res/main_list_mark_sel.png" />
+        <attribute name="List Icon Default Texture" value="Texture2D;res/main_list_icon_default.png" />
+        <attribute name="Item Background Texture" value="Texture2D;res/list_item_bg.png" />
+        <attribute name="Item Background Select Texture" value="Texture2D;res/list_item_bg_sel.png" />
+    	<attribute name="Select Color" value="0 .8 .2 1" />
+    	<attribute name="Unselect Color" value="1 1 1 1" />
+        <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+        <attribute name="Text Font Size" value="12" />
+        <attribute name="Item Base Position" value="70 0" />
+        <attribute name="List Icon Size" value="55 33" />
+	</element>
+	<element type="VideoPlayer">
+		<attribute name="Name" value="Video Player" />
+		<attribute name="Position" value="600 200" />
+		<attribute name="Size" value="600 500" />
+		<attribute name="Pivot" value="0 0" />
+		<attribute name="Texture" value="Texture2D;res/VideoPlayerBackground.png" />
+		<attribute name="Image Rect" value="0 0 1 1" />
+	</element>
+	<element type="MenuBar">
+        <attribute name="Position" value="0  105" />
+		<attribute name="Size" value="60 50" />
+		<attribute name="Name" value="Main Tab" />
+		<attribute name="Pivot" value="0 0" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Background Texture" value="Texture2D;res/main_tab_bg.png" />
+        <attribute name="Unselect Cursor Texture" value="Texture2D;res/main_tab.png" />
+        <attribute name="Select Cursor Texture" value="Texture2D;res/main_tab_sel.png" />
+        <attribute name="Cursor Base Position" value=" 70 15" />
+		<attribute name="Texts">
+			<variant type="String" value="GAME" />
+			<variant type="String" value="RECENT" />
+			<variant type="String" value="FAVORITE" />
+			<variant type="String" value="SEARCH" />
+		</attribute>
+		<attribute name="Select Color" value="0 0 0 1" />
+		<attribute name="Unselect Color" value="1 1 1 1" />
+		<attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+	</element>
+	<element type="MenuBar">
+        <attribute name="Position" value="0  155" />
+		<attribute name="Size" value="60 50" />
+		<attribute name="Name" value="Search Tab" />
+		<attribute name="Pivot" value="0 0" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Background Texture" value="Texture2D;res/main_tab_bg.png" />
+        <attribute name="Unselect Cursor Texture" value="Texture2D;res/main_tab.png" />
+        <attribute name="Select Cursor Texture" value="Texture2D;res/main_tab_sel.png" />
+        <attribute name="Cursor Base Position" value=" 570 15" />
+		<attribute name="Texts">
+			<variant type="String" value="LOCAL" />
+			<variant type="String" value="STORE" />
+		</attribute>
+		<attribute name="Select Color" value="0 0 0 1" />
+		<attribute name="Unselect Color" value="1 1 1 1" />
+		<attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+	</element>
+    <element type="PageIndicator">
+        <attribute name="Position" value="169 600" />
+        <attribute name="Name" value="Page Indicator" />
+        <attribute name="Pivot" value="0 0" />
+    	<attribute name="Background Texture" value="Texture2D;res/main_page_bg.png" />
+    	<attribute name="Text Color" value="1 1 1 1" />
+        <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+        <attribute name="Text Font Size" value="15" />
+        <attribute name="Text Position" value="20 20" />
+    </element>
+    <element>
+        <attribute name="Pivot" value="0 0" />
+        <element type="Sprite">
+            <attribute name="Position" value="18 688" />
+            <attribute name="Size" value="79 27" />
+            <attribute name="Texture" value="Texture2D;res/tips_start.png" />
+            <attribute name="Image Rect" value="0 0 79 27" />
+            <attribute name="Blend Mode" value="alpha" />
+        </element>
         <element type="Text">
-            <attribute name="Name" value="r  " />
-            <attribute name="Position" value="185 65" />
+            <attribute name="Position" value="105 688" />
             <attribute name="Pivot" value="0 0" />
             <attribute name="Font" value="Font;res/geometr415.ttf" />
-            <attribute name="Font Size" value="35" />
-            <attribute name="Text" value="HOME" />
+            <attribute name="Font Size" value="15" />
+            <attribute name="Text" value="+" />
         </element>
         <element type="Sprite">
-            <attribute name="Name" value="r" />
-            <attribute name="Position" value=" 700 200" />
-            <attribute name="Size" value="555 450" />
-            <attribute name="Texture" value="Texture2D;res/key_bg.png" />
-            <attribute name="Image Rect" value="0 0 55 53" />
-            <attribute name="Blend Mode" value="multiply" />
+            <attribute name="Position" value="125 688" />
+            <attribute name="Size" value="79 27" />
+            <attribute name="Texture" value="Texture2D;res/tips_coin.png" />
+            <attribute name="Image Rect" value="0 0 79 27" />
+            <attribute name="Blend Mode" value="alpha" />
         </element>
-    	<element type="Gamelist">
-    		<attribute name="Name" value="Gamelist" />
-    		<attribute name="Pivot" value="0 0" />
-            <attribute name="Position" value="40 208" />
-            <attribute name="List Mask Texture" value="Texture2D;res/main_list_mark.png" />
-            <attribute name="List Mask Select Texture" value="Texture2D;res/main_list_mark_sel.png" />
-            <attribute name="List Icon Default Texture" value="Texture2D;res/main_list_icon_default.png" />
-            <attribute name="Item Background Texture" value="Texture2D;res/list_item_bg.png" />
-            <attribute name="Item Background Select Texture" value="Texture2D;res/list_item_bg_sel.png" />
-    		<attribute name="Select Color" value="0 .8 .2 1" />
-    		<attribute name="Unselect Color" value="1 1 1 1" />
-            <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-            <attribute name="Text Font Size" value="12" />
-            <attribute name="Item Base Position" value="70 0" />
-            <attribute name="List Icon Size" value="55 33" />
-		</element>
-		<element type="VideoPlayer">
-			<attribute name="Name" value="VideoPlayer" />
-			<attribute name="Position" value="600 200" />
-			<attribute name="Size" value="600 500" />
-			<attribute name="Pivot" value="0 0" />
-			<attribute name="Texture" value="Texture2D;res/VideoPlayerBackground.png" />
-			<attribute name="Image Rect" value="0 0 1 1" />
-		</element>
-		<element type="MenuBar">
-            <attribute name="Position" value="0  105" />
-			<attribute name="Size" value="60 50" />
-			<attribute name="Name" value="Main Tab" />
-			<attribute name="Pivot" value="0 0" />
-            <attribute name="Text Auto Localizable" value="true" />
-            <attribute name="Background Texture" value="Texture2D;res/main_tab_bg.png" />
-            <attribute name="Unselect Cursor Texture" value="Texture2D;res/main_tab.png" />
-            <attribute name="Select Cursor Texture" value="Texture2D;res/main_tab_sel.png" />
-            <attribute name="Cursor Base Position" value=" 70 15" />
-			<attribute name="Texts">
-				<variant type="String" value="GAME" />
-				<variant type="String" value="RECENT" />
-				<variant type="String" value="FAVORITE" />
-				<variant type="String" value="SEARCH" />
-			</attribute>
-			<attribute name="Select Color" value="0 0 0 1" />
-			<attribute name="Unselect Color" value="1 1 1 1" />
-			<attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-		</element>
-		<element type="MenuBar">
-            <attribute name="Position" value="0  155" />
-			<attribute name="Size" value="60 50" />
-			<attribute name="Name" value="Search Tab" />
-			<attribute name="Pivot" value="0 0" />
-            <attribute name="Text Auto Localizable" value="true" />
-            <attribute name="Background Texture" value="Texture2D;res/main_tab_bg.png" />
-            <attribute name="Unselect Cursor Texture" value="Texture2D;res/main_tab.png" />
-            <attribute name="Select Cursor Texture" value="Texture2D;res/main_tab_sel.png" />
-            <attribute name="Cursor Base Position" value=" 570 15" />
-			<attribute name="Texts">
-				<variant type="String" value="LOCAL" />
-				<variant type="String" value="STORE" />
-			</attribute>
-			<attribute name="Select Color" value="0 0 0 1" />
-			<attribute name="Unselect Color" value="1 1 1 1" />
-			<attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-		</element>
-        <element type="PageIndicator">
-            <attribute name="Position" value="169 600" />
-            <attribute name="Name" value="pageIndicator" />
+        <element type="Text">
+            <attribute name="Position" value="205 688" />
             <attribute name="Pivot" value="0 0" />
-    		<attribute name="Background Texture" value="Texture2D;res/main_page_bg.png" />
-    		<attribute name="Text Color" value="1 1 1 1" />
-            <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-            <attribute name="Text Font Size" value="15" />
-            <attribute name="Text Position" value="20 20" />
+            <attribute name="Text" value="RETURN_GAME_LIST" />
+            <attribute name="Auto Localizable" value="true" />
+            <attribute name="Font" value="Font;res/geometr415.ttf" />
+            <attribute name="Font Size" value="15" />
         </element>
-        <element>
-            <attribute name="Name" value="tipHome" />
+        <element type="Sprite">
+            <attribute name="Position" value="355 688" />
+            <attribute name="Size" value="46 27" />
+            <attribute name="Texture" value="Texture2D;res/tips_left.png" />
+            <attribute name="Image Rect" value="0 0 46 27" />
+            <attribute name="Blend Mode" value="alpha" />
+        </element>
+        <element type="Text">
+            <attribute name="Position" value="400 688" />
             <attribute name="Pivot" value="0 0" />
-            <element type="Sprite">
-                <attribute name="Position" value="18 688" />
-                <attribute name="Size" value="79 27" />
-                <attribute name="Texture" value="Texture2D;res/tips_start.png" />
-                <attribute name="Image Rect" value="0 0 79 27" />
-                <attribute name="Blend Mode" value="alpha" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value="105 688" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Font" value="Font;res/geometr415.ttf" />
-                <attribute name="Font Size" value="15" />
-                <attribute name="Text" value="+" />
-            </element>
-            <element type="Sprite">
-                <attribute name="Position" value="125 688" />
-                <attribute name="Size" value="79 27" />
-                <attribute name="Texture" value="Texture2D;res/tips_coin.png" />
-                <attribute name="Image Rect" value="0 0 79 27" />
-                <attribute name="Blend Mode" value="alpha" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value="205 688" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Text" value="RETURN_GAME_LIST" />
-                <attribute name="Auto Localizable" value="true" />
-                <attribute name="Font" value="Font;res/geometr415.ttf" />
-                <attribute name="Font Size" value="15" />
-            </element>
-            <element type="Sprite">
-                <attribute name="Position" value="355 688" />
-                <attribute name="Size" value="46 27" />
-                <attribute name="Texture" value="Texture2D;res/tips_left.png" />
-                <attribute name="Image Rect" value="0 0 46 27" />
-                <attribute name="Blend Mode" value="alpha" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value="400 688" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Font" value="Font;res/geometr415.ttf" />
-                <attribute name="Font Size" value="15" />
-                <attribute name="Text" value="/" />
-            </element>
-            <element type="Sprite">
-                <attribute name="Position" value="415 688" />
-                <attribute name="Size" value="46 27" />
-                <attribute name="Texture" value="Texture2D;res/tips_right.png" />
-                <attribute name="Image Rect" value="0 0 46 27" />
-                <attribute name="Blend Mode" value="alpha" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value="475 688" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Text" value="PAGE" />
-                <attribute name="Auto Localizable" value="true" />
-                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-                <attribute name="Font Size" value="15" />
-            </element>
-            <element type="Sprite">
-                <attribute name="Position" value="535 688" />
-                <attribute name="Size" value="46 27" />
-                <attribute name="Texture" value="Texture2D;res/tips_a.png" />
-                <attribute name="Image Rect" value="0 0 46 27" />
-                <attribute name="Blend Mode" value="alpha" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value="585 688" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Text" value="SELECT" />
-                <attribute name="Auto Localizable" value="true" />
-                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-                <attribute name="Font Size" value="15" />
-            </element>
-            <element type="Sprite">
-                <attribute name="Position" value="665 688" />
-                <attribute name="Size" value="46 27" />
-                <attribute name="Texture" value="Texture2D;res/tips_b.png" />
-                <attribute name="Image Rect" value="0 0 46 27" />
-                <attribute name="Blend Mode" value="alpha" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value="735 688" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Text" value="DIFFICULT" />
-                <attribute name="Auto Localizable" value="true" />
-                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-                <attribute name="Font Size" value="15" />
-            </element>
-            <element type="Sprite">
-                <attribute name="Position" value="855 688" />
-                <attribute name="Size" value="46 27" />
-                <attribute name="Texture" value="Texture2D;res/tips_c.png" />
-                <attribute name="Image Rect" value="0 0 46 27" />
-                <attribute name="Blend Mode" value="alpha" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value="900 688" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Text" value="ADD/REMOVE FAV" />
-                <attribute name="Auto Localizable" value="true" />
-                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-                <attribute name="Font Size" value="15" />
-            </element>
-            <element type="Text">
-                <attribute name="Position" value="1100 688" />
-                <attribute name="Pivot" value="0 0" />
-                <attribute name="Text" value="192.168.2.1" />
-                <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-                <attribute name="Font Size" value="15" />
-            </element>
-            <element type="Sprite">
-                <attribute name="Position" value="1240 688" />
-                <attribute name="Size" value="34 34" />
-                <attribute name="Texture" value="Texture2D;res/wifi_sig3_big.png" />
-                <attribute name="Image Rect" value="0 0 34 34" />
-                <attribute name="Blend Mode" value="alpha" />
-            </element>
+            <attribute name="Font" value="Font;res/geometr415.ttf" />
+            <attribute name="Font Size" value="15" />
+            <attribute name="Text" value="/" />
         </element>
-    	<element type="SearchEdit">
-    		<attribute name="Name" value="Search Edit" />
-    		<attribute name="Position" value="650 208" />
-    		<attribute name="Pivot" value="0 0" />
-    		<attribute name="Background Texture" value="Texture2D;res/search_edit_bg.png" />
-    		<attribute name="Text Color" value="0 1 0 1" />
-            <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-            <attribute name="Text Font Size" value="25" />
-    		<attribute name="Key Base Position" value="10 15" />
-    		<attribute name="Count Base Position" value="250 15" />
-    		<attribute name="Key Text Gap" value="25" />
-    	</element>
-    	<element type="Keyboard">
-    		<attribute name="Name" value="Keyboard" />
-    		<attribute name="Position" value="650 258" />
-    		<attribute name="Pivot" value="0 0" />
-    		<attribute name="Text Unselect Color" value="0 0 1 1" />
-    		<attribute name="Text Select Color" value="1 1 1 1" />
-    		<attribute name="Key Gap" value="2 2" />
-            <attribute name="Key Background Texture" value="Texture2D;res/key_bg.png" />
-            <attribute name="Key Select Texture" value="Texture2D;res/key_sel.png" />
-            <attribute name="Key Clear Texture" value="Texture2D;res/key_clear.png" />
-            <attribute name="Key Del Texture" value="Texture2D;res/key_del.png" />
-            <attribute name="Key Shift Texture" value="Texture2D;res/key_shift.png" />
-            <attribute name="Key Space Texture" value="Texture2D;res/key_space.png" />
-            <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
-    		<attribute name="Text Font Size" value="25" />
-    	</element>
+        <element type="Sprite">
+            <attribute name="Position" value="415 688" />
+            <attribute name="Size" value="46 27" />
+            <attribute name="Texture" value="Texture2D;res/tips_right.png" />
+            <attribute name="Image Rect" value="0 0 46 27" />
+            <attribute name="Blend Mode" value="alpha" />
+        </element>
+        <element type="Text">
+            <attribute name="Position" value="475 688" />
+            <attribute name="Pivot" value="0 0" />
+            <attribute name="Text" value="PAGE" />
+            <attribute name="Auto Localizable" value="true" />
+            <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+            <attribute name="Font Size" value="15" />
+        </element>
+        <element type="Sprite">
+            <attribute name="Position" value="535 688" />
+            <attribute name="Size" value="46 27" />
+            <attribute name="Texture" value="Texture2D;res/tips_a.png" />
+            <attribute name="Image Rect" value="0 0 46 27" />
+            <attribute name="Blend Mode" value="alpha" />
+        </element>
+        <element type="Text">
+            <attribute name="Position" value="585 688" />
+            <attribute name="Pivot" value="0 0" />
+            <attribute name="Text" value="SELECT" />
+            <attribute name="Auto Localizable" value="true" />
+            <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+            <attribute name="Font Size" value="15" />
+        </element>
+        <element type="Sprite">
+            <attribute name="Position" value="665 688" />
+            <attribute name="Size" value="46 27" />
+            <attribute name="Texture" value="Texture2D;res/tips_b.png" />
+            <attribute name="Image Rect" value="0 0 46 27" />
+            <attribute name="Blend Mode" value="alpha" />
+        </element>
+        <element type="Text">
+            <attribute name="Position" value="735 688" />
+            <attribute name="Pivot" value="0 0" />
+            <attribute name="Text" value="DIFFICULT" />
+            <attribute name="Auto Localizable" value="true" />
+            <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+            <attribute name="Font Size" value="15" />
+        </element>
+        <element type="Sprite">
+            <attribute name="Position" value="855 688" />
+            <attribute name="Size" value="46 27" />
+            <attribute name="Texture" value="Texture2D;res/tips_c.png" />
+            <attribute name="Image Rect" value="0 0 46 27" />
+            <attribute name="Blend Mode" value="alpha" />
+        </element>
+        <element type="Text">
+            <attribute name="Position" value="900 688" />
+            <attribute name="Pivot" value="0 0" />
+            <attribute name="Text" value="ADD/REMOVE FAV" />
+            <attribute name="Auto Localizable" value="true" />
+            <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+            <attribute name="Font Size" value="15" />
+        </element>
+        <element type="Text">
+            <attribute name="Position" value="1100 688" />
+            <attribute name="Pivot" value="0 0" />
+            <attribute name="Text" value="192.168.2.1" />
+            <attribute name="Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+            <attribute name="Font Size" value="15" />
+        </element>
+        <element type="Sprite">
+            <attribute name="Position" value="1240 688" />
+            <attribute name="Size" value="34 34" />
+            <attribute name="Texture" value="Texture2D;res/wifi_sig3_big.png" />
+            <attribute name="Image Rect" value="0 0 34 34" />
+            <attribute name="Blend Mode" value="alpha" />
+        </element>
+    </element>
+    <element type="SearchEdit">
+    	<attribute name="Name" value="Search Edit" />
+    	<attribute name="Position" value="650 208" />
+    	<attribute name="Pivot" value="0 0" />
+    	<attribute name="Background Texture" value="Texture2D;res/search_edit_bg.png" />
+    	<attribute name="Text Color" value="0 1 0 1" />
+        <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+        <attribute name="Text Font Size" value="25" />
+    	<attribute name="Key Base Position" value="10 15" />
+    	<attribute name="Count Base Position" value="250 15" />
+    	<attribute name="Key Text Gap" value="25" />
+    </element>
+    <element type="Keyboard">
+    	<attribute name="Name" value="Keyboard" />
+    	<attribute name="Position" value="650 258" />
+    	<attribute name="Pivot" value="0 0" />
+    	<attribute name="Text Unselect Color" value="0 0 1 1" />
+    	<attribute name="Text Select Color" value="1 1 1 1" />
+    	<attribute name="Key Gap" value="2 2" />
+        <attribute name="Key Background Texture" value="Texture2D;res/key_bg.png" />
+        <attribute name="Key Select Texture" value="Texture2D;res/key_sel.png" />
+        <attribute name="Key Clear Texture" value="Texture2D;res/key_clear.png" />
+        <attribute name="Key Del Texture" value="Texture2D;res/key_del.png" />
+        <attribute name="Key Shift Texture" value="Texture2D;res/key_shift.png" />
+        <attribute name="Key Space Texture" value="Texture2D;res/key_space.png" />
+        <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+    	<attribute name="Text Font Size" value="25" />
+    </element>
 </element>

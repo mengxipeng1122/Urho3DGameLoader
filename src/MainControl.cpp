@@ -75,9 +75,9 @@ MainControl::MainControl(Context* context)
 
 void MainControl::RegisterScreens()
 {
-    { std::string name(HomeScreen       ::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<HomeScreen       >()); }
-    { std::string name(IOTestScreen     ::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<IOTestScreen     >()); }
-    { std::string name(SettingsScreen   ::GetName()); ScreenManager::RegistScreen(name, new ScreenTBuilder<SettingsScreen   >()); }
+    { std::string name(HomeScreen       ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<HomeScreen       >()); }
+    { std::string name(IOTestScreen     ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<IOTestScreen     >()); }
+    { std::string name(SettingsScreen   ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<SettingsScreen   >()); }
 }
 
 void MainControl::RegisterWidgets()
@@ -90,6 +90,7 @@ void MainControl::RegisterWidgets()
     SearchEdit              ::RegisterObject(context_);
     Keyboard                ::RegisterObject(context_);
     NormalMenuItem          ::RegisterObject(context_);
+    TextSelectMenuItem      ::RegisterObject(context_);
     ImageSelectMenuItem     ::RegisterObject(context_);
 }
 
@@ -168,7 +169,7 @@ void MainControl::Start()
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
 
-    ScreenManager::SetCurrentScreen(HomeScreen::GetName(), context_);
+    ScreenManager::SetCurrentScreen(SettingsScreen::GetName(), context_);
 
     // Create console and debug HUD
     CreateConsoleAndDebugHud();
@@ -303,5 +304,5 @@ void MainControl::HandleJoyStickButtonDown(StringHash /*eventType*/, VariantMap&
     {
         ScreenManager::HandleKeyDown(inputKey, inputIdx);
     }
-
 }
+

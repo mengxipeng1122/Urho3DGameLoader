@@ -23,7 +23,7 @@ class ScreenManager
         ScreenManager();
         virtual ~ScreenManager()=default;
 
-        static void RegistScreen(ScreenTypes& name, ScreenBuilder* builder) { s_screenFactory.AddBuilder(name, builder); }
+        static void RegisterScreen(ScreenTypes& name, ScreenBuilder* builder) { s_screenFactory.AddBuilder(name, builder); }
 
         static void SetCurrentScreen(ScreenTypes, Context* context);
         static void SetCurrentScreen(std::unique_ptr<Screen> ptr);
