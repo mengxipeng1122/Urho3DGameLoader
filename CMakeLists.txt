@@ -46,6 +46,13 @@ define_source_files (GROUP EXTRA_CPP_FILES ${SRC_CPP_FILES} EXTRA_H_FILES ${SRC_
 # Setup target with resource copying
 setup_main_executable ()
 
+add_custom_target(
+    clang-tidy-check clang-tidy -p ${CMAKE_BINARY_DIR}/compile_commands.json -checks=cert* -header-filter=.* ${SRC_CPP_FILES}
+    DEPENDS ${SRC_CPP_FILES}
+    )
+
+add_custom_target(check DEPENDS clang-tidy-check)
+
 # get_target_property(TARGET_INCLUDES ${TARGET_NAME} INCLUDE_DIRECTORIES)
 # list(REMOVE_ITEM TARGET_INCLUDES "/usr/local/include")
 # list(APPEND TARGET_INCLUDES "/usr/local/include" )
