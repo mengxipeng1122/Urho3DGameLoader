@@ -1,6 +1,4 @@
 
-#include <Urho3D/Input/InputEvents.h>
-
 #include "InputSystem.hpp"
 
 bool InputSystem::KeyHasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx)

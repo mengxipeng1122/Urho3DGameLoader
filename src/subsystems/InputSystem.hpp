@@ -34,3 +34,4 @@ class InputSystem: public Object
         bool JoystickButtonDownHasInputKey(VariantMap& eventData, InputKey& inputKey, int& inputIdx);
 };
 
+

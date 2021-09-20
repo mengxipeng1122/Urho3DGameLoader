@@ -70,10 +70,6 @@ MainControl::MainControl(Context* context)
     , background_(nullptr)
     , logo_(nullptr)
 {
-    RegisterSubsystems();
-    RegisterComponents();
-    RegisterWidgets();
-    RegisterScreens();
 }
 
 void MainControl::RegisterScreens()
@@ -117,6 +113,10 @@ void MainControl::RegisterComponents()
 
 void MainControl::Setup()
 {
+    RegisterSubsystems();
+    RegisterComponents();
+    RegisterWidgets();
+    RegisterScreens();
     // Modify engine startup parameters
     engineParameters_[EP_WINDOW_TITLE] = "GameBox";
     engineParameters_[EP_LOG_NAME]     = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
