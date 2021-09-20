@@ -60,9 +60,11 @@ add_custom_target(check DEPENDS clang-tidy-check)
 target_compile_features(${TARGET_NAME} PRIVATE cxx_std_17)
 
 target_link_libraries(${TARGET_NAME}   -lavformat -lavcodec -lavutil)
+get_target_property(TARGET_LINK_LIBRARIES ${TARGET_NAME} LINK_LIBRARIES)
+message("TARGET_LINK_LIBRARIES ${TARGET_LINK_LIBRARIES}")
 
-
-#add_subdirectory(Samples/61_UITest)
+enable_testing()
+add_subdirectory(test)
 
 
 
