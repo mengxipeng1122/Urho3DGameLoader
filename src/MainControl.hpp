@@ -58,21 +58,6 @@ private:
     void RegisterScreens();
     void RegisterWidgets();
     void RegisterComponents();
-    
-
-    // uiroot 
-    SharedPtr<UIElement> uiRoot_;
-    void CreateUIControls();
-    ////////////////////////////////////////////////////////////////////////////////
-    /// wallpaper names
-    Vector<String> wallpaperNames_;
-    size_t wallpaperno_{0};
-    /// background
-    SharedPtr<Sprite> background_;
-
-    /// logo
-    SharedPtr<Sprite> logo_;
 
 };
 
-//#include "MainControl.inl"

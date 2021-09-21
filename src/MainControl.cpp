@@ -54,21 +54,6 @@ MainControl::MainControl(Context* context)
     : Application(context)
     , screenJoystickIndex_(M_MAX_UNSIGNED)
     , screenJoystickSettingsIndex_(M_MAX_UNSIGNED)
-    , uiRoot_(GetSubsystem<UI>()->GetRoot())
-    , wallpaperNames_{
-        "wallpaper/00.jpg",
-        "wallpaper/01.jpg",
-        "wallpaper/02.jpg",
-        "wallpaper/03.jpg",
-        "wallpaper/04.jpg",
-        "wallpaper/05.jpg",
-        "wallpaper/06.jpg",
-        "wallpaper/07.jpg",
-        "wallpaper/08.jpg",
-        "wallpaper/09.jpg",
-        }
-    , background_(nullptr)
-    , logo_(nullptr)
 {
 }
 
@@ -135,29 +120,6 @@ void MainControl::Setup()
 
 }
 
-void MainControl::CreateUIControls()
-{
-    auto* cache = GetSubsystem<ResourceCache>(); 
-    // show Background
-    background_ = new Sprite(context_);
-    {
-        auto texture = cache->GetResource<Texture2D>(wallpaperNames_[wallpaperno_]);
-        background_->SetSize(texture->GetWidth(), texture->GetHeight());
-        background_->SetTexture(texture); // Set texture
-        background_->SetName(String("background"));
-    }
-    uiRoot_->AddChild(background_);
-
-    logo_ = new Sprite(context_);
-    {
-        auto texture = cache->GetResource<Texture2D>("res/logo.png");
-        logo_->SetSize(texture->GetWidth(), texture->GetHeight());
-        logo_->SetTexture(texture); // Set texture
-    }
-    uiRoot_->AddChild(logo_);
-
-}
-
 void MainControl::Start()
 {
     // resource path 
@@ -175,7 +137,7 @@ void MainControl::Start()
     auto* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
 
     // Set the loaded style as default style
-    uiRoot_->SetDefaultStyle(style);
+    UI_ROOT->SetDefaultStyle(style);
 
     ScreenManager::SetCurrentScreen(IOTestScreen::GetName(), context_);
 
@@ -279,7 +241,8 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
         // Save UI layout xml file 
         else if (key == '2')
         {
-            File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); uiRoot_->SaveXML(saveFile);
+            File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); 
+            UI_ROOT->SaveXML(saveFile);
             LOG_INFOS_CPP(" save to /tmp/tt.xml");
         }
 
