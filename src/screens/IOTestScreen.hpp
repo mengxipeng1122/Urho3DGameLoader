@@ -42,30 +42,4 @@ class IOTestScreen : public Screen
 
         void UpdateWidget();  
         void UpdateJoystick(WeakPtr<JoystickDir>& widget, int idx);
-        Vector<bool> keysIsHolding_{
-            false,  // UP       1p
-            false,  // DOWN     1p
-            false,  // LEFT     1p
-            false,  // RIGHT    1p
-            false,  // SELECT   1p
-            false,  // START    1p
-            false,  // A        1p
-            false,  // B        1p
-            false,  // C        1p
-            false,  // D        1p
-            false,  // E        1p
-            false,  // F        1p
-            false,  // UP       2p
-            false,  // DOWN     2p
-            false,  // LEFT     2p
-            false,  // RIGHT    2p
-            false,  // SELECT   2p
-            false,  // START    2p
-            false,  // A        2p
-            false,  // B        2p
-            false,  // C        2p
-            false,  // D        2p
-            false,  // E        2p
-            false,  // F        2p
-            };
 };

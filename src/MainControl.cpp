@@ -149,10 +149,10 @@ void MainControl::Start()
     // Subscribe key up event
     SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(MainControl, HandleKeyUp));
     // Subscribe scene update event
-    SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(MainControl, HandleSceneUpdate));
+    // SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(MainControl, HandleSceneUpdate));
 
-//    SubscribeToEvent(E_JOYSTICKAXISMOVE,    URHO3D_HANDLER(MainControl, HandleJoyStickAxisMove));
-    SubscribeToEvent(E_JOYSTICKBUTTONDOWN,  URHO3D_HANDLER(MainControl, HandleJoyStickButtonDown));
+    // SubscribeToEvent(E_JOYSTICKAXISMOVE,    URHO3D_HANDLER(MainControl, HandleJoyStickAxisMove));
+    // SubscribeToEvent(E_JOYSTICKBUTTONDOWN,  URHO3D_HANDLER(MainControl, HandleJoyStickButtonDown));
 
 }
 
@@ -184,10 +184,6 @@ void MainControl::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
 
     InputKey inputKey;
     int      inputIdx;
-    if(INPUT_SYSTEM->KeyHasInputKey(eventData, inputKey, inputIdx)) {
-        ScreenManager::HandleKeyUp(inputKey, inputIdx);
-    }
-
     int key = eventData[P_KEY].GetInt();
     // Close console (if open) or exit when ESC is pressed
     if (key == KEY_ESCAPE)
@@ -200,12 +196,6 @@ void MainControl::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
 void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
 {
     using namespace KeyDown;
-
-    InputKey inputKey;
-    int      inputIdx;
-    if(INPUT_SYSTEM->KeyHasInputKey(eventData, inputKey, inputIdx)) {
-        ScreenManager::HandleKeyDown(inputKey, inputIdx);
-    }
 
     int key = eventData[P_KEY].GetInt();
 
@@ -275,9 +265,5 @@ void MainControl::HandleJoyStickButtonDown(StringHash /*eventType*/, VariantMap&
 {
     InputKey inputKey;
     int      inputIdx;
-    if(INPUT_SYSTEM->JoystickButtonDownHasInputKey(eventData, inputKey, inputIdx))
-    {
-        ScreenManager::HandleKeyDown(inputKey, inputIdx);
-    }
 }
 

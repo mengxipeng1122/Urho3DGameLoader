@@ -42,8 +42,6 @@ bool IOTestScreen::HandleKeyDown(InputKey key, int idx)
     if(idx>=2) return false;
     if(key >=InputKey::NUMS_KEY) return false;
 
-    auto kidx = static_cast<int>(InputKey::NUMS_KEY)*idx+ static_cast<int>(key);
-    keysIsHolding_[kidx] = true; 
     UpdateWidget();
     return true;
 }
@@ -53,8 +51,6 @@ bool IOTestScreen::HandleKeyUp(InputKey key, int idx)
     if(idx>=2) return false;
     if(key >=InputKey::NUMS_KEY) return false;
 
-    auto kidx = static_cast<int>(InputKey::NUMS_KEY)*idx+ static_cast<int>(key);
-    keysIsHolding_[kidx] = false;
     UpdateWidget();
     return true;
 }
@@ -65,46 +61,38 @@ void IOTestScreen::UpdateJoystick(WeakPtr<JoystickDir>& widget, int idx)
     ASSERT_CPP(widget!=nullptr, "widget is nullptr");
 
     auto numsKey = static_cast<int>(InputKey::NUMS_KEY);
+    auto inputSystem = INPUT_SYSTEM;
+    auto upHolding      = inputSystem->GetKeyState(InputKey::UP,    idx);
+    auto downHolding    = inputSystem->GetKeyState(InputKey::DOWN,  idx);
+    auto leftHolding    = inputSystem->GetKeyState(InputKey::LEFT,  idx);
+    auto rightHolding   = inputSystem->GetKeyState(InputKey::RIGHT, idx);
 
     // 1p 
     widget->SetState(JoystickDir::State::CENTER);
-    if(    keysIsHolding_[static_cast<int>(InputKey::UP) +numsKey*idx]
-        && keysIsHolding_[static_cast<int>(InputKey::LEFT) +numsKey*idx])
-    {
+    if(    upHolding && leftHolding) {
         widget->SetState(JoystickDir::State::UP_LEFT);
     }
-    else if(    keysIsHolding_[static_cast<int>(InputKey::UP) +numsKey*idx]
-        && keysIsHolding_[static_cast<int>(InputKey::RIGHT) +numsKey*idx])
-    {
+    else if( upHolding && rightHolding) {
         widget->SetState(JoystickDir::State::UP_RIGHT);
     }
-    else if(    keysIsHolding_[static_cast<int>(InputKey::DOWN) +numsKey*idx]
-        && keysIsHolding_[static_cast<int>(InputKey::LEFT) +numsKey*idx])
-    {
+    else if( downHolding && leftHolding) {
         widget->SetState(JoystickDir::State::DOWN_LEFT);
     }
-    else if(    keysIsHolding_[static_cast<int>(InputKey::DOWN) +numsKey*idx]
-        && keysIsHolding_[static_cast<int>(InputKey::RIGHT) +numsKey*idx])
-    {
+    else if( downHolding && rightHolding) {
         widget->SetState(JoystickDir::State::DOWN_RIGHT);
     }
-    else if(keysIsHolding_[static_cast<int>(InputKey::UP) +numsKey*idx])
-    {
+    else if(upHolding) {
         widget->SetState(JoystickDir::State::UP);
     }
-    else if(keysIsHolding_[static_cast<int>(InputKey::DOWN) +numsKey*idx])
-    {
+    else if(downHolding) {
         widget->SetState(JoystickDir::State::DOWN);
     }
-    else if(keysIsHolding_[static_cast<int>(InputKey::LEFT) +numsKey*idx])
-    {
+    else if(leftHolding) {
         widget->SetState(JoystickDir::State::LEFT);
     }
-    else if(keysIsHolding_[static_cast<int>(InputKey::RIGHT) +numsKey*idx])
-    {
+    else if(rightHolding) {
         widget->SetState(JoystickDir::State::RIGHT);
     }
-
 }
 
 void IOTestScreen::UpdateWidget()
@@ -114,23 +102,24 @@ void IOTestScreen::UpdateWidget()
     UpdateJoystick(joystickDir2p_, 1);
 
     auto numsKey = static_cast<int>(InputKey::NUMS_KEY);
-    joystickSelect1p_->SetState(keysIsHolding_[static_cast<int>(InputKey::SELECT) +numsKey*0]);
-    joystickStart1p_ ->SetState(keysIsHolding_[static_cast<int>(InputKey::START ) +numsKey*0]);
-    joystickA1p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_A) +numsKey*0]);
-    joystickB1p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_B) +numsKey*0]);
-    joystickC1p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_C) +numsKey*0]);
-    joystickD1p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_D) +numsKey*0]);
-    joystickE1p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_E) +numsKey*0]);
-    joystickF1p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_F) +numsKey*0]);
+    auto inputSystem = INPUT_SYSTEM;
+    joystickSelect1p_->SetState(inputSystem->GetKeyState(InputKey::SELECT, 0));
+    joystickStart1p_ ->SetState(inputSystem->GetKeyState(InputKey::START , 0));
+    joystickA1p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_A, 0));
+    joystickB1p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_B, 0));
+    joystickC1p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_C, 0));
+    joystickD1p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_D, 0));
+    joystickE1p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_E, 0));
+    joystickF1p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_F, 0));
 
-    joystickSelect2p_->SetState(keysIsHolding_[static_cast<int>(InputKey::SELECT) +numsKey*1]);
-    joystickStart2p_ ->SetState(keysIsHolding_[static_cast<int>(InputKey::START ) +numsKey*1]);
-    joystickA2p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_A) +numsKey*1]);
-    joystickB2p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_B) +numsKey*1]);
-    joystickC2p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_C) +numsKey*1]);
-    joystickD2p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_D) +numsKey*1]);
-    joystickE2p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_E) +numsKey*1]);
-    joystickF2p_     ->SetState(keysIsHolding_[static_cast<int>(InputKey::FIRE_F) +numsKey*1]);
+    joystickSelect2p_->SetState(inputSystem->GetKeyState(InputKey::SELECT, 1));
+    joystickStart2p_ ->SetState(inputSystem->GetKeyState(InputKey::START , 1));
+    joystickA2p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_A, 1));
+    joystickB2p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_B, 1));
+    joystickC2p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_C, 1));
+    joystickD2p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_D, 1));
+    joystickE2p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_E, 1));
+    joystickF2p_     ->SetState(inputSystem->GetKeyState(InputKey::FIRE_F, 1));
 }
 
 

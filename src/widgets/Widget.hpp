@@ -6,6 +6,27 @@
 namespace Urho3D
 {
 
+// send from widget classes
+URHO3D_EVENT(E_ITEMCHANGED, ItemChanged)
+{
+    URHO3D_PARAM(P_ELEMENT, Element);              // UIElement pointer
+    URHO3D_PARAM(P_INDEX,   Index);                // Integer [in/out]
+}
+
+URHO3D_EVENT(E_LOSTSELECTED, LostSelected)
+{
+    URHO3D_PARAM(P_ELEMENT, Element);              // UIElement pointer
+    URHO3D_PARAM(P_KEY,     InputKey);             // pressed key;
+    URHO3D_PARAM(P_INDEX,   Index);                // Integer [in/out]
+}
+
+URHO3D_EVENT(E_STRINGCHANGED,   StringChanged)
+{
+    URHO3D_PARAM(P_ELEMENT, Element);              // UIElement pointer
+    URHO3D_PARAM(P_STRING,  String);               // pressed key;
+}
+
+
 class Widget: public UIElement
 {
     public:

@@ -13,6 +13,9 @@ class Screen : public UIElement
         virtual ~Screen()=default;
         virtual void Enter() ;
         virtual void Leave() ;
+        // this function handle events
+        void HandleInputKeyDown(StringHash eventType, VariantMap& eventData);
+        void HandleInputKeyUp(StringHash eventType, VariantMap& eventData);
         virtual bool HandleKeyDown(InputKey key, int idx){return false;}
         virtual bool HandleKeyUp(InputKey key, int idx){ return false;}
 
