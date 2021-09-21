@@ -28,14 +28,14 @@ namespace Urho3D
 
 URHO3D_EVENT(E_INPUTKEYDOWN,   InputKeyDown)
 {
-    URHO3D_PARAM(P_INPUTKEY,    int);
-    URHO3D_PARAM(P_INDEX,       int);
+    URHO3D_PARAM(P_INPUTKEY,    InputKey);
+    URHO3D_PARAM(P_INDEX,       Index);
 }
 
 URHO3D_EVENT(E_INPUTKEYUP,   InputKeyUp)
 {
-    URHO3D_PARAM(P_INPUTKEY,    int);
-    URHO3D_PARAM(P_INDEX,       int);
+    URHO3D_PARAM(P_INPUTKEY,    InputKey);
+    URHO3D_PARAM(P_INDEX,       Index);
 }
 
 }

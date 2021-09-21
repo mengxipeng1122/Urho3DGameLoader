@@ -84,11 +84,10 @@ void InputSystem::HandleKeyDown(StringHash eventType, VariantMap& eventData)
     {
         auto keyidx  = static_cast<int>(inputKey)+inputIdx*NUMS_KEY;
         keyStates_[keyidx] =true;
-        LOG_INFOS_CPP(static_cast<int>(inputKey), inputIdx);
-        using namespace InputKeyDown;
         VariantMap& eventData   = GetEventDataMap();
-        eventData[P_INPUTKEY]   = static_cast<int>(inputKey);
-        eventData[P_INDEX]      = inputIdx;
+        auto key = static_cast<int>(inputKey);
+        eventData[Urho3D::InputKeyDown::P_INPUTKEY]   = key;
+        eventData[Urho3D::InputKeyDown::P_INDEX]      = inputIdx;
         SendEvent(E_INPUTKEYDOWN, eventData);
     }
 }

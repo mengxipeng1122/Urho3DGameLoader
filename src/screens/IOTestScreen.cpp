@@ -29,6 +29,7 @@ void IOTestScreen::Enter()
     joystickE2p_  = screen->GetChildStaticCast<JoystickKey>(String("E 2P"));
     joystickF2p_  = screen->GetChildStaticCast<JoystickKey>(String("F 2P"));
 
+    InitAllUIElements();
 
 }
 
@@ -39,6 +40,7 @@ void IOTestScreen::Leave()
 
 bool IOTestScreen::HandleKeyDown(InputKey key, int idx)
 {
+    Screen::HandleKeyDown(key, idx);
     if(idx>=2) return false;
     if(key >=InputKey::NUMS_KEY) return false;
 
