@@ -56,6 +56,7 @@ void Screen::InitAllUIElements()
         }
     }
     UpdataDebugElment();
+    LOG_INFOS_CPP("name ",allUIElements_[currentDebugUIElementIdx_]->GetName());
 }
 
 bool Screen::HandleKeyDown(InputKey key, int idx)
@@ -76,6 +77,7 @@ bool Screen::HandleKeyDown(InputKey key, int idx)
         if(key == InputKey::FIRE_B){
             currentDebugUIElementIdx_++; 
             currentDebugUIElementIdx_%=allUIElements_.Size(); 
+            LOG_INFOS_CPP("name ",allUIElements_[currentDebugUIElementIdx_]->GetName());
         }
         UpdataDebugElment();
     }

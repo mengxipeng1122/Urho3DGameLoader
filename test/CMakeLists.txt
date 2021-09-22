@@ -13,7 +13,7 @@ target_link_libraries (Test
     -ldl
     -lm
     -lrt
-    -lGLESv2
+    -lGL
     -lavformat
     -lavcodec
     -lavutil

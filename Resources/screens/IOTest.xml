@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <element>
     <attribute name="Size" value="1280 720" />
     <element type="Text">
@@ -9,7 +8,7 @@
         <attribute name="Text" value="IO TEST" />
     </element>
     <element type="JoystickDir">
-        <attribute name="Position" value="287 168" />
+        <attribute name="Position" value="291 168" />
         <attribute name="Name" value="Joysick Dir 1P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Images">
@@ -26,20 +25,20 @@
     </element>
     <element type="JoystickKey">
         <attribute name="Name" value="Select 1P" />
-        <attribute name="Position" value="228 266" />
+        <attribute name="Position" value="235 266" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_coin.png" />
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
         <attribute name="Name" value="Start 1P" />
-        <attribute name="Position" value="376 265" />
+        <attribute name="Position" value="377 265" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_start.png" />
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="273 301" />
+        <attribute name="Position" value="285 305" />
         <attribute name="Name" value="A 1P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_a.png" />
@@ -60,21 +59,21 @@
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="385 265" />
+        <attribute name="Position" value="286 357" />
         <attribute name="Name" value="D 1P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_d.png" />
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="385 265" />
+        <attribute name="Position" value="364 356" />
         <attribute name="Name" value="E 1P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_e.png" />
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="385 265" />
+        <attribute name="Position" value="426 356" />
         <attribute name="Name" value="F 1P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_f.png" />
@@ -97,56 +96,56 @@
         </attribute>
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="285 265" />
+        <attribute name="Position" value="893 265" />
         <attribute name="Name" value="Select 2P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_stop.png" />
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="385 265" />
+        <attribute name="Position" value="1014 265" />
         <attribute name="Name" value="Start 2P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_start.png" />
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="385 265" />
+        <attribute name="Position" value="868 307" />
         <attribute name="Name" value="A 2P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_a.png" />
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="385 265" />
+        <attribute name="Position" value="969 307" />
         <attribute name="Name" value="B 2P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_b.png" />
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="385 265" />
+        <attribute name="Position" value="1044 305" />
         <attribute name="Name" value="C 2P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_c.png" />
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="385 265" />
+        <attribute name="Position" value="869 359" />
         <attribute name="Name" value="D 2P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_d.png" />
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="385 265" />
+        <attribute name="Position" value="966 351" />
         <attribute name="Name" value="E 2P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_e.png" />
         <attribute name="Image Scale" value="1.5" />
     </element>
     <element type="JoystickKey">
-        <attribute name="Position" value="385 265" />
+        <attribute name="Position" value="1042 353" />
         <attribute name="Name" value="F 2P" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Image" value="Texture;res/tips_f.png" />

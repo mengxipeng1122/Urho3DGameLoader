@@ -32,12 +32,11 @@ class Screen : public UIElement
 
     protected:
         void InitAllUIElements();
-        void UpdataDebugElment() {
-            if(HAS_DEBUG)
-            {
+        void UpdataDebugElment() 
+        {
+            if(HAS_DEBUG) {
                 auto debugUIElement = UI_ROOT->GetChildStaticCast<DEBUG_UIELEMENT_TYPE>(String(DEBUG_UIELEMENT_NAME));
-                if(currentDebugUIElementIdx_<allUIElements_.Size())
-                {
+                if(currentDebugUIElementIdx_<allUIElements_.Size()) {
                     auto currentDebugUIElement = allUIElements_[currentDebugUIElementIdx_];
                     debugUIElement->SetText(currentDebugUIElement->GetName());
                     debugUIElement->SetPosition(currentDebugUIElement->GetPosition());
