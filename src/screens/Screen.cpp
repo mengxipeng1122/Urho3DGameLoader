@@ -63,8 +63,7 @@ bool Screen::HandleKeyDown(InputKey key, int idx)
 {
     if(HAS_DEBUG) {
         auto inputSystem = INPUT_SYSTEM;
-        if(inputSystem->GetKeyState(InputKey::FIRE_A,0))
-        {
+        if(inputSystem->GetKeyState(InputKey::FIRE_A,0)) {
             auto position = allUIElements_[currentDebugUIElementIdx_]->GetPosition();
             switch (key) {
                 case InputKey::UP       :{if(position.y_>0) position.y_--; } break;
@@ -74,11 +73,26 @@ bool Screen::HandleKeyDown(InputKey key, int idx)
             }
             allUIElements_[currentDebugUIElementIdx_]->SetPosition(position);
         }
-        if(key == InputKey::FIRE_B){
-            currentDebugUIElementIdx_++; 
-            currentDebugUIElementIdx_%=allUIElements_.Size(); 
-            LOG_INFOS_CPP("name ",allUIElements_[currentDebugUIElementIdx_]->GetName());
+
+        if(inputSystem->GetKeyState(InputKey::FIRE_C,0)) {
+            auto size = allUIElements_[currentDebugUIElementIdx_]->GetSize();
+            switch (key) {
+                case InputKey::UP       :{if(size.y_>0) size.y_--; } break;
+                case InputKey::DOWN     :{              size.y_++; } break;
+                case InputKey::LEFT     :{if(size.x_>0) size.x_--; } break;
+                case InputKey::RIGHT    :{              size.x_++; } break;
+            }
+            allUIElements_[currentDebugUIElementIdx_]->SetSize(size);
         }
+
+        if(inputSystem->GetKeyState(InputKey::FIRE_A,0)) {
+            if(key == InputKey::FIRE_B){
+                currentDebugUIElementIdx_++; 
+                currentDebugUIElementIdx_%=allUIElements_.Size(); 
+                LOG_INFOS_CPP("name ",allUIElements_[currentDebugUIElementIdx_]->GetName());
+            }
+        }
+
         UpdataDebugElment();
     }
     return false;

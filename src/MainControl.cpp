@@ -41,9 +41,11 @@
 #include "widgets/TextSelectMenuItem.hpp"
 #include "widgets/ImageSelectMenuItem.hpp"
 #include "widgets/Keyboard.hpp"
+#include "widgets/FlashText.hpp"
 #include "widgets/JoystickDir.hpp"
 #include "widgets/JoystickKey.hpp"
 #include "screens/ScreenManager.hpp"
+#include "screens/KeySettingScreen.hpp"
 #include "screens/HomeScreen.hpp"
 #include "screens/IOTestScreen.hpp"
 #include "screens/SettingsScreen.hpp"
@@ -62,6 +64,7 @@ void MainControl::RegisterScreens()
     { std::string name(HomeScreen       ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<HomeScreen       >()); }
     { std::string name(SettingsScreen   ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<SettingsScreen   >()); }
     { std::string name(IOTestScreen     ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<IOTestScreen     >()); }
+    { std::string name(KeySettingScreen ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<KeySettingScreen >()); }
 }
 
 void MainControl::RegisterWidgets()
@@ -81,6 +84,7 @@ void MainControl::RegisterWidgets()
     ImageSelectMenuItem     ::RegisterObject(context_);
     JoystickDir             ::RegisterObject(context_);
     JoystickKey             ::RegisterObject(context_);
+    FlashText               ::RegisterObject(context_);
 }
 
 void MainControl::RegisterSubsystems()
@@ -139,7 +143,7 @@ void MainControl::Start()
     // Set the loaded style as default style
     UI_ROOT->SetDefaultStyle(style);
 
-    ScreenManager::SetCurrentScreen(IOTestScreen::GetName(), context_);
+    ScreenManager::SetCurrentScreen(KeySettingScreen::GetName(), context_);
 
     // Create console and debug HUD
     CreateConsoleAndDebugHud();

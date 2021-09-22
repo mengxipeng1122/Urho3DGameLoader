@@ -1,0 +1,149 @@
+<element>
+    <attribute name="Size" value="1280 720" />
+    <element type="Text">
+        <attribute name="Position" value="102 54" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="35" />
+        <attribute name="Name" value="Title" />
+        <attribute name="Text" value="KEY SETTING" />
+    </element>
+    <element type="FlashText">
+        <attribute name="Position" value="521 135" />
+        <attribute name="Name" value="FlashText" />
+        <attribute name="Size" value="2 5" />
+        <attribute name="Pivot" value="0 0" />
+    	<attribute name="Text Color" value="1 .8 .8 1" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="35" />
+        <attribute name="Text" value="TEST" />
+    </element>
+	<element type="Sprite">
+		<attribute name="Position" value="21 187" />
+		<attribute name="Name" value="Player 1 Background" />
+		<attribute name="Size" value="550 335" />
+		<attribute name="Texture" value="Texture2D;res/key_bg.png" />
+		<attribute name="Image Rect" value="0 0 55 53" />
+		<attribute name="Blend Mode" value="multiply" />
+	</element>
+    <element type="Text">
+        <attribute name="Position" value="30 177" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="35" />
+        <attribute name="Name" value="Player 1 Text" />
+        <attribute name="Text" value="PLAYER 1" />
+    </element>
+	<element type="Sprite">
+		<attribute name="Position" value="100 260" />
+		<attribute name="Name" value="Player 1 A" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="212 234" />
+		<attribute name="Name" value="Player 1 B" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="353 228" />
+		<attribute name="Name" value="Player 1 C" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="98 361" />
+		<attribute name="Name" value="Player 1 D" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="208 336" />
+		<attribute name="Name" value="Player 1 E" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="346 326" />
+		<attribute name="Name" value="Player 1 F" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="584 188" />
+		<attribute name="Name" value="Player 2 Background" />
+		<attribute name="Size" value="503 337" />
+		<attribute name="Texture" value="Texture2D;res/key_bg.png" />
+		<attribute name="Image Rect" value="0 0 55 53" />
+		<attribute name="Blend Mode" value="multiply" />
+	</element>
+    <element type="Text">
+        <attribute name="Position" value="579 177" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="35" />
+        <attribute name="Name" value="Player 2 Text" />
+        <attribute name="Text" value="PLAYER 2" />
+    </element>
+	<element type="Sprite">
+		<attribute name="Position" value="687 238" />
+		<attribute name="Name" value="Player 2 A" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="815 223" />
+		<attribute name="Name" value="Player 2 B" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="950 221" />
+		<attribute name="Name" value="Player 2 C" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="683 336" />
+		<attribute name="Name" value="Player 2 D" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="811 324" />
+		<attribute name="Name" value="Player 2 E" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+	<element type="Sprite">
+		<attribute name="Position" value="941 323" />
+		<attribute name="Name" value="Player 2 F" />
+		<attribute name="Size" value="106 100" />
+		<attribute name="Texture" value="Texture2D;res/pad1_null.png" />
+		<attribute name="Image Rect" value="0 0 106 100" />
+		<attribute name="Blend Mode" value="alpha" />
+	</element>
+</element>
