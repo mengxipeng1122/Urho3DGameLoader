@@ -207,8 +207,7 @@ void HomeScreen::SetGamelist()
         };
 
     // add data 
-    switch(state)
-    {
+    switch(state) {
         case State::GAMELIST:      MACHINE->HandleAllGames(cb);     break;
         case State::RECENT:        MACHINE->HandleRecentGames(cb);  break;
         case State::FAVORITE:      MACHINE->HandleFavoriteGames(cb);break;
@@ -244,8 +243,7 @@ void HomeScreen::ChanageToState(State newState)
     }
 
     // enter old state
-    switch(newState)
-    {
+    switch(newState) {
         case State::GAMELIST:      
         case State::RECENT:        
         case State::FAVORITE:      

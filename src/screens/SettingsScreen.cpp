@@ -1,5 +1,6 @@
 
 #include "SettingsScreen.hpp"
+#include "IOTestScreen.hpp"
 #include "../widgets/TextSelectMenuItem.hpp"
 #include "../widgets/ImageSelectMenuItem.hpp"
 
@@ -34,7 +35,7 @@ void SettingsScreen::Enter()
     ADD_MENUITEM( NormalMenuItem,       "Default Setting And Quit"     );
     ADD_MENUITEM( NormalMenuItem,       "Save Setting And Quit"        );
 
-    menuIndex_ = 0;
+    menuIndex_ = MACHINE->GetSetttingScreenIndex();
     menuitems_[menuIndex_]->SetSelected(true);
 }
 
@@ -69,6 +70,13 @@ bool SettingsScreen::HandleKeyDown(InputKey key, int idx)
             menuitems_[menuIndex_]->SetSelected(true);
             return  true;
         }
+
+        case InputKey::FIRE_A:
+        {
+            switch(menuIndex_){   
+                case 0: ScreenManager::SetCurrentScreen(IOTestScreen::GetName(), context_); return true;
+            }
+        };
     }
     return false;
 }

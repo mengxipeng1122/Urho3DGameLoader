@@ -1,5 +1,6 @@
 
 #include "IOTestScreen.hpp"
+#include "SettingsScreen.hpp"
 #include "../widgets/TextSelectMenuItem.hpp"
 #include "../widgets/ImageSelectMenuItem.hpp"
 
@@ -44,6 +45,13 @@ bool IOTestScreen::HandleKeyDown(InputKey key, int idx)
     if(idx>=2) return false;
     if(key >=InputKey::NUMS_KEY) return false;
 
+    if(INPUT_SYSTEM->GetKeyState(InputKey::SELECT,0) 
+        && INPUT_SYSTEM->GetKeyState(InputKey::START,0)) {
+        MACHINE->SetSetttingScreenIndex(0);
+        ScreenManager::SetCurrentScreen(SettingsScreen::GetName(), context_);
+        return true;
+    }
+
     UpdateWidget();
     return true;
 }
@@ -69,8 +77,6 @@ void IOTestScreen::UpdateJoystick(WeakPtr<JoystickDir>& widget, int idx)
     auto leftHolding    = inputSystem->GetKeyState(InputKey::LEFT,  idx);
     auto rightHolding   = inputSystem->GetKeyState(InputKey::RIGHT, idx);
 
-    // 1p 
-    widget->SetState(JoystickDir::State::CENTER);
     if(    upHolding && leftHolding) {
         widget->SetState(JoystickDir::State::UP_LEFT);
     }
@@ -94,6 +100,9 @@ void IOTestScreen::UpdateJoystick(WeakPtr<JoystickDir>& widget, int idx)
     }
     else if(rightHolding) {
         widget->SetState(JoystickDir::State::RIGHT);
+    }
+    else{
+        widget->SetState(JoystickDir::State::CENTER);
     }
 }
 
