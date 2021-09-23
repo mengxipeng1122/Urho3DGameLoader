@@ -146,4 +146,32 @@
 		<attribute name="Image Rect" value="0 0 106 100" />
 		<attribute name="Blend Mode" value="alpha" />
 	</element>
+    <element type="NormalMenuItem">
+        <attribute name="Position" value="445 569" />
+        <attribute name="Size" value="534 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/key_set_btn.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/key_set_btn_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="SAVE" />
+        <attribute name="Text Auto Localizable" value="false" />
+        <attribute name="Name" value="Save" />
+        <attribute name="Text Base Position" value="2 2" />
+	</element>
+    <element type="NormalMenuItem">
+        <attribute name="Position" value="596 571" />
+        <attribute name="Size" value="534 33" />
+        <attribute name="Unselect Background Texture" value="Texture2D;res/key_set_btn.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/key_set_btn_sel.png" />
+        <attribute name="Text Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Text Font Size" value="12" />
+    	<attribute name="Select Color" value="1 .8 .8 1" />
+    	<attribute name="Unselect Color" value="0 0 0 1" />
+        <attribute name="Text" value="RESTORE_DEFAULT" />
+        <attribute name="Text Auto Localizable" value="false" />
+        <attribute name="Name" value="Restore Default" />
+        <attribute name="Text Base Position" value="2 2" />
+	</element>
 </element>
