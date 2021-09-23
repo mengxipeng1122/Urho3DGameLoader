@@ -1,0 +1,28 @@
+<element>
+    <attribute name="Size" value="1280 720" />
+    <element type="Text">
+        <attribute name="Position" value="47 52" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="35" />
+        <attribute name="Text" value="GAME SETTING" />
+        <attribute name="Name" value="Game Setting" />
+    </element>
+    <element type="Gamelist">
+    	<attribute name="Name" value="Game List" />
+        <attribute name="Size" value="555 450" />
+    	<attribute name="Pivot" value="0 0" />
+        <attribute name="Position" value="40 208" />
+        <attribute name="List Mask Texture" value="Texture2D;res/main_list_mark.png" />
+        <attribute name="List Mask Select Texture" value="Texture2D;res/main_list_mark_sel.png" />
+        <attribute name="List Icon Default Texture" value="Texture2D;res/main_list_icon_default.png" />
+        <attribute name="Item Background Texture" value="Texture2D;res/list_item_bg.png" />
+        <attribute name="Item Background Select Texture" value="Texture2D;res/list_item_bg_sel.png" />
+    	<attribute name="Select Color" value="0 .8 .2 1" />
+    	<attribute name="Unselect Color" value="1 1 1 1" />
+        <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+        <attribute name="Text Font Size" value="12" />
+        <attribute name="Item Base Position" value="70 0" />
+        <attribute name="List Icon Size" value="55 33" />
+	</element>
+</element>
