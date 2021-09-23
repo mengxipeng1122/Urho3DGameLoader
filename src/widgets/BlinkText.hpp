@@ -11,14 +11,14 @@ namespace Urho3D
 
 //=============================================================================
 //=============================================================================
-class FlashText : public Widget
+class BlinkText : public Widget
 {
-    URHO3D_OBJECT(FlashText, Widget);
+    URHO3D_OBJECT(BlinkText, Widget);
 public:
     static void RegisterObject(Context* context);
 
-    explicit FlashText(Context *context);
-    virtual ~FlashText();
+    explicit BlinkText(Context *context);
+    virtual ~BlinkText();
 
 public:
     void SetText(const String& text) { text_ = text; }

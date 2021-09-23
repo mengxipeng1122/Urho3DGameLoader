@@ -41,7 +41,7 @@
 #include "widgets/TextSelectMenuItem.hpp"
 #include "widgets/ImageSelectMenuItem.hpp"
 #include "widgets/Keyboard.hpp"
-#include "widgets/FlashText.hpp"
+#include "widgets/BlinkText.hpp"
 #include "widgets/JoystickDir.hpp"
 #include "widgets/JoystickKey.hpp"
 #include "screens/ScreenManager.hpp"
@@ -49,6 +49,7 @@
 #include "screens/HomeScreen.hpp"
 #include "screens/IOTestScreen.hpp"
 #include "screens/SettingsScreen.hpp"
+#include "screens/GameSettingScreen.hpp"
 
 URHO3D_DEFINE_APPLICATION_MAIN(MainControl)
 
@@ -65,6 +66,7 @@ void MainControl::RegisterScreens()
     { std::string name(SettingsScreen   ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<SettingsScreen   >()); }
     { std::string name(IOTestScreen     ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<IOTestScreen     >()); }
     { std::string name(KeySettingScreen ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<KeySettingScreen >()); }
+    { std::string name(GameSettingScreen::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<GameSettingScreen>()); }
 }
 
 void MainControl::RegisterWidgets()
@@ -84,7 +86,7 @@ void MainControl::RegisterWidgets()
     ImageSelectMenuItem     ::RegisterObject(context_);
     JoystickDir             ::RegisterObject(context_);
     JoystickKey             ::RegisterObject(context_);
-    FlashText               ::RegisterObject(context_);
+    BlinkText               ::RegisterObject(context_);
 }
 
 void MainControl::RegisterSubsystems()
@@ -143,7 +145,7 @@ void MainControl::Start()
     // Set the loaded style as default style
     UI_ROOT->SetDefaultStyle(style);
 
-    ScreenManager::SetCurrentScreen(KeySettingScreen::GetName(), context_);
+    ScreenManager::SetCurrentScreen(HomeScreen::GetName(), context_);
 
     // Create console and debug HUD
     CreateConsoleAndDebugHud();

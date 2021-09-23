@@ -6,7 +6,7 @@
 #include "ScreenBuilder.hpp"
 #include "Screen.hpp"
 #include "ScreenManager.hpp"
-#include "../widgets/FlashText.hpp"
+#include "../widgets/BlinkText.hpp"
 #include "../widgets/NormalMenuItem.hpp"
 
 
@@ -22,7 +22,7 @@ class KeySettingScreen : public Screen
 
     private:
 
-        WeakPtr<FlashText>      keyTipFlashText_;
+        WeakPtr<BlinkText>      keyTipText_;
         WeakPtr<NormalMenuItem> saveButton_;
         WeakPtr<NormalMenuItem> restoreDefaultButton_;
 

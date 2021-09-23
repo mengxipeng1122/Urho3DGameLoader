@@ -8,7 +8,7 @@
         <attribute name="Name" value="Title" />
         <attribute name="Text" value="KEY SETTING" />
     </element>
-    <element type="FlashText">
+    <element type="BlinkText">
         <attribute name="Position" value="521 135" />
         <attribute name="Name" value="Key Tip" />
         <attribute name="Size" value="2 5" />

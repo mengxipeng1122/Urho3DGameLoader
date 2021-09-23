@@ -2,7 +2,7 @@
 #include "../utils/log.hpp"
 #include "../utils/string.hpp"
 
-#include "FlashText.hpp"
+#include "BlinkText.hpp"
 
 namespace Urho3D
 {
@@ -10,9 +10,9 @@ extern const char* UI_CATEGORY;
 
 //=============================================================================
 //=============================================================================
-void FlashText::RegisterObject(Context* context)
+void BlinkText::RegisterObject(Context* context)
 {
-    context->RegisterFactory<FlashText>(UI_CATEGORY);
+    context->RegisterFactory<BlinkText>(UI_CATEGORY);
     URHO3D_COPY_BASE_ATTRIBUTES(Widget);
 
     URHO3D_ATTRIBUTE("Text Color", Color, textColor_, Color::TRANSPARENT_BLACK, AM_FILE);
@@ -23,20 +23,20 @@ void FlashText::RegisterObject(Context* context)
 
 }
 
-FlashText::FlashText(Context *context)
+BlinkText::BlinkText(Context *context)
     : Widget(context)
 {
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(FlashText, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(BlinkText, HandleUpdate));
 }
 
-FlashText::~FlashText()
+BlinkText::~BlinkText()
 {
     UnsubscribeFromEvent(E_UPDATE);
 }
 
 
 
-void FlashText::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
+void BlinkText::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
 {
     if(IsSelected()) {
         if(show_) {
@@ -48,7 +48,7 @@ void FlashText::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertex
     }
 }
 
-void FlashText::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void BlinkText::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
     elapsedTime_ += (eventData[P_TIMESTEP].GetFloat()*1000.f);

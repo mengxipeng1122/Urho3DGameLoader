@@ -12,10 +12,10 @@ void KeySettingScreen::Enter()
 
     const auto* screen = UI_ROOT->GetChildStaticCast<UIElement>(String("Screen"));
 
-    keyTipFlashText_ = screen->GetChildStaticCast<FlashText>(String("Key Tip"));
-    ASSERT_CPP(keyTipFlashText_!=nullptr, "can not found Key Tip ");
-    keyTipFlashText_->SetSelected(true);
-    keyTipFlashText_->SetText(String(GetKeyStateTip()));
+    keyTipText_ = screen->GetChildStaticCast<BlinkText>(String("Key Tip"));
+    ASSERT_CPP(keyTipText_!=nullptr, "can not found Key Tip ");
+    keyTipText_->SetSelected(true);
+    keyTipText_->SetText(String(GetKeyStateTip()));
 
     saveButton_ = screen->GetChildStaticCast<NormalMenuItem>(String("Save"));
     ASSERT_CPP(saveButton_!=nullptr, "can not found Save");
@@ -54,10 +54,10 @@ bool KeySettingScreen::HandleKeyDown(InputKey key, int idx)
     Screen::HandleKeyDown(key, idx);
 
     // switch select focus
-    if(keyTipFlashText_->IsSelected()) {
+    if(keyTipText_->IsSelected()) {
         switch(key) {
             case InputKey::DOWN: 
-                keyTipFlashText_->SetSelected(false);
+                keyTipText_->SetSelected(false);
                 saveButton_->SetSelected(true);
                 return true;
         }
@@ -70,7 +70,7 @@ bool KeySettingScreen::HandleKeyDown(InputKey key, int idx)
                 return true;
             case InputKey::UP:
                 saveButton_->SetSelected(false);
-                keyTipFlashText_->SetSelected(true);
+                keyTipText_->SetSelected(true);
                 return true;
             case InputKey::FIRE_A:
                 // save and exit 
@@ -88,7 +88,7 @@ bool KeySettingScreen::HandleKeyDown(InputKey key, int idx)
                 return true;
             case InputKey::UP:
                 restoreDefaultButton_->SetSelected(false);
-                keyTipFlashText_->SetSelected(true);
+                keyTipText_->SetSelected(true);
                 return true;
             case InputKey::FIRE_A:
                 MACHINE->RestoreKeyMap();
@@ -98,7 +98,7 @@ bool KeySettingScreen::HandleKeyDown(InputKey key, int idx)
         }
     }
 
-    if(keyTipFlashText_->IsSelected()) {
+    if(keyTipText_->IsSelected()) {
         switch(keyState_) 
         {
             case KeySettingState::PLAYER1_A:
@@ -131,7 +131,7 @@ bool KeySettingScreen::HandleKeyDown(InputKey key, int idx)
                         }
                         UpdateAllButtons();
                         AdvanceKeyState();
-                        keyTipFlashText_->SetText(String(GetKeyStateTip()));
+                        keyTipText_->SetText(String(GetKeyStateTip()));
                         return true;
                     }
                 }
@@ -170,11 +170,11 @@ bool KeySettingScreen::HandleKeyDown(InputKey key, int idx)
                         }
                         UpdateAllButtons();
                         if(keyState_ == KeySettingState::PLAYER2_F) {
-                            keyTipFlashText_->SetSelected(false);
+                            keyTipText_->SetSelected(false);
                             saveButton_->SetSelected(true);
                         }
                         AdvanceKeyState();
-                        keyTipFlashText_->SetText(String(GetKeyStateTip()));
+                        keyTipText_->SetText(String(GetKeyStateTip()));
                         return true;
                     }
                 }

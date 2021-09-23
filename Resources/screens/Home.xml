@@ -16,6 +16,7 @@
     </element>
     <element type="Gamelist">
     	<attribute name="Name" value="Game List" />
+        <attribute name="Size" value="555 450" />
     	<attribute name="Pivot" value="0 0" />
         <attribute name="Position" value="40 208" />
         <attribute name="List Mask Texture" value="Texture2D;res/main_list_mark.png" />
