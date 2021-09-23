@@ -38,12 +38,13 @@ FlashText::~FlashText()
 
 void FlashText::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
 {
-    if(show_)
-    {
-        auto font = CACHE->GetResource<Font>(textFont_);
-        FontFace* face = font->GetFace(textFontSize_);
-        const auto& position = GetPosition();
-        Widget::AddStringBatch(batches, vertexData, currentScissor, text_, face, textColor_ , 0,0);
+    if(IsSelected()) {
+        if(show_) {
+            auto font = CACHE->GetResource<Font>(textFont_);
+            FontFace* face = font->GetFace(textFontSize_);
+            const auto& position = GetPosition();
+            Widget::AddStringBatch(batches, vertexData, currentScissor, text_, face, textColor_ , 0,0);
+        }
     }
 }
 

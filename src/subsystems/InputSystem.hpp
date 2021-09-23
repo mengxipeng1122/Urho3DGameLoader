@@ -1,7 +1,8 @@
 
 #pragma once 
 
-#include "../Global.h"
+#include "../Urho3DAll.h"
+#include "../utils/log.hpp"
 
 enum class InputKey
 {
@@ -21,6 +22,27 @@ enum class InputKey
     SETTING,
     NUMS_KEY,
 };
+
+ // some helper functions
+inline bool IsKey(const InputKey& key) {
+    auto val = static_cast<int>(key);
+    return val>=static_cast<int>(InputKey::FIRE_A) && val<=static_cast<int>(InputKey::FIRE_F);
+}
+
+inline int ConvertInputKeyToIndex(const InputKey& key) {
+    ASSERT_CPP(IsKey(key), "key is not FIRE_*", static_cast<int>(key));
+    auto val = static_cast<int>(key);
+    return  val-static_cast<int>(InputKey::FIRE_A);
+}
+
+inline InputKey ConvertIndexToInputKey(int v){
+    ASSERT_CPP(v>=0 && v<6, "v is not correct", v);
+    auto fireA = static_cast<int>(InputKey::FIRE_A);
+    return  static_cast<InputKey>(fireA+v);
+}
+
+
+
 
 
 namespace Urho3D

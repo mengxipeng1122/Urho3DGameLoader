@@ -10,7 +10,7 @@
     </element>
     <element type="FlashText">
         <attribute name="Position" value="521 135" />
-        <attribute name="Name" value="FlashText" />
+        <attribute name="Name" value="Key Tip" />
         <attribute name="Size" value="2 5" />
         <attribute name="Pivot" value="0 0" />
     	<attribute name="Text Color" value="1 .8 .8 1" />

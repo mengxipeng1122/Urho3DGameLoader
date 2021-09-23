@@ -14,8 +14,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 // applications
 #include "subsystems/Settings.hpp"
-#include "subsystems/Machine.hpp"
 #include "subsystems/InputSystem.hpp"
+#include "subsystems/Machine.hpp"
 #define SETTINGS        GetSubsystem<Settings>()
 #define MACHINE         GetSubsystem<Machine>()
 #define INPUT_SYSTEM    GetSubsystem<InputSystem>()

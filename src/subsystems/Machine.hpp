@@ -2,6 +2,7 @@
 #pragma once
 
 #include "../Global.h"
+#include "InputSystem.hpp"
 
 class Machine: public Object
 {
@@ -31,6 +32,22 @@ public:
     void SetSetttingScreenIndex(int i) {settingScreenIndex_ = i;}
 private:
     int settingScreenIndex_{0};
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // key map 
+public:
+    void SetKeyMap(InputKey actKey, int idx,  InputKey mapKey);
+    InputKey GetKeyMap(int idx,  InputKey mapKey);
+    void RestoreKeyMap();
+    static constexpr int MAXIMUM_PLAYERS =2; 
+    static constexpr int MAXIMUM_KEYS    =6; 
+private:
+    // a--0 , b--1 c--2 .etc
+    std::array<int, MAXIMUM_PLAYERS*MAXIMUM_KEYS> keyMap_{
+            0, 1, 2, 3, 4, 5,
+            0, 1, 2, 3, 4, 5,
+        }; 
+
 
 };
 
