@@ -1,7 +1,7 @@
 <element>
     <attribute name="Size" value="1280 720" />
     <element type="Text">
-        <attribute name="Position" value="47 52" />
+        <attribute name="Position" value="47 54" />
         <attribute name="Pivot" value="0 0" />
         <attribute name="Font" value="Font;res/geometr415.ttf" />
         <attribute name="Font Size" value="35" />
@@ -25,4 +25,86 @@
         <attribute name="Item Base Position" value="70 0" />
         <attribute name="List Icon Size" value="55 33" />
 	</element>
+    <element type="Sprite">
+        <attribute name="Position" value="183 582" />
+        <attribute name="Name" value="Page Count Background" />
+        <attribute name="Size" value="169 66" />
+        <attribute name="Texture" value="Texture2D;res/main_page_bg.png" />
+        <attribute name="Image Rect" value="0 0 169 66" />
+        <attribute name="Blend Mode" value="alpha" />
+    </element>
+    <element type="Text">
+        <attribute name="Position" value="216 595" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="25" />
+        <attribute name="Text" value="" />
+        <attribute name="Name" value="Page Indicator" />
+    </element>
+    <element type="Sprite">
+        <attribute name="Position" value="388 581" />
+        <attribute name="Name" value="Game Count Background" />
+        <attribute name="Size" value="169 66" />
+        <attribute name="Texture" value="Texture2D;res/main_total_bg.png" />
+        <attribute name="Image Rect" value="0 0 169 66" />
+        <attribute name="Blend Mode" value="alpha" />
+    </element>
+    <element type="Text">
+        <attribute name="Position" value="424 598" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="25" />
+        <attribute name="Text" value="" />
+        <attribute name="Name" value="Game Indicator" />
+    </element>
+    <element type="Sprite">
+        <attribute name="Position" value="601 210" />
+        <attribute name="Name" value="Level Background" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Image Rect" value="0 0 600 33" />
+        <attribute name="Blend Mode" value="alpha" />
+    </element>
+    <element type="Text">
+        <attribute name="Position" value="616 208" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="25" />
+        <attribute name="Text" value="LEVEL" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="Level Tip" />
+    </element>
+    <element type="Text">
+        <attribute name="Position" value="1003 207" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="25" />
+        <attribute name="Text" value="level" />
+        <attribute name="Name" value="Level" />
+    </element>
+    <element type="Sprite">
+        <attribute name="Position" value="600 250" />
+        <attribute name="Name" value="Life Background" />
+        <attribute name="Size" value="600 33" />
+        <attribute name="Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Image Rect" value="0 0 600 33" />
+        <attribute name="Blend Mode" value="alpha" />
+    </element>
+    <element type="Text">
+        <attribute name="Position" value="618 247" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="25" />
+        <attribute name="Text" value="LIEF" />
+        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Name" value="Life Tip" />
+    </element>
+    <element type="Text">
+        <attribute name="Position" value="1014 244" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="25" />
+        <attribute name="Text" value="life" />
+        <attribute name="Name" value="Life" />
+    </element>
 </element>

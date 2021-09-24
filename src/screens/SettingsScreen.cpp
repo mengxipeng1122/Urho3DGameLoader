@@ -1,6 +1,8 @@
 
 #include "SettingsScreen.hpp"
 #include "IOTestScreen.hpp"
+#include "KeySettingScreen.hpp"
+#include "GameSettingScreen.hpp"
 #include "../widgets/TextSelectMenuItem.hpp"
 #include "../widgets/ImageSelectMenuItem.hpp"
 
@@ -74,7 +76,9 @@ bool SettingsScreen::HandleKeyDown(InputKey key, int idx)
         case InputKey::FIRE_A:
         {
             switch(menuIndex_){   
-                case 0: ScreenManager::SetCurrentScreen(IOTestScreen::GetName(), context_); return true;
+                case 0: ScreenManager::SetCurrentScreen(IOTestScreen::GetName(),        context_); return true;
+                case 1: ScreenManager::SetCurrentScreen(KeySettingScreen::GetName(),    context_); return true;
+                case 3: ScreenManager::SetCurrentScreen(GameSettingScreen::GetName(),   context_); return true;
             }
         };
     }

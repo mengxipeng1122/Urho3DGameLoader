@@ -48,6 +48,7 @@ public:
     void UpdateDrawItems();
 
     int GetPageItems() const noexcept { return pageItems_; }
+    bool HandleKeyDown(InputKey key, int idx) override;
 
 protected:
 
@@ -84,10 +85,10 @@ protected:
     };
     Vector<DrawItem>          drawItems_; // this vector store all UI items for display one game 
 
+
 private:
 //    bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
     void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor) override;
-    bool HandleKeyDown(InputKey key, int idx) override;
     //void Start() override;
 
     int goNextPage();

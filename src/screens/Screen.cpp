@@ -61,15 +61,16 @@ void Screen::InitAllUIElements()
 
 bool Screen::HandleKeyDown(InputKey key, int idx)
 {
+    auto handled=false;
     if(HAS_DEBUG) {
         auto inputSystem = INPUT_SYSTEM;
         if(inputSystem->GetKeyState(InputKey::FIRE_A,0)) {
             auto position = allUIElements_[currentDebugUIElementIdx_]->GetPosition();
             switch (key) {
-                case InputKey::UP       :{if(position.y_>0) position.y_--; } break;
-                case InputKey::DOWN     :{                  position.y_++; } break;
-                case InputKey::LEFT     :{if(position.x_>0) position.x_--; } break;
-                case InputKey::RIGHT    :{                  position.x_++; } break;
+                case InputKey::UP       :{if(position.y_>0) position.y_--; handled=true;} break;
+                case InputKey::DOWN     :{                  position.y_++; handled=true;} break;
+                case InputKey::LEFT     :{if(position.x_>0) position.x_--; handled=true;} break;
+                case InputKey::RIGHT    :{                  position.x_++; handled=true;} break;
             }
             allUIElements_[currentDebugUIElementIdx_]->SetPosition(position);
         }
@@ -77,10 +78,10 @@ bool Screen::HandleKeyDown(InputKey key, int idx)
         if(inputSystem->GetKeyState(InputKey::FIRE_C,0)) {
             auto size = allUIElements_[currentDebugUIElementIdx_]->GetSize();
             switch (key) {
-                case InputKey::UP       :{if(size.y_>0) size.y_--; } break;
-                case InputKey::DOWN     :{              size.y_++; } break;
-                case InputKey::LEFT     :{if(size.x_>0) size.x_--; } break;
-                case InputKey::RIGHT    :{              size.x_++; } break;
+                case InputKey::UP       :{if(size.y_>0) size.y_--; handled=true;} break;
+                case InputKey::DOWN     :{              size.y_++; handled=true;} break;
+                case InputKey::LEFT     :{if(size.x_>0) size.x_--; handled=true;} break;
+                case InputKey::RIGHT    :{              size.x_++; handled=true;} break;
             }
             allUIElements_[currentDebugUIElementIdx_]->SetSize(size);
         }
@@ -90,11 +91,11 @@ bool Screen::HandleKeyDown(InputKey key, int idx)
                 currentDebugUIElementIdx_++; 
                 currentDebugUIElementIdx_%=allUIElements_.Size(); 
                 LOG_INFOS_CPP("name ",allUIElements_[currentDebugUIElementIdx_]->GetName());
+                handled = true;
             }
         }
-
         UpdataDebugElment();
     }
-    return false;
+    return handled;
 }
 

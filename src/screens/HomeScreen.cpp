@@ -290,7 +290,6 @@ void HomeScreen::UpdatePagerIndicator()
     int c = int((index/pageItems))+1;
     int t = int(((gameItemsCount+pageItems-1)/pageItems));
     pageIndicator_->SetPage(c,t);
-
 }
 
 

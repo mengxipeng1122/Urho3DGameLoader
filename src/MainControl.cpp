@@ -145,7 +145,7 @@ void MainControl::Start()
     // Set the loaded style as default style
     UI_ROOT->SetDefaultStyle(style);
 
-    ScreenManager::SetCurrentScreen(HomeScreen::GetName(), context_);
+    ScreenManager::SetCurrentScreen(GameSettingScreen::GetName(), context_);
 
     // Create console and debug HUD
     CreateConsoleAndDebugHud();
@@ -192,8 +192,7 @@ void MainControl::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
     int      inputIdx;
     int key = eventData[P_KEY].GetInt();
     // Close console (if open) or exit when ESC is pressed
-    if (key == KEY_ESCAPE)
-    {
+    if (key == KEY_ESCAPE) {
         ScreenManager::SetCurrentScreen(nullptr);
         engine_->Exit();
     }
@@ -219,23 +218,24 @@ void MainControl::HandleKeyDown(StringHash eventType, VariantMap& eventData)
         Renderer* renderer = GetSubsystem<Renderer>();
 
         // Switch Screen test
-        if (key == '8')
-        {
-            static bool homescreen = true;
-            if(homescreen)
-            {
-                ScreenManager::SetCurrentScreen(IOTestScreen::GetName(), context_);
-                homescreen = false;
-            }
-            else
-            {
-                ScreenManager::SetCurrentScreen(HomeScreen::GetName(), context_);
-                homescreen = true;
-            }
-        }
+        //if (key == '8')
+        //{
+        //    static bool homescreen = true;
+        //    if(homescreen)
+        //    {
+        //        ScreenManager::SetCurrentScreen(IOTestScreen::GetName(), context_);
+        //        homescreen = false;
+        //    }
+        //    else
+        //    {
+        //        ScreenManager::SetCurrentScreen(HomeScreen::GetName(), context_);
+        //        homescreen = true;
+        //    }
+        //}
+        //else
 
         // Save UI layout xml file 
-        else if (key == '2')
+        if (key == '2')
         {
             File saveFile(this->context_, String("/tmp/tt.xml"), FILE_WRITE); 
             UI_ROOT->SaveXML(saveFile);

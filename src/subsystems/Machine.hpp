@@ -1,8 +1,55 @@
 
 #pragma once
 
+#include <set>
 #include "../Global.h"
 #include "InputSystem.hpp"
+
+enum class GameLife {
+        INVALID,
+        _1, 
+        _2, 
+        _3, 
+        _4, 
+};
+
+inline const char* GetGamelifeString(GameLife gameLife)
+{
+    switch(gameLife)
+    {
+        case GameLife::_1: return "1";
+        case GameLife::_2: return "2";
+        case GameLife::_3: return "3";
+        case GameLife::_4: return "4";
+        case GameLife::INVALID: 
+        default:
+        return "";
+    }
+}
+
+enum class GameLevel {
+        INVALID,
+        _2, 
+        _4, 
+        _6, 
+        _8, 
+};
+
+inline const char* GetGameLevelString(GameLevel gameLevel)
+{
+    switch(gameLevel)
+    {
+        case GameLevel::_2: return "2";
+        case GameLevel::_4: return "4";
+        case GameLevel::_6: return "6";
+        case GameLevel::_8: return "8";
+        case GameLevel::INVALID: 
+        default:
+        return "";
+    }
+}
+
+
 
 class Machine: public Object
 {
@@ -15,8 +62,12 @@ public:
     // game list related
 public:
     struct GameItem {
-        String name_;
-        String rom_;
+        String                  name_;
+        String                  rom_;
+        int                     lifeIdx_;
+        Vector<GameLife>        validLives_;
+        GameLevel               level_;
+        
     };
     // use cb to handle all found gameitem; cb is function 
     void HandleAllGames(std::function<void(const GameItem& gameItem)> cb);
