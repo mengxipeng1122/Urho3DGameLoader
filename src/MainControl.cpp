@@ -149,7 +149,7 @@ void MainControl::Start()
     // Set the loaded style as default style
     UI_ROOT->SetDefaultStyle(style);
 
-    ScreenManager::SetCurrentScreen(HomeScreen::GetName(), context_);
+    ScreenManager::SetCurrentScreen(WifiScreen::GetName(), context_);
 
     // Create console and debug HUD
     CreateConsoleAndDebugHud();

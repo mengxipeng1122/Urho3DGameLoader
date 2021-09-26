@@ -1,0 +1,27 @@
+<element>
+    <attribute name="Size" value="1280 720" />
+    <element type="Text">
+        <attribute name="Position" value="185 65" />
+        <attribute name="Pivot" value="0 0" />
+        <attribute name="Font" value="Font;res/geometr415.ttf" />
+        <attribute name="Font Size" value="35" />
+        <attribute name="Text" value="WIFI" />
+    </element>
+    <element type="WifiList">
+    	<attribute name="Name" value="Wifi List" />
+        <attribute name="Size" value="555 450" />
+    	<attribute name="Pivot" value="0 0" />
+        <attribute name="Position" value="40 208" />
+        <attribute name="Wifi Signal Strength 0 Texture" value="Texture2D;res/wifi_sig0_big.png" />
+        <attribute name="Wifi Signal Strength 1 Texture" value="Texture2D;res/wifi_sig0_big.png" />
+        <attribute name="Wifi Signal Strength 2 Texture" value="Texture2D;res/wifi_sig0_big.png" />
+        <attribute name="Wifi Signal Strength 3 Texture" value="Texture2D;res/wifi_sig0_big.png" />
+        <attribute name="Wifi Password Texture" value="Texture2D;res/wifi_auth.png" />
+        <attribute name="Background Texture" value="Texture2D;res/set_item_bg.png" />
+        <attribute name="Select Background Texture" value="Texture2D;res/set_item_bg_sel.png" />
+    	<attribute name="Select Color" value="0 .8 .2 1" />
+    	<attribute name="Unselect Color" value="1 1 1 1" />
+        <attribute name="Text Font" value="Font;res/MicrosoftYaHeiUI-Bold-02.ttf" />
+        <attribute name="Text Font Size" value="12" />
+	</element>
+</element>
