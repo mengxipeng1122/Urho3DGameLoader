@@ -153,13 +153,6 @@ void VideoPlayerComponent::ClearTexture()
 			outputTexture[i] = 0;
 		}
 	}
-    if(outputMaterial!=nullptr)
-    {
-	    outputMaterial->SetTexture(TextureUnit::TU_DIFFUSE, nullptr);
-	    outputMaterial->SetTexture(TextureUnit::TU_SPECULAR,nullptr);
-	    outputMaterial->SetTexture(TextureUnit::TU_NORMAL,  nullptr);
-    }
-
 
     isInitilizedTextures_ = false;
 
@@ -175,8 +168,18 @@ bool VideoPlayerComponent::InitTexture()
 	Advance(1.f/framesPerSecond_);
 
 
-    if (videoInfo_.pFrameYUV_!=nullptr && outputMaterial !=nullptr)
+    if (   videoInfo_.pFrameYUV_!=nullptr 
+        && videoInfo_.pFrameYUV_->width > 0
+        && videoInfo_.pFrameYUV_->height > 0
+        && outputMaterial !=nullptr
+        )
     {
+
+        {
+            auto texWidth  = videoInfo_.pFrameYUV_->width;
+            auto texHeight = videoInfo_.pFrameYUV_->height;
+            LOG_INFOS_CPP( videoInfo_.pFrameYUV_,  texWidth, texHeight);
+        }
 
 	    // Planes textures create
 	    for (int i = 0; i < YUV_PLANE_MAX_SIZE; ++i)

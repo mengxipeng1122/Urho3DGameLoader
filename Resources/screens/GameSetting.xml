@@ -71,7 +71,7 @@
         <attribute name="Font" value="Font;res/geometr415.ttf" />
         <attribute name="Font Size" value="25" />
         <attribute name="Text" value="LEVEL" />
-        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Auto Localizable" value="true" />
         <attribute name="Name" value="Level Tip" />
     </element>
     <element type="Text">
@@ -96,7 +96,7 @@
         <attribute name="Font" value="Font;res/geometr415.ttf" />
         <attribute name="Font Size" value="25" />
         <attribute name="Text" value="LIEF" />
-        <attribute name="Text Auto Localizable" value="true" />
+        <attribute name="Auto Localizable" value="true" />
         <attribute name="Name" value="Life Tip" />
     </element>
     <element type="Text">

@@ -31,6 +31,7 @@
 #include "subsystems/InputSystem.hpp"
 #include "components/VideoPlayerComponent.hpp"
 #include "widgets/PageIndicator.hpp"
+#include "widgets/WifiList.hpp"
 #include "widgets/Gamelist.hpp"
 #include "widgets/MenuBar.hpp"
 #include "widgets/VideoPlayer.hpp"
@@ -50,6 +51,7 @@
 #include "screens/IOTestScreen.hpp"
 #include "screens/SettingsScreen.hpp"
 #include "screens/GameSettingScreen.hpp"
+#include "screens/WifiScreen.hpp"
 
 URHO3D_DEFINE_APPLICATION_MAIN(MainControl)
 
@@ -67,6 +69,7 @@ void MainControl::RegisterScreens()
     { std::string name(IOTestScreen     ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<IOTestScreen     >()); }
     { std::string name(KeySettingScreen ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<KeySettingScreen >()); }
     { std::string name(GameSettingScreen::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<GameSettingScreen>()); }
+    { std::string name(WifiScreen       ::GetName()); ScreenManager::RegisterScreen(name, new ScreenTBuilder<WifiScreen       >()); }
 }
 
 void MainControl::RegisterWidgets()
@@ -87,6 +90,7 @@ void MainControl::RegisterWidgets()
     JoystickDir             ::RegisterObject(context_);
     JoystickKey             ::RegisterObject(context_);
     BlinkText               ::RegisterObject(context_);
+    WifiList                ::RegisterObject(context_);
 }
 
 void MainControl::RegisterSubsystems()
@@ -145,7 +149,7 @@ void MainControl::Start()
     // Set the loaded style as default style
     UI_ROOT->SetDefaultStyle(style);
 
-    ScreenManager::SetCurrentScreen(GameSettingScreen::GetName(), context_);
+    ScreenManager::SetCurrentScreen(HomeScreen::GetName(), context_);
 
     // Create console and debug HUD
     CreateConsoleAndDebugHud();
